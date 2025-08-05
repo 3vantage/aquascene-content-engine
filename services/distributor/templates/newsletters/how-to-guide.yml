@@ -1,0 +1,330 @@
+# How-To Guide Newsletter Template Configuration
+# AquaScene Content Engine - Newsletter Templates
+
+template:
+  name: "how-to-guide"
+  display_name: "How-To Guide"
+  category: "newsletter"
+  type: "tutorial"
+  version: "1.0.0"
+  
+description: "Step-by-step tutorial template for detailed aquascaping guides and instructions"
+
+# Template metadata
+metadata:
+  author: "AquaScene Content Engine"
+  created: "2025-08-05"
+  updated: "2025-08-05"
+  tags: ["tutorial", "how-to", "step-by-step", "guide", "educational"]
+  
+# Email client compatibility
+compatibility:
+  outlook: true
+  gmail: true
+  apple_mail: true
+  yahoo: true
+  android: true
+  ios: true
+  mobile_responsive: true
+
+# Template variables and their types
+variables:
+  # Header section
+  guide_title:
+    type: "string"
+    default: "Complete Aquascaping Setup Guide"
+    description: "Main guide title"
+    required: true
+    max_length: 80
+    
+  # Guide metadata
+  estimated_time:
+    type: "string"
+    default: "2-3 hours"
+    description: "Estimated completion time"
+    required: true
+    
+  difficulty_level:
+    type: "string"
+    enum: ["Beginner", "Intermediate", "Advanced", "Expert"]
+    default: "Intermediate"
+    required: true
+    
+  estimated_cost:
+    type: "string"
+    default: "€150-300"
+    description: "Estimated budget for the project"
+    required: true
+    
+  required_experience:
+    type: "string"
+    default: "6+ months"
+    description: "Recommended experience level"
+    required: true
+  
+  # Subscriber personalization
+  subscriber_name:
+    type: "string"
+    default: "Fellow Aquascaper"
+    description: "Personalized subscriber name"
+    required: false
+    personalization: true
+    
+  # Introduction section
+  introduction:
+    type: "string"
+    description: "Guide introduction text"
+    required: true
+    max_length: 500
+    
+  intro_tip:
+    type: "string"
+    default: "Read through the entire guide before starting. Having all materials ready and understanding each step will make the process much smoother."
+    max_length: 200
+    
+  # Materials and equipment
+  materials:
+    type: "array"
+    description: "List of required materials"
+    required: true
+    items:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          required: true
+        description:
+          type: "string"
+          required: true
+        icon:
+          type: "string"
+          default: "✓"
+        green_aqua_link:
+          type: "url"
+          description: "Link to Green Aqua product page"
+          
+  tools_list:
+    type: "string"
+    default: "Aquascaping tweezers, scissors, substrate spatula, spray bottle, cleaning cloth, measuring cup"
+    description: "Required tools list"
+    max_length: 300
+    
+  # Step-by-step instructions
+  total_steps:
+    type: "integer"
+    default: 8
+    description: "Total number of steps in the guide"
+    validation:
+      min: 3
+      max: 20
+      
+  steps:
+    type: "array"
+    description: "Step-by-step instructions"
+    required: true
+    items:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+          required: true
+          max_length: 60
+        description:
+          type: "string"
+          required: true
+          max_length: 500
+        image:
+          type: "url"
+          description: "Step illustration image"
+          validation:
+            formats: ["jpg", "png", "webp"]
+        detailed_instructions:
+          type: "array"
+          items:
+            type: "string"
+            max_length: 200
+        tip:
+          type: "string"
+          max_length: 200
+          description: "Helpful tip for this step"
+        warning:
+          type: "string"
+          max_length: 200
+          description: "Important warning or caution"
+          
+  # Troubleshooting section
+  troubleshooting_items:
+    type: "array"
+    description: "Common problems and solutions"
+    items:
+      type: "object"
+      properties:
+        problem:
+          type: "string"
+          required: true
+          max_length: 100
+        solution:
+          type: "string"
+          required: true
+          max_length: 300
+          
+  # Maintenance schedule
+  week1_maintenance:
+    type: "string"
+    default: "No water changes. Monitor for major issues only. Light: 6 hours daily."
+    max_length: 200
+    
+  week2_maintenance:
+    type: "string"
+    default: "Small water changes (10-20%) if needed. Begin CO2 injection. Light: 7 hours daily."
+    max_length: 200
+    
+  week3_maintenance:
+    type: "string"
+    default: "Regular water changes (30%). Trim fast-growing plants. Light: 8 hours daily."
+    max_length: 200
+    
+  week4_maintenance:
+    type: "string"
+    default: "Full maintenance routine. Monitor plant growth and adjust fertilization."
+    max_length: 200
+    
+  # Links and CTAs
+  green_aqua_shop_link:
+    type: "url"
+    description: "Link to Green Aqua shop"
+    
+  community_link:
+    type: "url"
+    description: "Link to community forum"
+    
+  support_link:
+    type: "url"
+    description: "Link to support/help section"
+    
+  more_guides_link:
+    type: "url"
+    description: "Link to more how-to guides"
+    
+  video_tutorials_link:
+    type: "url"
+    description: "Link to video tutorials"
+    
+  community_forum_link:
+    type: "url"
+    description: "Link to community forum for help"
+    
+  # Footer links
+  unsubscribe_link:
+    type: "url"
+    required: true
+  preferences_link:
+    type: "url"
+    required: true
+    
+  # Preview content
+  next_guide_preview:
+    type: "string"
+    default: "Advanced Plant Trimming Techniques - Learn professional pruning methods to maintain perfect plant shapes and encourage healthy growth."
+    max_length: 200
+
+# Content generation hints for AI
+ai_generation:
+  content_areas:
+    - introduction: "Create engaging introduction that explains the value and outcome"
+    - steps: "Generate detailed, actionable instructions with safety considerations"
+    - troubleshooting: "Provide solutions for common beginner mistakes"
+    - materials: "List essential and optional materials with explanations"
+    
+  tone: "Clear, instructional, encouraging, safety-conscious"
+  expertise_level: "Detailed enough for beginners, valuable for intermediate"
+  
+  step_guidelines:
+    - "Each step should be completable independently"
+    - "Include visual checkpoints to verify success"
+    - "Mention time estimates for longer steps"
+    - "Always include safety warnings where relevant"
+    
+# Integration settings
+integrations:
+  green_aqua:
+    enabled: true
+    product_links: true
+    partnership_badges: true
+    affiliate_tracking: true
+    material_recommendations: true
+    
+  progress_tracking:
+    enabled: true
+    step_completion: true
+    estimated_time_tracking: true
+    
+  social_media:
+    auto_share: true
+    hashtags: ["#AquaSceneGuide", "#HowTo", "#Aquascaping", "#Tutorial"]
+    share_completion_achievements: true
+    
+# Accessibility features
+accessibility:
+  alt_text_required: true
+  color_contrast_check: true
+  font_size_minimum: "14px"
+  step_numbering: true
+  clear_headings: true
+  
+# A/B testing configuration
+ab_testing:
+  guide_format: ["long_form", "condensed"]
+  step_presentation: ["numbered", "checkboxes"]
+  image_placement: ["inline", "gallery"]
+  
+# Automation rules
+automation:
+  personalization:
+    difficulty_adjustment: true
+    time_estimates: "user_experience_based"
+    material_suggestions: "budget_based"
+    
+  follow_up:
+    completion_survey: "7_days"
+    related_guides: "immediate"
+    troubleshooting_help: "if_needed"
+    
+  progress_tracking:
+    save_state: true
+    resume_capability: true
+    completion_certificate: true
+
+# Template validation rules
+validation:
+  required_sections: ["header", "materials", "steps", "troubleshooting", "footer"]
+  min_steps: 3
+  max_steps: 20
+  step_image_required: false
+  max_email_size: "2MB"
+  readability_score: "minimum_8th_grade"
+  
+# Quality assurance
+quality_checks:
+  step_clarity: true
+  safety_warnings: true
+  material_availability: true
+  cost_accuracy: true
+  time_estimate_realism: true
+  
+# Localization support
+localization:
+  default_language: "en"
+  supported_languages: ["en", "bg", "de", "hu", "ro"]
+  currency_localization: true
+  measurement_units: ["metric", "imperial"]
+  local_supplier_links: true
+  
+# Analytics tracking
+analytics:
+  step_completion_rates: true
+  drop_off_points: true
+  time_spent_per_step: true
+  material_click_through: true
+  support_requests: true
+  user_success_rate: true

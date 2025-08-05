@@ -1,0 +1,159 @@
+{{#if urgency_level}}
+{{#eq urgency_level 'high'}}🚨 URGENT ANNOUNCEMENT{{else}}{{#eq urgency_level 'medium'}}⚡ IMPORTANT NEWS{{else}}📢 AQUASCENE UPDATE{{/eq}}{{/eq}}
+{{/if}}
+
+AquaScene News
+{{announcement_title|default:"Big News for Aquascapers!"}}
+{{announcement_type|default:"🚀 PRODUCT LAUNCH"}}
+In Partnership with Green Aqua
+
+==================================================
+
+Hello {{subscriber_name|default:"Fellow Aquascaper"}}!
+
+We have exciting news to share with the aquascaping community!
+
+==================================================
+MAJOR ANNOUNCEMENT
+==================================================
+
+{{badge_text|default:"NEW"}} - {{main_headline|default:"Revolutionary New Aquascaping System"}}
+
+{{main_message|default:"We're thrilled to announce something that will change how you approach aquascaping forever. This breakthrough innovation combines cutting-edge technology with natural beauty to create the ultimate aquascaping experience."}}
+
+{{#if key_points}}
+Key Highlights:
+{{#each key_points}}
+• {{this}}
+{{/each}}
+{{/if}}
+
+==================================================
+{{#if product_launch}}
+PRODUCT DETAILS
+==================================================
+
+🚀 Introducing: {{product_launch.name|default:"AquaScene Pro System"}}
+
+{{product_launch.description|default:"The ultimate all-in-one aquascaping solution designed for both beginners and professionals."}}
+
+What's Included:
+{{#each product_launch.features}}
+• {{name}} - {{description}}
+{{else}}
+• Smart LED System - Automated lighting with app control
+• CO2 Management - Precise bubble counting and safety features
+• Plant Health Monitor - Real-time nutrient tracking
+• Expert Guides - Step-by-step video tutorials
+{{/each}}
+
+{{#if product_launch.pricing}}
+SPECIAL LAUNCH PRICING
+Price: {{product_launch.pricing.price}} {{product_launch.pricing.currency|default:"EUR"}}
+{{#if product_launch.pricing.discount}}
+Save {{product_launch.pricing.discount}} - Limited Time Only!
+{{/if}}
+{{/if}}
+
+==================================================
+{{/if}}
+
+{{#if partnership}}
+PARTNERSHIP NEWS
+==================================================
+
+🤝 {{partnership.title|default:"Exciting New Partnership"}}
+
+{{partnership.description|default:"We've joined forces with industry leaders to bring you unprecedented access to premium aquascaping products and expertise."}}
+
+{{#if partnership.benefits}}
+Partnership Benefits:
+{{#each partnership.benefits}}
+• {{this}}
+{{/each}}
+{{/if}}
+
+==================================================
+{{/if}}
+
+{{#if event}}
+EVENT ANNOUNCEMENT
+==================================================
+
+🎉 {{event.title|default:"AquaScape Conference 2025"}}
+
+{{event.description|default:"Join aquascaping experts from around the world for workshops, competitions, and networking opportunities."}}
+
+Event Details:
+📅 Date: {{event.date|default:"March 15-17, 2025"}}
+📍 Location: {{event.location|default:"Budapest, Hungary"}}
+🎫 Price: {{event.price|default:"€149 Early Bird"}}
+👥 Capacity: {{event.capacity|default:"Limited to 200 attendees"}}
+
+{{#if event.speakers}}
+Featured Speakers:
+{{#each event.speakers}}
+• {{name}} - {{title}}
+{{/each}}
+{{/if}}
+
+==================================================
+{{/if}}
+
+{{#if countdown}}
+LIMITED TIME OFFER
+==================================================
+
+⏰ {{countdown.title|default:"Launch Countdown"}}
+{{countdown.message|default:"Don't miss out on this limited-time opportunity!"}}
+
+Time Remaining:
+{{countdown.days|default:"7"}} Days, {{countdown.hours|default:"12"}} Hours, {{countdown.minutes|default:"30"}} Minutes
+
+==================================================
+{{/if}}
+
+READY TO TAKE ACTION?
+==================================================
+
+{{cta_message|default:"Join thousands of aquascapers who have already discovered the future of underwater landscaping."}}
+
+👉 {{primary_cta_text|default:"Get Started Now"}}: {{primary_cta_link|default:"[primary action link]"}}
+📖 {{secondary_cta_text|default:"Learn More"}}: {{secondary_cta_link|default:"[secondary action link]"}}
+
+{{#if social_proof}}
+What Our Community Says:
+"{{social_proof.quote|default:"This has completely transformed my aquascaping approach!"}}"
+- {{social_proof.author|default:"Maria K., Professional Aquascaper"}}
+{{/if}}
+
+==================================================
+STAY CONNECTED
+==================================================
+
+Share this news: {{share_link|default:"[share link]"}}
+Join discussion: {{community_link|default:"forum.aquascene.com"}}
+Get support: {{support_link|default:"aquascene.com/help"}}
+
+Official Green Aqua Partnership
+
+==================================================
+WHAT'S NEXT
+==================================================
+
+{{upcoming_news|default:"More exciting announcements coming soon. Follow us on social media for the latest updates and behind-the-scenes content."}}
+
+Follow us on social media for updates and exclusive content.
+
+==================================================
+
+Thanks for being part of the AquaScene community, {{subscriber_name|default:"Fellow Aquascaper"}}!
+
+This announcement was sent to AquaScene newsletter subscribers.
+You're receiving this because you signed up for AquaScene updates.
+
+Unsubscribe: {{unsubscribe_link|default:"[unsubscribe link]"}}
+Update preferences: {{preferences_link|default:"[preferences link]"}}
+
+© 2025 AquaScene. All rights reserved.
+Announcement generated with AI-powered personalization

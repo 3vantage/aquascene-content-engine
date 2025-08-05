@@ -1,0 +1,424 @@
+# Community Showcase Newsletter Template Configuration
+# AquaScene Content Engine - Newsletter Templates
+
+template:
+  name: "community-showcase"
+  display_name: "Community Showcase"
+  category: "newsletter"
+  type: "community"
+  version: "1.0.0"
+  
+description: "Template for highlighting community member submissions, achievements, and user-generated content"
+
+# Template metadata
+metadata:
+  author: "AquaScene Content Engine"
+  created: "2025-08-05"
+  updated: "2025-08-05"
+  tags: ["community", "showcase", "user-generated", "spotlight", "gallery"]
+  
+# Email client compatibility
+compatibility:
+  outlook: true
+  gmail: true
+  apple_mail: true
+  yahoo: true
+  android: true
+  ios: true
+  mobile_responsive: true
+
+# Template variables and their types
+variables:
+  # Header section
+  showcase_title:
+    type: "string"
+    default: "Community Spotlight"
+    description: "Main showcase title"
+    required: true
+    max_length: 50
+  
+  # Community statistics
+  total_members:
+    type: "string"
+    default: "2,847"
+    description: "Total community members count"
+    
+  monthly_submissions:
+    type: "string"
+    default: "156"
+    description: "Monthly submission count"
+    
+  countries_represented:
+    type: "string"
+    default: "34"
+    description: "Number of countries in community"
+  
+  # Subscriber personalization
+  subscriber_name:
+    type: "string"
+    default: "Fellow Aquascaper"
+    description: "Personalized subscriber name"
+    required: false
+    personalization: true
+    
+  # Featured aquascaper section
+  featured_member:
+    type: "object"
+    description: "Featured community member details"
+    required: true
+    properties:
+      name:
+        type: "string"
+        default: "Alexandra Petrovic"
+        required: true
+      location:
+        type: "string"
+        default: "Sofia, Bulgaria"
+        required: true
+      experience:
+        type: "string"
+        default: "3 years experience"
+      specialty:
+        type: "string"
+        default: "Nature Aquariums"
+      social_followers:
+        type: "string"
+        default: "1.2K"
+      achievements:
+        type: "string"
+        default: "5 contest wins"
+      profile_image:
+        type: "url"
+        validation:
+          formats: ["jpg", "png", "webp"]
+          max_size: "500KB"
+      tank_name:
+        type: "string"
+        default: "Mountain Valley Serenity"
+        required: true
+      tank_image:
+        type: "url"
+        required: true
+        validation:
+          formats: ["jpg", "png", "webp"]
+          max_size: "1MB"
+      tank_specs:
+        type: "object"
+        properties:
+          size:
+            type: "string"
+            default: "120L (60x40x50cm)"
+          lighting:
+            type: "string"
+            default: "Chihiros WRGB II Pro"
+          filtration:
+            type: "string"
+            default: "Oase BioMaster Thermo 350"
+          co2:
+            type: "string"
+            default: "Pressurized system, 2bps"
+          substrate:
+            type: "string"
+            default: "ADA Amazonia Ver.2"
+          hardscape:
+            type: "string"
+            default: "Seiryu stone, Manzanita wood"
+      story:
+        type: "string"
+        max_length: 500
+        required: true
+      success_tips:
+        type: "string"
+        max_length: 300
+      instagram:
+        type: "url"
+      youtube:
+        type: "url"
+      forum_profile:
+        type: "url"
+        
+  # Community gallery section
+  gallery_items:
+    type: "array"
+    description: "Community gallery submissions"
+    items:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+          required: true
+          max_length: 50
+        author:
+          type: "string"
+          required: true
+        image:
+          type: "url"
+          required: true
+          validation:
+            formats: ["jpg", "png", "webp"]
+        description:
+          type: "string"
+          max_length: 150
+          
+  # Success story section
+  success_story:
+    type: "object"
+    description: "Community member success story"
+    properties:
+      member_name:
+        type: "string"
+        default: "Petra's"
+        required: true
+      before_image:
+        type: "url"
+        required: true
+        validation:
+          formats: ["jpg", "png", "webp"]
+      after_image:
+        type: "url"
+        required: true
+        validation:
+          formats: ["jpg", "png", "webp"]
+      timeline:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            date:
+              type: "string"
+              required: true
+            milestone:
+              type: "string"
+              required: true
+              max_length: 200
+      advice:
+        type: "string"
+        max_length: 300
+        
+  # Monthly challenge section
+  challenge:
+    type: "object"
+    description: "Monthly challenge details"
+    properties:
+      title:
+        type: "string"
+        default: "February Challenge: Nano Tank Mastery"
+        required: true
+      description:
+        type: "string"
+        max_length: 200
+        required: true
+      participants:
+        type: "string"
+        default: "89"
+      submissions:
+        type: "string"
+        default: "67"
+      countries:
+        type: "string"
+        default: "12"
+      entries:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            author:
+              type: "string"
+              required: true
+            image:
+              type: "url"
+              required: true
+              validation:
+                formats: ["jpg", "png", "webp"]
+            caption:
+              type: "string"
+              max_length: 80
+      join_link:
+        type: "url"
+      gallery_link:
+        type: "url"
+        
+  next_challenge:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        default: "March Challenge: Biotope Authenticity"
+        
+  # Links and CTAs
+  submit_aquascape_link:
+    type: "url"
+    description: "Link to submit aquascape form"
+    
+  join_forum_link:
+    type: "url"
+    description: "Link to join community forum"
+    
+  follow_social_link:
+    type: "url"
+    description: "Link to social media follow"
+    
+  community_guidelines_link:
+    type: "url"
+    description: "Link to community guidelines"
+    
+  featured_member_nominate_link:
+    type: "url"
+    description: "Link to nominate community members"
+    
+  help_link:
+    type: "url"
+    description: "Link to help/support"
+    
+  # Footer links
+  unsubscribe_link:
+    type: "url"
+    required: true
+  preferences_link:
+    type: "url"
+    required: true
+    
+  # Preview content
+  next_month_preview:
+    type: "string"
+    default: "March Community Spotlight will feature biotope aquascaping specialists and showcase authentic regional ecosystems from around the world."
+    max_length: 200
+
+# Content generation hints for AI
+ai_generation:
+  content_areas:
+    - featured_member: "Generate inspiring member profiles with authentic details"
+    - success_story: "Create motivational transformation stories"
+    - gallery_items: "Describe diverse aquascaping styles and techniques"
+    - challenge_entries: "Generate realistic community challenge submissions"
+    
+  tone: "Encouraging, celebratory, inclusive, inspiring"
+  community_values: ["creativity", "learning", "sharing", "support", "diversity"]
+  
+# Integration settings
+integrations:
+  green_aqua:
+    enabled: true
+    product_links: true
+    partnership_badges: true
+    community_discounts: true
+    
+  social_media:
+    auto_share: true
+    hashtags: ["#AquaSceneShowcase", "#CommunitySpotlight", "#AquascapingCommunity"]
+    member_tagging: true
+    
+  community_platform:
+    member_verification: true
+    submission_tracking: true
+    achievement_badges: true
+    
+# Community features
+community_features:
+  member_verification:
+    required: true
+    verification_methods: ["email", "social_media", "portfolio"]
+    
+  submission_guidelines:
+    image_requirements:
+      - "High resolution (minimum 1200px width)"
+      - "Clear, well-lit photography"
+      - "Multiple angles preferred"
+    content_requirements:
+      - "Original work only"
+      - "Tank specifications required"
+      - "Setup story encouraged"
+      
+  moderation:
+    auto_moderation: true
+    manual_review: true
+    community_reporting: true
+    
+# Gamification elements
+gamification:
+  achievement_system:
+    - "First Submission"
+    - "Monthly Regular"
+    - "Community Helper"
+    - "Contest Winner"
+    - "Mentor Status"
+    
+  leaderboards:
+    - "Most Helpful Member"
+    - "Best Photography"
+    - "Most Creative Setup"
+    - "Rising Star"
+    
+  reward_system:
+    points_per_submission: 10
+    points_per_helpful_comment: 5
+    points_per_challenge_participation: 15
+    
+# A/B testing configuration
+ab_testing:
+  featured_member_format: ["detailed", "brief"]
+  gallery_layout: ["grid", "list", "carousel"]
+  success_story_placement: ["before_gallery", "after_gallery"]
+  
+# Automation rules
+automation:
+  content_curation:
+    auto_feature_selection: true
+    quality_scoring: true
+    diversity_balancing: true
+    
+  member_engagement:
+    featured_member_notification: true
+    submission_acknowledgment: true
+    milestone_celebration: true
+    
+  moderation:
+    spam_detection: true
+    inappropriate_content_filtering: true
+    duplicate_submission_detection: true
+
+# Template validation rules
+validation:
+  required_sections: ["header", "featured_member", "community_gallery", "footer"]
+  featured_member_image_required: true
+  gallery_minimum_items: 3
+  max_email_size: "2MB"
+  
+# Privacy and consent
+privacy:
+  member_consent_required: true
+  image_usage_rights: "explicit_permission"
+  personal_info_handling: "gdpr_compliant"
+  opt_out_mechanism: true
+  
+# Quality assurance
+quality_checks:
+  image_quality_verification: true
+  content_authenticity_check: true
+  member_permission_verification: true
+  technical_accuracy_review: true
+  
+# Localization support
+localization:
+  default_language: "en"
+  supported_languages: ["en", "bg", "de", "hu", "ro"]
+  cultural_sensitivity: true
+  local_community_features: true
+  regional_challenges: true
+  
+# Analytics tracking
+analytics:
+  community_engagement: true
+  submission_rates: true
+  member_activity: true
+  feature_effectiveness: true
+  social_sharing: true
+  member_retention: true
+  
+# Community growth metrics
+growth_metrics:
+  new_member_conversion: true
+  member_activation_rate: true
+  content_creation_rate: true
+  community_health_score: true
+  member_satisfaction: true

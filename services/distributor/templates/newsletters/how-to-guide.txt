@@ -1,0 +1,162 @@
+AquaScene How-To Guide
+{{guide_title|default:"Complete Aquascaping Setup Guide"}}
+Powered by Green Aqua Partnership
+
+==================================================
+
+📊 GUIDE OVERVIEW
+==================================================
+
+Duration: {{estimated_time|default:"2-3 hours"}}
+Difficulty: {{difficulty_level|default:"Intermediate"}}
+Budget: {{estimated_cost|default:"€150-300"}}
+Experience needed: {{required_experience|default:"6+ months"}}
+
+==================================================
+INTRODUCTION
+==================================================
+
+Hello {{subscriber_name|default:"Fellow Aquascaper"}}!
+
+{{introduction|default:"Today we'll walk through creating a stunning nature aquarium from start to finish. This comprehensive guide covers everything from substrate preparation to the final plant placement, ensuring your success every step of the way."}}
+
+💡 Pro Tip: {{intro_tip|default:"Read through the entire guide before starting. Having all materials ready and understanding each step will make the process much smoother."}}
+
+==================================================
+MATERIALS & EQUIPMENT
+==================================================
+
+🛠️ Essential Materials:
+
+{{#each materials}}
+• {{name}} - {{description}}
+  Available at Green Aqua: {{green_aqua_link|default:"greenaqua.hu"}}
+{{else}}
+• Aquarium Tank - 60cm x 40cm x 50cm (120L)
+• LED Lighting - Full spectrum aquarium light, 30-40W
+• Aqua Soil - 9L bag for substrate base
+• Hardscape Materials - Driftwood and rocks for structure
+• Aquatic Plants - Variety pack with foreground, midground, and background plants
+{{/each}}
+
+🔧 Tools Required:
+{{tools_list|default:"Aquascaping tweezers, scissors, substrate spatula, spray bottle, cleaning cloth, measuring cup"}}
+
+==================================================
+STEP-BY-STEP INSTRUCTIONS
+==================================================
+
+{{#each steps}}
+STEP {{@index}}: {{title|default:"Setup Step"}}
+--------------------------------------------------
+
+{{description}}
+
+{{#if detailed_instructions}}
+Detailed Steps:
+{{#each detailed_instructions}}
+• {{this}}
+{{/each}}
+{{/if}}
+
+{{#if tip}}
+💡 Tip: {{tip}}
+{{/if}}
+
+{{#if warning}}
+⚠️ Important: {{warning}}
+{{/if}}
+
+{{else}}
+STEP 1: Tank Preparation
+--------------------------------------------------
+Clean your aquarium thoroughly with warm water. Avoid using any detergents or chemicals. Rinse until there's no residue left and dry with a clean, lint-free cloth.
+
+💡 Tip: Position your tank in its final location before adding substrate - it will be much heavier afterward!
+
+STEP 2: Substrate Layout
+--------------------------------------------------
+Create a sloping substrate bed, higher in the back (6-8cm) and lower in the front (3-4cm). This creates depth and helps with the overall composition.
+
+⚠️ Important: Don't rinse aqua soil - it will break down and cloud your water.
+
+STEP 3: Hardscape Placement
+--------------------------------------------------
+Arrange your rocks and driftwood following the rule of thirds. Create focal points and ensure the hardscape looks natural from the front viewing angle.
+
+💡 Tip: Take photos from different angles to check your composition before proceeding.
+
+STEP 4: Initial Water Fill
+--------------------------------------------------
+Slowly add water using a plate or bowl to diffuse the flow. Fill to about 50% capacity to make planting easier while preventing substrate disturbance.
+{{/each}}
+
+==================================================
+TROUBLESHOOTING
+==================================================
+
+🔧 Common Issues & Solutions:
+
+{{#each troubleshooting_items}}
+Problem: {{problem|default:"Common Issue"}}
+Solution: {{solution}}
+
+{{else}}
+Problem: Cloudy Water After Setup
+Solution: This is normal with aqua soil. Run your filter and the water will clear in 24-48 hours. Avoid large water changes initially.
+
+Problem: Plants Floating or Uprooting
+Solution: Plant deeper and use tweezers to firmly anchor roots. Some floating is normal in the first week.
+
+Problem: Algae Growth in First Month
+Solution: Reduce lighting to 6 hours daily and increase CO2. This is part of the natural cycling process.
+{{/each}}
+
+==================================================
+MAINTENANCE SCHEDULE
+==================================================
+
+📅 First 30 Days (Critical Period):
+
+Days 1-7: {{week1_maintenance|default:"No water changes. Monitor for major issues only. Light: 6 hours daily."}}
+
+Days 8-14: {{week2_maintenance|default:"Small water changes (10-20%) if needed. Begin CO2 injection. Light: 7 hours daily."}}
+
+Days 15-21: {{week3_maintenance|default:"Regular water changes (30%). Trim fast-growing plants. Light: 8 hours daily."}}
+
+Days 22-30: {{week4_maintenance|default:"Full maintenance routine. Monitor plant growth and adjust fertilization."}}
+
+==================================================
+NEXT STEPS
+==================================================
+
+🎉 Congratulations on completing your aquascape setup!
+
+Get all materials from Green Aqua: {{green_aqua_shop_link|default:"greenaqua.hu"}}
+Join our community: {{community_link|default:"forum.aquascene.com"}}
+Get support: {{support_link|default:"aquascene.com/help"}}
+
+Share your results with #AquaSceneGuide
+
+More guides: {{more_guides_link|default:"aquascene.com/guides"}}
+Video tutorials: {{video_tutorials_link|default:"youtube.com/@aquascene"}}
+Community help: {{community_forum_link|default:"forum.aquascene.com"}}
+
+==================================================
+COMING NEXT
+==================================================
+
+Next Guide: {{next_guide_preview|default:"Advanced Plant Trimming Techniques - Learn professional pruning methods to maintain perfect plant shapes and encourage healthy growth."}}
+
+==================================================
+
+Thank you for following along, {{subscriber_name|default:"Fellow Aquascaper"}}!
+
+This guide was sent to subscribers of AquaScene educational content.
+You're receiving this because you signed up for how-to guides.
+
+Unsubscribe: {{unsubscribe_link|default:"[unsubscribe link]"}}
+Update preferences: {{preferences_link|default:"[preferences link]"}}
+
+© 2025 AquaScene Content Engine. All rights reserved.
+Generated with AI-powered aquascaping expertise

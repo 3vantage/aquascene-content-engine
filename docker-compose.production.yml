@@ -1,0 +1,924 @@
+# AquaScape Content Engine - Production Environment
+# Version: 1.0
+# High-availability production configuration with security hardening
+
+version: '3.8'
+
+networks:
+  content-engine-prod:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+  monitoring-prod:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
+
+volumes:
+  postgres_prod_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/postgres
+  postgres_prod_backup:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/backups/postgres
+  redis_prod_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/redis
+  prometheus_prod_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/prometheus
+  grafana_prod_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/grafana
+  nginx_prod_certs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /etc/ssl/certs/content-engine
+  minio_prod_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /data/minio
+
+services:
+  # ===================
+  # DATABASE SERVICES
+  # ===================
+  
+  postgres-primary:
+    image: postgres:15
+    container_name: content-engine-postgres-primary
+    restart: always
+    environment:
+      POSTGRES_DB: ${PROD_DB_NAME}
+      POSTGRES_USER: ${PROD_DB_USER}
+      POSTGRES_PASSWORD: ${PROD_DB_PASSWORD}
+      POSTGRES_REPLICATION_MODE: master
+      POSTGRES_REPLICATION_USER: ${PROD_DB_REPLICA_USER}
+      POSTGRES_REPLICATION_PASSWORD: ${PROD_DB_REPLICA_PASSWORD}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data
+      - postgres_prod_backup:/backups
+      - ./infrastructure/database/production/init:/docker-entrypoint-initdb.d:ro
+      - ./infrastructure/database/production/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+    command: >
+      postgres
+      -c config_file=/etc/postgresql/postgresql.conf
+      -c shared_preload_libraries=pg_stat_statements
+      -c log_statement=all
+      -c log_min_duration_statement=1000
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.10
+    ports:
+      - "${PROD_DB_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PROD_DB_USER} -d ${PROD_DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4.0'
+        reservations:
+          memory: 4G
+          cpus: '2.0'
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+        max-file: "10"
+        labels: "service=postgres-primary"
+
+  postgres-replica:
+    image: postgres:15
+    container_name: content-engine-postgres-replica
+    restart: always
+    environment:
+      POSTGRES_REPLICATION_MODE: slave
+      POSTGRES_REPLICATION_USER: ${PROD_DB_REPLICA_USER}
+      POSTGRES_REPLICATION_PASSWORD: ${PROD_DB_REPLICA_PASSWORD}
+      POSTGRES_MASTER_HOST: postgres-primary
+      POSTGRES_MASTER_PORT_NUMBER: 5432
+    volumes:
+      - ./data/postgres-replica:/var/lib/postgresql/data
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.11
+    ports:
+      - "${PROD_DB_REPLICA_PORT:-5433}:5432"
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+        reservations:
+          memory: 2G
+          cpus: '1.0'
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+        labels: "service=postgres-replica"
+
+  redis-primary:
+    image: redis:7-alpine
+    container_name: content-engine-redis-primary
+    restart: always
+    command: >
+      redis-server
+      --appendonly yes
+      --requirepass ${PROD_REDIS_PASSWORD}
+      --maxmemory 4gb
+      --maxmemory-policy allkeys-lru
+      --tcp-keepalive 300
+      --timeout 300
+    volumes:
+      - redis_prod_data:/data
+      - ./infrastructure/redis/production.conf:/etc/redis/redis.conf:ro
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.20
+    ports:
+      - "${PROD_REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 6G
+          cpus: '2.0'
+        reservations:
+          memory: 4G
+          cpus: '1.0'
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+        labels: "service=redis-primary"
+
+  redis-sentinel:
+    image: redis:7-alpine
+    container_name: content-engine-redis-sentinel
+    restart: always
+    command: >
+      redis-sentinel /etc/redis/sentinel.conf
+      --sentinel
+    volumes:
+      - ./infrastructure/redis/sentinel.conf:/etc/redis/sentinel.conf:ro
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.21
+    ports:
+      - "26379:26379"
+    depends_on:
+      - redis-primary
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ===================
+  # STORAGE SERVICES
+  # ===================
+  
+  minio:
+    image: minio/minio:latest
+    container_name: content-engine-minio-prod
+    restart: always
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${PROD_MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${PROD_MINIO_ROOT_PASSWORD}
+      MINIO_PROMETHEUS_AUTH_TYPE: public
+      MINIO_SERVER_URL: https://storage.aquascene.com
+    volumes:
+      - minio_prod_data:/data
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.30
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+        labels: "service=minio"
+
+  # ===================
+  # LOAD BALANCER
+  # ===================
+  
+  haproxy:
+    image: haproxy:alpine
+    container_name: content-engine-haproxy
+    restart: always
+    volumes:
+      - ./infrastructure/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - nginx_prod_certs:/etc/ssl/certs:ro
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8404:8404"  # HAProxy stats
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.5
+    depends_on:
+      - content-manager-1
+      - content-manager-2
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8404/stats"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+        max-file: "10"
+        labels: "service=haproxy"
+
+  # ===================
+  # CORE SERVICES - SCALED
+  # ===================
+  
+  content-manager-1:
+    build:
+      context: ./services/content-manager
+      dockerfile: Dockerfile
+      target: production
+    container_name: content-engine-api-1
+    restart: always
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASSWORD}@postgres-primary:5432/${PROD_DB_NAME}
+      - DATABASE_READ_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASSWORD}@postgres-replica:5432/${PROD_DB_NAME}
+      - REDIS_URL=redis://:${PROD_REDIS_PASSWORD}@redis-primary:6379/0
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=${PROD_MINIO_ROOT_USER}
+      - MINIO_SECRET_KEY=${PROD_MINIO_ROOT_PASSWORD}
+      - LOG_LEVEL=WARNING
+      - SENTRY_DSN=${PROD_SENTRY_DSN}
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
+      - WORKERS=4
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.100
+    expose:
+      - "8000"
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+      redis-primary:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+        reservations:
+          memory: 2G
+          cpus: '1.0'
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+        max-file: "10"
+        labels: "service=content-manager,instance=1"
+
+  content-manager-2:
+    build:
+      context: ./services/content-manager
+      dockerfile: Dockerfile
+      target: production
+    container_name: content-engine-api-2
+    restart: always
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASSWORD}@postgres-primary:5432/${PROD_DB_NAME}
+      - DATABASE_READ_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASSWORD}@postgres-replica:5432/${PROD_DB_NAME}
+      - REDIS_URL=redis://:${PROD_REDIS_PASSWORD}@redis-primary:6379/0
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=${PROD_MINIO_ROOT_USER}
+      - MINIO_SECRET_KEY=${PROD_MINIO_ROOT_PASSWORD}
+      - LOG_LEVEL=WARNING
+      - SENTRY_DSN=${PROD_SENTRY_DSN}
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
+      - WORKERS=4
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.101
+    expose:
+      - "8000"
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+      redis-primary:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+        reservations:
+          memory: 2G
+          cpus: '1.0'
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+        max-file: "10"
+        labels: "service=content-manager,instance=2"
+
+  ai-processor-1:
+    build:
+      context: ./services/ai-processor
+      dockerfile: Dockerfile
+      target: production
+    container_name: content-engine-ai-1
+    restart: always
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASSWORD}@postgres-primary:5432/${PROD_DB_NAME}
+      - DATABASE_READ_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASSWORD}@postgres-replica:5432/${PROD_DB_NAME}
+      - REDIS_URL=redis://:${PROD_REDIS_PASSWORD}@redis-primary:6379/1
+      - OPENAI_API_KEY=${PROD_OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${PROD_ANTHROPIC_API_KEY}
+      - LOG_LEVEL=WARNING
+      - SENTRY_DSN=${PROD_SENTRY_DSN}
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.110
+    expose:
+      - "8001"
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+      redis-primary:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4.0'
+        reservations:
+          memory: 4G
+          cpus: '2.0'
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+        max-file: "10"
+        labels: "service=ai-processor,instance=1"
+
+  ai-processor-2:
+    build:
+      context: ./services/ai-processor
+      dockerfile: Dockerfile
+      target: production
+    container_name: content-engine-ai-2
+    restart: always
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASSWORD}@postgres-primary:5432/${PROD_DB_NAME}
+      - DATABASE_READ_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASSWORD}@postgres-replica:5432/${PROD_DB_NAME}
+      - REDIS_URL=redis://:${PROD_REDIS_PASSWORD}@redis-primary:6379/1
+      - OPENAI_API_KEY=${PROD_OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${PROD_ANTHROPIC_API_KEY}
+      - LOG_LEVEL=WARNING
+      - SENTRY_DSN=${PROD_SENTRY_DSN}
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.111
+    expose:
+      - "8001"
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+      redis-primary:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4.0'
+        reservations:
+          memory: 4G
+          cpus: '2.0'
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+        max-file: "10"
+        labels: "service=ai-processor,instance=2"
+
+  web-scraper:
+    build:
+      context: ./services/web-scraper
+      dockerfile: Dockerfile
+      target: production
+    container_name: content-engine-scraper-prod
+    restart: always
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASSWORD}@postgres-primary:5432/${PROD_DB_NAME}
+      - REDIS_URL=redis://:${PROD_REDIS_PASSWORD}@redis-primary:6379/2
+      - SCRAPER_USER_AGENT=${PROD_SCRAPER_USER_AGENT:-AquaSceneBot/1.0}
+      - SCRAPER_DELAY=${PROD_SCRAPER_DELAY:-5}
+      - LOG_LEVEL=WARNING
+      - SENTRY_DSN=${PROD_SENTRY_DSN}
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.120
+    expose:
+      - "8002"
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+      redis-primary:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+        labels: "service=web-scraper"
+
+  distributor:
+    build:
+      context: ./services/distributor
+      dockerfile: Dockerfile
+      target: production
+    container_name: content-engine-distributor-prod
+    restart: always
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASSWORD}@postgres-primary:5432/${PROD_DB_NAME}
+      - REDIS_URL=redis://:${PROD_REDIS_PASSWORD}@redis-primary:6379/3
+      - SENDGRID_API_KEY=${PROD_SENDGRID_API_KEY}
+      - INSTAGRAM_ACCESS_TOKEN=${PROD_INSTAGRAM_ACCESS_TOKEN}
+      - INSTAGRAM_BUSINESS_ACCOUNT_ID=${PROD_INSTAGRAM_BUSINESS_ACCOUNT_ID}
+      - LOG_LEVEL=WARNING
+      - SENTRY_DSN=${PROD_SENTRY_DSN}
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.130
+    expose:
+      - "8003"
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+      redis-primary:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8003/health"]
+      interval: 60s
+      timeout: 15s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+        labels: "service=distributor"
+
+  subscriber-manager:
+    build:
+      context: ./services/subscriber-manager
+      dockerfile: Dockerfile
+      target: production
+    container_name: content-engine-subscribers-prod
+    restart: always
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASSWORD}@postgres-primary:5432/${PROD_DB_NAME}
+      - DATABASE_READ_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASSWORD}@postgres-replica:5432/${PROD_DB_NAME}
+      - REDIS_URL=redis://:${PROD_REDIS_PASSWORD}@redis-primary:6379/4
+      - ENCRYPTION_KEY=${PROD_ENCRYPTION_KEY}
+      - JWT_SECRET=${PROD_JWT_SECRET}
+      - LOG_LEVEL=WARNING
+      - SENTRY_DSN=${PROD_SENTRY_DSN}
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.140
+    expose:
+      - "8004"
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+      redis-primary:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8004/health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+        labels: "service=subscriber-manager"
+
+  # ===================
+  # ADMIN DASHBOARD
+  # ===================
+  
+  admin-dashboard:
+    build:
+      context: ./admin-dashboard
+      dockerfile: Dockerfile
+      target: production
+    container_name: content-engine-admin-prod
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_API_URL=https://api.aquascene.com
+      - REACT_APP_SENTRY_DSN=${PROD_FRONTEND_SENTRY_DSN}
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.150
+    expose:
+      - "3000"
+    depends_on:
+      - content-manager-1
+      - content-manager-2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+        reservations:
+          memory: 512M
+          cpus: '0.25'
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+        labels: "service=admin-dashboard"
+
+  # ===================
+  # MONITORING STACK
+  # ===================
+  
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: content-engine-prometheus-prod
+    restart: always
+    user: "65534:65534"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=90d'
+      - '--storage.tsdb.retention.size=20GB'
+      - '--web.enable-lifecycle'
+      - '--web.enable-admin-api'
+      - '--web.external-url=https://monitoring.aquascene.com/prometheus'
+    volumes:
+      - ./infrastructure/monitoring/prometheus/production.yml:/etc/prometheus/prometheus.yml:ro
+      - ./infrastructure/monitoring/prometheus/rules:/etc/prometheus/rules:ro
+      - prometheus_prod_data:/prometheus
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.200
+      monitoring-prod:
+        ipv4_address: 172.21.0.10
+    expose:
+      - "9090"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+        reservations:
+          memory: 2G
+          cpus: '1.0'
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+        labels: "service=prometheus"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: content-engine-grafana-prod
+    restart: always
+    environment:
+      - GF_SECURITY_ADMIN_USER=${PROD_GRAFANA_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${PROD_GRAFANA_PASSWORD}
+      - GF_INSTALL_PLUGINS=redis-datasource,postgres-datasource
+      - GF_FEATURE_TOGGLES_ENABLE=publicDashboards
+      - GF_SERVER_ROOT_URL=https://monitoring.aquascene.com
+      - GF_SECURITY_SECRET_KEY=${GRAFANA_SECRET_KEY}
+      - GF_DATABASE_TYPE=postgres
+      - GF_DATABASE_HOST=postgres-primary:5432
+      - GF_DATABASE_NAME=grafana
+      - GF_DATABASE_USER=${GRAFANA_DB_USER}
+      - GF_DATABASE_PASSWORD=${GRAFANA_DB_PASSWORD}
+    volumes:
+      - grafana_prod_data:/var/lib/grafana
+      - ./infrastructure/monitoring/grafana/production/provisioning:/etc/grafana/provisioning:ro
+      - ./infrastructure/monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    networks:
+      content-engine-prod:
+        ipv4_address: 172.20.0.201
+      monitoring-prod:
+        ipv4_address: 172.21.0.11
+    expose:
+      - "3000"
+    depends_on:
+      - prometheus
+      - postgres-primary
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+        labels: "service=grafana"
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: content-engine-alertmanager
+    restart: always
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+      - '--web.external-url=https://monitoring.aquascene.com/alertmanager'
+    volumes:
+      - ./infrastructure/monitoring/alertmanager/config.yml:/etc/alertmanager/config.yml:ro
+      - ./data/alertmanager:/alertmanager
+    networks:
+      monitoring-prod:
+        ipv4_address: 172.21.0.12
+    expose:
+      - "9093"
+    depends_on:
+      - prometheus
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9093/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "3"
+
+  # ===================
+  # BACKUP SERVICES
+  # ===================
+  
+  backup-service:
+    build:
+      context: ./infrastructure/backup
+      dockerfile: Dockerfile
+      target: production
+    container_name: content-engine-backup-prod
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://${PROD_DB_USER}:${PROD_DB_PASSWORD}@postgres-primary:5432/${PROD_DB_NAME}
+      - BACKUP_SCHEDULE=${PROD_BACKUP_SCHEDULE:-0 2 * * *}
+      - BACKUP_RETENTION_DAYS=${PROD_BACKUP_RETENTION_DAYS:-90}
+      - S3_ENDPOINT=${PROD_S3_ENDPOINT}
+      - S3_ACCESS_KEY=${PROD_S3_ACCESS_KEY}
+      - S3_SECRET_KEY=${PROD_S3_SECRET_KEY}
+      - S3_BUCKET=${PROD_S3_BACKUP_BUCKET}
+      - ENCRYPTION_PASSWORD=${BACKUP_ENCRYPTION_PASSWORD}
+      - SLACK_WEBHOOK_URL=${BACKUP_SLACK_WEBHOOK}
+    volumes:
+      - postgres_prod_backup:/database-backups
+      - ./data/backups:/backups
+    networks:
+      - content-engine-prod
+    depends_on:
+      postgres-primary:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+        labels: "service=backup"
+
+  # ===================
+  # LOG AGGREGATION
+  # ===================
+  
+  loki:
+    image: grafana/loki:latest
+    container_name: content-engine-loki-prod
+    restart: always
+    user: "10001"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./infrastructure/logging/loki-production.yml:/etc/loki/local-config.yaml:ro
+      - ./data/loki:/loki
+    networks:
+      monitoring-prod:
+        ipv4_address: 172.21.0.20
+    expose:
+      - "3100"
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: content-engine-promtail-prod
+    restart: always
+    command: -config.file=/etc/promtail/config.yml
+    volumes:
+      - ./infrastructure/logging/promtail-production.yml:/etc/promtail/config.yml:ro
+      - /var/log:/var/log:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    networks:
+      - monitoring-prod
+    depends_on:
+      - loki
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "3"

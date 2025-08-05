@@ -1,0 +1,77 @@
+# Instagram Automation System Configuration
+# Copy this file to config.yaml and update with your actual values
+
+# System environment
+environment: development  # development, staging, production
+debug_mode: true
+log_level: INFO
+
+# Instagram Business API Configuration
+instagram_api:
+  access_token: "YOUR_ACCESS_TOKEN_HERE"
+  business_account_id: "YOUR_BUSINESS_ACCOUNT_ID_HERE"
+  app_id: "YOUR_APP_ID_HERE"
+  app_secret: "YOUR_APP_SECRET_HERE"
+  api_version: "v18.0"
+  base_url: "https://graph.facebook.com"
+  requests_per_hour: 200
+  requests_per_day: 4800
+
+# Database Configuration
+database:
+  scheduler_db_path: "data/instagram_scheduler.db"
+  analytics_db_path: "data/instagram_analytics.db"
+  queue_db_path: "data/content_queue.db"
+  hashtag_db_path: "data/hashtag_database.db"
+  error_db_path: "data/error_tracking.db"
+  backup_enabled: true
+  backup_interval_hours: 24
+
+# Content Scheduling Configuration
+scheduling:
+  default_posts_per_day: 2
+  min_interval_hours: 4
+  max_posts_per_day: 3
+  optimal_hours: [9, 13, 17, 19, 21]  # 9 AM, 1 PM, 5 PM, 7 PM, 9 PM
+  timezone: "Europe/Sofia"
+  weekends_enabled: true
+  holiday_posting: false
+
+# Content Configuration
+content:
+  default_language: "bg"  # bg, en
+  bilingual_posts: true
+  max_caption_length: 2200
+  max_hashtags: 30
+  min_hashtags: 10
+  auto_hashtag_generation: true
+  content_validation_enabled: true
+  duplicate_check_enabled: true
+  brand_compliance_check: true
+
+# Analytics Configuration
+analytics:
+  collection_enabled: true
+  collection_interval_hours: 6
+  retention_days: 90
+  performance_alerts_enabled: true
+  low_engagement_threshold: 2.0  # Below 2% engagement rate
+  high_error_rate_threshold: 5.0  # More than 5 errors per hour
+  health_check_interval_minutes: 30
+
+# Security Configuration
+security:
+  encryption_enabled: true
+  token_rotation_enabled: true
+  token_rotation_days: 30
+  audit_logging_enabled: true
+  rate_limit_buffer: 0.8  # Use 80% of API rate limit
+  request_timeout_seconds: 30
+
+# Notification Configuration
+notifications:
+  enabled: true
+  email_notifications: false
+  slack_webhook_url: null  # Add your Slack webhook URL
+  discord_webhook_url: null  # Add your Discord webhook URL
+  notification_levels: ["error", "warning", "success"]

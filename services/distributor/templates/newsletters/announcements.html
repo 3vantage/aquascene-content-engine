@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{announcement_title}} - AquaScene News</title>
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:AllowPNG/>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    <style>
+        /* Reset styles */
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        /* Base styles */
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            background-color: #f0f8ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Container */
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+
+        /* Header styles */
+        .header {
+            background: linear-gradient(135deg, #e65100 0%, #ff6f00 50%, #ff8f00 100%);
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.1) 10px,
+                rgba(255, 255, 255, 0.1) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+        @keyframes slide {
+            0% { transform: translateX(-50px); }
+            100% { transform: translateX(50px); }
+        }
+        .header h1 {
+            color: #ffffff;
+            font-size: 32px;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+        .header .announcement-type {
+            background-color: rgba(255,255,255,0.9);
+            color: #e65100;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Urgency indicator */
+        .urgency-banner {
+            background: linear-gradient(135deg, #d32f2f 0%, #f44336 100%);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .urgency-normal {
+            background: linear-gradient(135deg, #388e3c 0%, #4caf50 100%);
+        }
+        .urgency-medium {
+            background: linear-gradient(135deg, #f57c00 0%, #ff9800 100%);
+        }
+
+        /* Content sections */
+        .content-section {
+            padding: 25px;
+            border-bottom: 1px solid #ffccbc;
+        }
+        .section-title {
+            color: #e65100;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+            border-left: 5px solid #ff6f00;
+            padding-left: 15px;
+        }
+
+        /* Main announcement */
+        .main-announcement {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffffff 100%);
+            border: 3px solid #ff8f00;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .announcement-badge {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: linear-gradient(135deg, #ff6f00 0%, #e65100 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .announcement-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Product launch section */
+        .product-launch {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #4caf50;
+        }
+        .product-features {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e8f5e8;
+        }
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            color: #4caf50;
+        }
+
+        /* Partnership announcement */
+        .partnership-section {
+            background: linear-gradient(135deg, #e3f2fd 0%, #e8f5e8 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #29b6f6;
+        }
+        .partner-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .partner-logo {
+            margin: 10px 15px;
+            max-height: 60px;
+            filter: grayscale(0%);
+        }
+
+        /* Event announcement */
+        .event-section {
+            background: linear-gradient(135deg, #f3e5f5 0%, #fce4ec 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #ab47bc;
+        }
+        .event-details {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .event-meta {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        .event-meta-item {
+            background: linear-gradient(135deg, #ab47bc 0%, #8e24aa 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 5px;
+        }
+
+        /* Call-to-action styles */
+        .cta-section {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin: 25px 0;
+            border: 2px solid #ffc107;
+        }
+        .cta-primary {
+            background: linear-gradient(135deg, #ff6f00 0%, #e65100 100%);
+            color: #ffffff !important;
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 18px;
+            display: inline-block;
+            margin: 10px;
+            box-shadow: 0 6px 16px rgba(230, 81, 0, 0.3);
+            text-transform: uppercase;
+        }
+        .cta-secondary {
+            background: linear-gradient(135deg, #29b6f6 0%, #1976d2 100%);
+            color: #ffffff !important;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px;
+            box-shadow: 0 4px 12px rgba(41, 182, 246, 0.3);
+        }
+
+        /* Countdown timer */
+        .countdown-section {
+            background: linear-gradient(135deg, #263238 0%, #37474f 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            margin: 5px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 70px;
+        }
+        .countdown-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6f00;
+        }
+        .countdown-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        /* Green Aqua Partnership */
+        .partnership-badge {
+            background: linear-gradient(45deg, #2e7d32, #4caf50);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        /* Social proof */
+        .social-proof {
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #263238;
+            color: #b0bec5;
+            padding: 30px 25px;
+            text-align: center;
+        }
+        .footer a {
+            color: #ff6f00;
+            text-decoration: none;
+        }
+
+        /* Mobile responsive */
+        @media screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+            }
+            .countdown-timer {
+                flex-direction: column;
+                align-items: center;
+            }
+            .event-meta {
+                flex-direction: column;
+                align-items: center;
+            }
+            .partner-logos {
+                flex-direction: column;
+            }
+            .cta-primary, .cta-secondary {
+                display: block;
+                margin: 10px auto;
+                max-width: 250px;
+            }
+        }
+
+        /* Personalization */
+        .personalized {
+            background-color: #fff3e0;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Urgency Banner -->
+        {{#if urgency_level}}
+        <div class="urgency-banner {{#eq urgency_level 'high'}}{{else}}{{#eq urgency_level 'medium'}}urgency-medium{{else}}urgency-normal{{/eq}}{{/eq}}">
+            {{#eq urgency_level 'high'}}🚨 URGENT ANNOUNCEMENT{{else}}{{#eq urgency_level 'medium'}}⚡ IMPORTANT NEWS{{else}}📢 AQUASCENE UPDATE{{/eq}}{{/eq}}
+        </div>
+        {{/if}}
+
+        <!-- Header Section -->
+        <div class="header">
+            <h1>{{announcement_title|default:"Big News for Aquascapers!"}}</h1>
+            <div class="announcement-type">{{announcement_type|default:"🚀 PRODUCT LAUNCH"}}</div>
+            <div class="partnership-badge">
+                🤝 In Partnership with Green Aqua
+            </div>
+        </div>
+
+        <!-- Main Announcement Section -->
+        <div class="content-section">
+            <div class="main-announcement">
+                <div class="announcement-badge">{{badge_text|default:"NEW"}}</div>
+                
+                {{#if main_image}}
+                <img src="{{main_image}}" alt="{{announcement_title}}" class="announcement-image">
+                {{else}}
+                <img src="https://via.placeholder.com/550x300/ff6f00/ffffff?text=Major+Announcement" alt="Major Announcement" class="announcement-image">
+                {{/if}}
+                
+                <h2 style="color: #e65100; margin: 20px 0 15px 0; font-size: 28px;">{{main_headline|default:"Revolutionary New Aquascaping System"}}</h2>
+                
+                <p style="font-size: 18px; line-height: 1.6; color: #455a64; margin: 0 0 20px 0;">
+                    Hey <span class="personalized">{{subscriber_name|default:"Fellow Aquascaper"}}</span>! 
+                    {{main_message|default:"We're thrilled to announce something that will change how you approach aquascaping forever. This breakthrough innovation combines cutting-edge technology with natural beauty to create the ultimate aquascaping experience."}}
+                </p>
+                
+                {{#if key_points}}
+                <div style="background-color: rgba(255, 111, 0, 0.1); padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="color: #e65100; margin: 0 0 15px 0;">Key Highlights:</h3>
+                    <ul style="color: #455a64; line-height: 1.8; margin: 0; padding-left: 20px;">
+                        {{#each key_points}}
+                        <li>{{this}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+
+        <!-- Product Launch Section (conditional) -->
+        {{#if product_launch}}
+        <div class="content-section">
+            <h2 class="section-title">🚀 Product Details</h2>
+            
+            <div class="product-launch">
+                <h3 style="color: #2e7d32; margin: 0 0 20px 0; font-size: 24px;">{{product_launch.name|default:"AquaScene Pro System"}}</h3>
+                
+                {{#if product_launch.image}}
+                <img src="{{product_launch.image}}" alt="{{product_launch.name}}" style="width: 100%; height: auto; border-radius: 8px; margin: 15px 0;">
+                {{/if}}
+                
+                <p style="font-size: 16px; line-height: 1.6; color: #2e7d32; margin: 0 0 20px 0;">
+                    {{product_launch.description|default:"The ultimate all-in-one aquascaping solution designed for both beginners and professionals."}}
+                </p>
+                
+                <div class="product-features">
+                    <h4 style="color: #388e3c; margin: 0 0 15px 0;">What's Included:</h4>
+                    {{#each product_launch.features}}
+                    <div class="feature-item">
+                        <span class="feature-icon">{{icon|default:"✅"}}</span>
+                        <div><strong>{{name}}</strong> - {{description}}</div>
+                    </div>
+                    {{else}}
+                    <div class="feature-item">
+                        <span class="feature-icon">✅</span>
+                        <div><strong>Smart LED System</strong> - Automated lighting with app control</div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✅</span>
+                        <div><strong>CO2 Management</strong> - Precise bubble counting and safety features</div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✅</span>
+                        <div><strong>Plant Health Monitor</strong> - Real-time nutrient tracking</div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">✅</span>
+                        <div><strong>Expert Guides</strong> - Step-by-step video tutorials</div>
+                    </div>
+                    {{/each}}
+                </div>
+                
+                {{#if product_launch.pricing}}
+                <div style="background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
+                    <h4 style="margin: 0 0 10px 0;">Special Launch Pricing</h4>
+                    <p style="margin: 0; font-size: 24px; font-weight: bold;">{{product_launch.pricing.price}} {{product_launch.pricing.currency|default:"EUR"}}</p>
+                    {{#if product_launch.pricing.discount}}
+                    <p style="margin: 5px 0 0 0; font-size: 14px; opacity: 0.9;">Save {{product_launch.pricing.discount}} - Limited Time Only!</p>
+                    {{/if}}
+                </div>
+                {{/if}}
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Partnership Announcement (conditional) -->
+        {{#if partnership}}
+        <div class="content-section">
+            <h2 class="section-title">🤝 Partnership News</h2>
+            
+            <div class="partnership-section">
+                <h3 style="color: #1976d2; margin: 0 0 20px 0; text-align: center;">{{partnership.title|default:"Exciting New Partnership"}}</h3>
+                
+                <div class="partner-logos">
+                    {{#each partnership.logos}}
+                    <img src="{{this}}" alt="Partner Logo" class="partner-logo">
+                    {{else}}
+                    <img src="https://via.placeholder.com/120x60/4caf50/ffffff?text=Green+Aqua" alt="Green Aqua" class="partner-logo">
+                    <img src="https://via.placeholder.com/120x60/29b6f6/ffffff?text=AquaScene" alt="AquaScene" class="partner-logo">
+                    {{/each}}
+                </div>
+                
+                <p style="font-size: 16px; line-height: 1.6; color: #1565c0; text-align: center; margin: 20px 0;">
+                    {{partnership.description|default:"We've joined forces with industry leaders to bring you unprecedented access to premium aquascaping products and expertise."}}
+                </p>
+                
+                {{#if partnership.benefits}}
+                <div style="background-color: #ffffff; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h4 style="color: #1976d2; margin: 0 0 15px 0;">Partnership Benefits:</h4>
+                    <ul style="color: #455a64; line-height: 1.8;">
+                        {{#each partnership.benefits}}
+                        <li>{{this}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Event Announcement (conditional) -->
+        {{#if event}}
+        <div class="content-section">
+            <h2 class="section-title">🎉 Event Announcement</h2>
+            
+            <div class="event-section">
+                <h3 style="color: #7b1fa2; margin: 0 0 20px 0; text-align: center;">{{event.title|default:"AquaScape Conference 2025"}}</h3>
+                
+                {{#if event.image}}
+                <img src="{{event.image}}" alt="{{event.title}}" style="width: 100%; height: auto; border-radius: 8px; margin: 15px 0;">
+                {{/if}}
+                
+                <div class="event-details">
+                    <p style="font-size: 16px; line-height: 1.6; color: #4a148c; margin: 0 0 20px 0;">
+                        {{event.description|default:"Join aquascaping experts from around the world for workshops, competitions, and networking opportunities."}}
+                    </p>
+                    
+                    <div class="event-meta">
+                        <div class="event-meta-item">📅 {{event.date|default:"March 15-17, 2025"}}</div>
+                        <div class="event-meta-item">📍 {{event.location|default:"Budapest, Hungary"}}</div>
+                        <div class="event-meta-item">🎫 {{event.price|default:"€149 Early Bird"}}</div>
+                        <div class="event-meta-item">👥 {{event.capacity|default:"Limited to 200 attendees"}}</div>
+                    </div>
+                </div>
+                
+                {{#if event.speakers}}
+                <div style="background-color: #ffffff; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h4 style="color: #7b1fa2; margin: 0 0 15px 0;">Featured Speakers:</h4>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+                        {{#each event.speakers}}
+                        <div style="text-align: center; margin: 10px; min-width: 120px;">
+                            {{#if photo}}<img src="{{photo}}" alt="{{name}}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">{{/if}}
+                            <p style="margin: 5px 0; font-weight: bold; color: #4a148c;">{{name}}</p>
+                            <p style="margin: 0; font-size: 12px; color: #7b1fa2;">{{title}}</p>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Countdown Timer (conditional) -->
+        {{#if countdown}}
+        <div class="content-section">
+            <div class="countdown-section">
+                <h3 style="margin: 0 0 15px 0; color: #ff6f00;">{{countdown.title|default:"Launch Countdown"}}</h3>
+                <p style="margin: 0 0 20px 0; opacity: 0.9;">{{countdown.message|default:"Don't miss out on this limited-time opportunity!"}}</p>
+                
+                <div class="countdown-timer">
+                    <div class="countdown-item">
+                        <div class="countdown-number">{{countdown.days|default:"7"}}</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number">{{countdown.hours|default:"12"}}</div>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number">{{countdown.minutes|default:"30"}}</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number">{{countdown.seconds|default:"15"}}</div>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Call to Action Section -->
+        <div class="content-section">
+            <div class="cta-section">
+                <h2 style="color: #e65100; margin: 0 0 15px 0;">Ready to Take Action?</h2>
+                <p style="color: #f57c00; font-size: 16px; margin: 0 0 25px 0;">
+                    {{cta_message|default:"Join thousands of aquascapers who have already discovered the future of underwater landscaping."}}
+                </p>
+                
+                <a href="{{primary_cta_link|default:'#'}}" class="cta-primary">{{primary_cta_text|default:"Get Started Now"}}</a>
+                <a href="{{secondary_cta_link|default:'#'}}" class="cta-secondary">{{secondary_cta_text|default:"Learn More"}}</a>
+                
+                {{#if social_proof}}
+                <div class="social-proof">
+                    <p style="margin: 0; color: #666; font-style: italic;">
+                        "{{social_proof.quote|default:"This has completely transformed my aquascaping approach!"}}"
+                    </p>
+                    <p style="margin: 5px 0 0 0; color: #999; font-size: 14px;">
+                        - {{social_proof.author|default:"Maria K., Professional Aquascaper"}}
+                    </p>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="partnership-badge">
+                🤝 Official Green Aqua Partnership
+            </div>
+            
+            <p style="margin: 20px 0 10px 0;">
+                Thanks for being part of the AquaScene community, <span class="personalized">{{subscriber_name|default:"Fellow Aquascaper"}}</span>! 
+            </p>
+            
+            <p style="margin: 10px 0;">
+                <a href="{{share_link|default:'#'}}">📱 Share This News</a> | 
+                <a href="{{community_link|default:'#'}}">💬 Join Discussion</a> | 
+                <a href="{{support_link|default:'#'}}">🤝 Get Support</a>
+            </p>
+            
+            <p style="margin: 10px 0;">
+                <a href="{{unsubscribe_link|default:'#'}}">Unsubscribe</a> | 
+                <a href="{{preferences_link|default:'#'}}">Email Preferences</a>
+            </p>
+            
+            <div style="margin: 20px 0; padding: 15px; background-color: rgba(255, 111, 0, 0.1); border-radius: 8px;">
+                <h4 style="color: #ff6f00; margin: 0 0 10px 0;">Stay Tuned</h4>
+                <p style="margin: 0; font-size: 14px;">{{upcoming_news|default:"More exciting announcements coming soon. Follow us on social media for the latest updates and behind-the-scenes content."}}</p>
+            </div>
+            
+            <p style="font-size: 12px; color: #78909c; margin: 10px 0;">
+                © 2025 AquaScene Content Engine. All rights reserved.<br>
+                Announcement generated with AI-powered personalization
+            </p>
+        </div>
+    </div>
+</body>
+</html>

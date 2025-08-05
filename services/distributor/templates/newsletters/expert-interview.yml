@@ -1,0 +1,399 @@
+# Expert Interview Newsletter Template Configuration
+# AquaScene Content Engine - Newsletter Templates
+
+template:
+  name: "expert-interview"
+  display_name: "Expert Interview"
+  category: "newsletter"
+  type: "interview"
+  version: "1.0.0"
+  
+description: "Template for in-depth Q&A format interviews with industry professionals and aquascaping experts"
+
+# Template metadata
+metadata:
+  author: "AquaScene Content Engine"
+  created: "2025-08-05"
+  updated: "2025-08-05"
+  tags: ["interview", "expert", "q-and-a", "professional", "knowledge-sharing"]
+  
+# Email client compatibility
+compatibility:
+  outlook: true
+  gmail: true
+  apple_mail: true
+  yahoo: true
+  android: true
+  ios: true
+  mobile_responsive: true
+
+# Template variables and their types
+variables:
+  # Header section
+  interview_title:
+    type: "string"
+    description: "Interview title/theme"
+    max_length: 60
+  
+  # Subscriber personalization
+  subscriber_name:
+    type: "string"
+    default: "Fellow Aquascaper"
+    description: "Personalized subscriber name"
+    required: false
+    personalization: true
+    
+  # Expert profile section
+  expert:
+    type: "object"
+    description: "Expert profile information"
+    required: true
+    properties:
+      name:
+        type: "string"
+        default: "Dr. Takashi Amano Jr."
+        required: true
+        max_length: 60
+      title:
+        type: "string"
+        default: "Master Aquascaper & Nature Aquarium Designer"
+        required: true
+        max_length: 100
+      credentials:
+        type: "string"
+        description: "Professional credentials and achievements"
+        max_length: 500
+        required: true
+      photo:
+        type: "url"
+        required: true
+        validation:
+          formats: ["jpg", "png", "webp"]
+          max_size: "500KB"
+      stats:
+        type: "object"
+        properties:
+          contests_won:
+            type: "string"
+            default: "47"
+          years_experience:
+            type: "string"
+            default: "22"
+          students_taught:
+            type: "string"
+            default: "1200+"
+          countries_judged:
+            type: "string"
+            default: "15"
+      website:
+        type: "url"
+      courses:
+        type: "url"
+        
+  # Interview introduction
+  interview_intro:
+    type: "string"
+    description: "Interview introduction text"
+    max_length: 600
+    required: true
+    
+  featured_quote:
+    type: "string"
+    description: "Highlighted quote from the interview"
+    max_length: 200
+    required: true
+    
+  # Main interview Q&A section
+  interview_questions:
+    type: "array"
+    description: "Interview questions and answers"
+    required: true
+    items:
+      type: "object"
+      properties:
+        question:
+          type: "string"
+          required: true
+          max_length: 200
+        answer:
+          type: "string"
+          required: true
+          max_length: 1000
+          
+  # Featured works section
+  featured_works:
+    type: "array"
+    description: "Expert's signature aquascapes"
+    items:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+          required: true
+          max_length: 50
+        image:
+          type: "url"
+          required: true
+          validation:
+            formats: ["jpg", "png", "webp"]
+        description:
+          type: "string"
+          max_length: 150
+          
+  # Expert tips section
+  expert_tips:
+    type: "array"
+    description: "Professional tips from the expert"
+    items:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+          required: true
+          max_length: 50
+        content:
+          type: "string"
+          required: true
+          max_length: 200
+          
+  # Product recommendations
+  recommended_products:
+    type: "array"
+    description: "Expert-recommended tools and products"
+    items:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          required: true
+          max_length: 60
+        image:
+          type: "url"
+          validation:
+            formats: ["jpg", "png", "webp"]
+        reason:
+          type: "string"
+          required: true
+          max_length: 150
+        green_aqua_link:
+          type: "url"
+          description: "Link to Green Aqua product page"
+          
+  # Media content (optional)
+  interview_video:
+    type: "object"
+    description: "Video interview details"
+    properties:
+      link:
+        type: "url"
+        required: true
+      platform:
+        type: "string"
+        enum: ["youtube", "vimeo", "custom"]
+        default: "youtube"
+        
+  interview_podcast:
+    type: "object"
+    description: "Podcast interview details"
+    properties:
+      link:
+        type: "url"
+        required: true
+      platform:
+        type: "string"
+        enum: ["spotify", "apple_podcasts", "google_podcasts", "custom"]
+        
+  # Links and CTAs
+  green_aqua_products:
+    type: "url"
+    description: "Link to recommended products at Green Aqua"
+    
+  share_interview_link:
+    type: "url"
+    description: "Social sharing link for the interview"
+    
+  suggest_expert_link:
+    type: "url"
+    description: "Link to suggest future interview experts"
+    
+  community_discussion:
+    type: "url"
+    description: "Link to community discussion about the interview"
+    
+  # Footer links
+  unsubscribe_link:
+    type: "url"
+    required: true
+  preferences_link:
+    type: "url"
+    required: true
+    
+  # Preview content
+  next_interview_preview:
+    type: "string"
+    default: "March Interview: Renowned biotope specialist Dr. Heiko Bleher discusses authentic habitat recreation and his 40+ years of field research in aquatic ecosystems."
+    max_length: 200
+
+# Content generation hints for AI
+ai_generation:
+  content_areas:
+    - interview_intro: "Create compelling introduction that establishes expert credibility"
+    - interview_questions: "Generate insightful questions covering technique, philosophy, and practical advice"
+    - expert_tips: "Extract actionable, professional-level advice"
+    - featured_quote: "Select most impactful or unique perspective from the interview"
+    
+  tone: "Professional, respectful, insightful, accessible"
+  question_categories:
+    - "technical_expertise"
+    - "career_journey"
+    - "industry_trends"
+    - "beginner_advice"
+    - "professional_insights"
+    - "future_predictions"
+    
+  interview_quality:
+    - "Questions should be specific and informed"
+    - "Answers should provide unique insights not found elsewhere"
+    - "Balance technical depth with accessibility"
+    - "Include personal anecdotes and experiences"
+    
+# Integration settings
+integrations:
+  green_aqua:
+    enabled: true
+    product_links: true
+    partnership_badges: true
+    expert_collaboration: true
+    
+  social_media:
+    auto_share: true
+    hashtags: ["#AquaSceneExpert", "#ExpertInterview", "#AquascapingMaster"]
+    expert_tagging: true
+    
+  content_syndication:
+    blog_cross_post: true
+    podcast_distribution: true
+    video_embedding: true
+    
+# Expert vetting process
+expert_qualification:
+  minimum_requirements:
+    - "5+ years professional experience"
+    - "Published work or competition success"
+    - "Teaching or mentoring experience"
+    - "Industry recognition or credentials"
+    
+  preferred_qualifications:
+    - "International competition judging"
+    - "Published books or articles"
+    - "Workshop or seminar leadership"
+    - "Product development involvement"
+    
+# Interview quality assurance
+quality_assurance:
+  fact_checking: true
+  technical_accuracy: true
+  plagiarism_check: true
+  expert_approval: true
+  
+# A/B testing configuration
+ab_testing:
+  interview_length: ["full", "condensed"]
+  question_order: ["chronological", "topic_grouped"]
+  media_placement: ["inline", "end_section"]
+  expert_photo_size: ["large", "medium"]
+  
+# Automation rules
+automation:
+  expert_outreach:
+    invitation_templates: true
+    follow_up_sequences: true
+    scheduling_coordination: true
+    
+  content_preparation:
+    question_research: true
+    background_compilation: true
+    media_collection: true
+    
+  post_interview:
+    thank_you_messages: true
+    content_sharing: true
+    feedback_collection: true
+
+# Template validation rules
+validation:
+  required_sections: ["header", "expert_profile", "interview_qa", "footer"]
+  minimum_questions: 5
+  maximum_questions: 15
+  expert_photo_required: true
+  featured_quote_required: true
+  
+# Interview format options
+format_options:
+  delivery_methods:
+    - "email_newsletter"
+    - "blog_post" 
+    - "video_interview"
+    - "podcast_episode"
+    - "social_media_series"
+    
+  presentation_styles:
+    - "traditional_qa"
+    - "conversational_narrative"
+    - "topic_focused_segments"
+    - "multimedia_enhanced"
+    
+# Media handling
+media_requirements:
+  images:
+    expert_portrait: "required, professional quality"
+    featured_works: "high resolution, watermarked if needed"
+    product_photos: "catalog quality with permissions"
+    
+  video:
+    format: ["mp4", "webm"]
+    max_length: "45 minutes"
+    quality: "minimum 720p"
+    
+  audio:
+    format: ["mp3", "wav"]
+    bitrate: "minimum 128kbps"
+    
+# Rights and permissions
+rights_management:
+  expert_consent: "explicit written agreement"
+  image_usage: "specified usage rights"
+  content_ownership: "shared or licensed"
+  republishing_rights: "clearly defined"
+  
+# Localization support
+localization:
+  default_language: "en"
+  supported_languages: ["en", "bg", "de", "hu", "ro"]
+  expert_language_matching: true
+  translation_services: "available_on_request"
+  cultural_context_adaptation: true
+  
+# Analytics tracking
+analytics:
+  interview_engagement: true
+  expert_recognition: true
+  question_popularity: true
+  media_consumption: true
+  expert_tip_usage: true
+  product_recommendation_clicks: true
+  
+# Follow-up opportunities
+follow_up:
+  expert_series: "multi-part interviews for complex topics"
+  workshop_announcements: "if expert offers training"
+  book_promotions: "if expert has publications"
+  contest_judging: "invitation for expert to judge community contests"
+  
+# Community impact measurement
+impact_metrics:
+  knowledge_transfer: true
+  community_discussion_generated: true
+  expert_technique_adoption: true
+  beginner_confidence_boost: true
+  industry_connection_facilitation: true

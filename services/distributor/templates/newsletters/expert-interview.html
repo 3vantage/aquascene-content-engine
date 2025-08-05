@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{interview_title}} - AquaScene Expert Interview</title>
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:AllowPNG/>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    <style>
+        /* Reset styles */
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        /* Base styles */
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            background-color: #f0f8ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Container */
+        .email-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+
+        /* Header styles */
+        .header {
+            background: linear-gradient(135deg, #1565c0 0%, #1976d2 50%, #1e88e5 100%);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        .header::before {
+            content: '🎙️';
+            position: absolute;
+            font-size: 80px;
+            opacity: 0.1;
+            top: 20px;
+            left: 30px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .header::after {
+            content: '💬';
+            position: absolute;
+            font-size: 60px;
+            opacity: 0.1;
+            bottom: 20px;
+            right: 30px;
+            animation: pulse 2s ease-in-out infinite reverse;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.1); opacity: 0.2; }
+        }
+        .header h1 {
+            color: #ffffff;
+            font-size: 36px;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+        .header .interview-type {
+            background-color: rgba(255,255,255,0.2);
+            color: #e3f2fd;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Expert profile section */
+        .expert-profile {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%);
+            padding: 30px;
+            border-bottom: 4px solid #1976d2;
+        }
+        .profile-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .expert-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid #1976d2;
+            margin-right: 25px;
+            object-fit: cover;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+        .expert-info h2 {
+            color: #0d47a1;
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .expert-title {
+            color: #1565c0;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+        }
+        .expert-credentials {
+            color: #455a64;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .expert-stats {
+            background-color: rgba(25, 118, 210, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1976d2;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        /* Content sections */
+        .content-section {
+            padding: 30px;
+            border-bottom: 1px solid #e3f2fd;
+        }
+        .section-title {
+            color: #1565c0;
+            font-size: 26px;
+            font-weight: 600;
+            margin: 0 0 25px 0;
+            border-left: 6px solid #1976d2;
+            padding-left: 20px;
+        }
+
+        /* Q&A styles */
+        .qa-item {
+            background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            margin: 25px 0;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .question-header {
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+            color: white;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: 600;
+            position: relative;
+        }
+        .question-header::before {
+            content: 'Q:';
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            font-weight: bold;
+            opacity: 0.7;
+        }
+        .question-text {
+            padding-left: 40px;
+        }
+        .answer-content {
+            padding: 25px;
+            position: relative;
+        }
+        .answer-content::before {
+            content: 'A:';
+            position: absolute;
+            left: 25px;
+            top: 25px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #1976d2;
+        }
+        .answer-text {
+            padding-left: 35px;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #455a64;
+        }
+
+        /* Featured work section */
+        .featured-work {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #4caf50;
+        }
+        .work-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .work-item {
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .work-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .work-info {
+            padding: 15px;
+        }
+        .work-title {
+            color: #2e7d32;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+        }
+        .work-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        /* Quick tips section */
+        .expert-tips {
+            background: linear-gradient(135deg, #fff3e0 0%, #fff8e1 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        .tip-item {
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 5px solid #ff9800;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        .tip-number {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 15px;
+        }
+        .tip-content {
+            display: inline-block;
+            vertical-align: top;
+            width: calc(100% - 50px);
+        }
+
+        /* Product recommendations */
+        .product-recommendations {
+            background: linear-gradient(135deg, #f3e5f5 0%, #fce4ec 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .product-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .product-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        .product-name {
+            color: #7b1fa2;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+            font-size: 14px;
+        }
+        .product-reason {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        /* Video/podcast section */
+        .media-section {
+            background: linear-gradient(135deg, #263238 0%, #37474f 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            margin: 25px 0;
+        }
+        .media-preview {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        /* Green Aqua Partnership */
+        .partnership-badge {
+            background: linear-gradient(45deg, #2e7d32, #4caf50);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        /* Buttons */
+        .cta-button {
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+            color: #ffffff !important;
+            padding: 14px 28px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 5px;
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+        }
+        .cta-button:hover {
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+        }
+
+        /* Quote highlight */
+        .quote-highlight {
+            background: linear-gradient(135deg, #e8f5e8 0%, #e3f2fd 100%);
+            border-left: 6px solid #4fc3f7;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            font-size: 18px;
+            color: #455a64;
+            position: relative;
+        }
+        .quote-highlight::before {
+            content: '"';
+            font-size: 60px;
+            color: #4fc3f7;
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            opacity: 0.5;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #263238;
+            color: #b0bec5;
+            padding: 30px;
+            text-align: center;
+        }
+        .footer a {
+            color: #1976d2;
+            text-decoration: none;
+        }
+
+        /* Mobile responsive */
+        @media screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+            }
+            .profile-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .expert-photo {
+                margin: 0 0 20px 0;
+            }
+            .work-gallery, .product-grid {
+                grid-template-columns: 1fr;
+            }
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .tip-content {
+                width: 100%;
+                margin-top: 10px;
+            }
+            .tip-number {
+                display: block;
+                margin: 0 0 10px 0;
+            }
+        }
+
+        /* Personalization */
+        .personalized {
+            background-color: #e3f2fd;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Expert Interview</h1>
+            <div class="interview-type">🎙️ EXCLUSIVE CONVERSATION</div>
+            <div class="partnership-badge">
+                🤝 Featured by Green Aqua
+            </div>
+        </div>
+
+        <!-- Expert Profile Section -->
+        <div class="expert-profile">
+            <div class="profile-container">
+                <img src="{{expert.photo|default:'https://via.placeholder.com/120x120/1976d2/ffffff?text=Expert'}}" alt="{{expert.name}}" class="expert-photo">
+                <div class="expert-info">
+                    <h2>{{expert.name|default:"Dr. Takashi Amano Jr."}}</h2>
+                    <div class="expert-title">{{expert.title|default:"Master Aquascaper & Nature Aquarium Designer"}}</div>
+                    <div class="expert-credentials">
+                        {{expert.credentials|default:"• 20+ years in aquascaping • International contest judge • Author of 'Modern Aquascaping Techniques' • Founder of Nature Design Studio"}}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="expert-stats">
+                <h3 style="color: #1565c0; margin: 0 0 15px 0; text-align: center;">Career Highlights</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">{{expert.stats.contests_won|default:"47"}}</div>
+                        <div class="stat-label">Contests Won</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">{{expert.stats.years_experience|default:"22"}}</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">{{expert.stats.students_taught|default:"1200+"}}</div>
+                        <div class="stat-label">Students Taught</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">{{expert.stats.countries_judged|default:"15"}}</div>
+                        <div class="stat-label">Countries Judged</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Introduction Section -->
+        <div class="content-section">
+            <p style="font-size: 18px; line-height: 1.6; color: #455a64; margin: 0 0 20px 0;">
+                Welcome <span class="personalized">{{subscriber_name|default:"Fellow Aquascaper"}}</span>! 
+                {{interview_intro|default:"Today we have the incredible privilege of speaking with one of the most influential figures in modern aquascaping. From revolutionary design techniques to sustainable aquarium practices, this conversation covers the insights that can transform your approach to underwater landscaping."}}
+            </p>
+            
+            <div class="quote-highlight">
+                {{featured_quote|default:"The secret to great aquascaping isn't in the equipment or plants you choose - it's in understanding the story your aquascape wants to tell and having the patience to let it unfold naturally."}}
+            </div>
+        </div>
+
+        <!-- Main Interview Q&A Section -->
+        <div class="content-section">
+            <h2 class="section-title">💬 The Interview</h2>
+            
+            {{#each interview_questions}}
+            <div class="qa-item">
+                <div class="question-header">
+                    <div class="question-text">{{question}}</div>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-text">{{{answer}}}</div>
+                </div>
+            </div>
+            {{else}}
+            <!-- Default interview questions -->
+            <div class="qa-item">
+                <div class="question-header">
+                    <div class="question-text">What's the biggest mistake you see beginners make in aquascaping?</div>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-text">The most common mistake is rushing the process. Beginners often want immediate results - they over-plant, over-fertilize, and change too many variables at once. Nature doesn't work that way. A truly stunning aquascape takes months to mature, and the best ones I've seen required patience above all else. Start simple, master the basics, and let your aquascape evolve naturally over time.</div>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question-header">
+                    <div class="question-text">How has aquascaping evolved since you started, and where do you see it heading?</div>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-text">When I started 22 years ago, aquascaping was primarily about following established styles - Dutch, Nature Aquarium, Iwagumi. Today, we're seeing more hybrid approaches and personal artistic expression. Technology has also revolutionized the hobby - LED lighting, automated CO2 systems, and smart monitoring have made advanced techniques accessible to more people. Looking ahead, I believe we'll see more focus on biotope accuracy and sustainability, with aquascapers recreating specific natural ecosystems with scientific precision.</div>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question-header">
+                    <div class="question-text">What role does the Green Aqua partnership play in advancing aquascaping education?</div>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-text">Green Aqua has been instrumental in making high-quality aquascaping accessible across Europe. Their commitment to education, not just selling products, aligns perfectly with my philosophy. Through our partnership, we've been able to share authentic techniques, provide reliable equipment, and build a community where beginners can learn from experienced aquascapers. It's not just about the tools - it's about fostering a culture of learning and artistic growth.</div>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question-header">
+                    <div class="question-text">Can you share your process for designing a new aquascape from concept to completion?</div>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-text">Every aquascape starts with a story or emotion I want to convey. I might sketch 20-30 different compositions before choosing one. Then comes the hardscape - this is where the magic happens. I'll spend hours, sometimes days, positioning rocks and wood until the composition feels alive. Only then do I consider plants, choosing species that support the narrative rather than dominate it. The key is thinking like a landscape architect first, aquascaper second. Water parameters, plant care, and maintenance considerations come after the artistic vision is solid.</div>
+                </div>
+            </div>
+
+            <div class="qa-item">
+                <div class="question-header">
+                    <div class="question-text">What advice would you give to someone who wants to turn aquascaping into a professional career?</div>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-text">First, master the craft. Enter contests, not just to win, but to receive feedback and challenge yourself. Document everything - your successes, failures, and learning process. Build a portfolio and share your work consistently. Most importantly, find your unique voice. The aquascaping world doesn't need another Takashi Amano - it needs the first YOU. Consider different paths: competition, teaching, consultation, product development, or content creation. The key is combining technical excellence with business understanding and genuine passion for sharing knowledge.</div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+
+        <!-- Featured Work Section -->
+        <div class="content-section">
+            <h2 class="section-title">🎨 Featured Works</h2>
+            
+            <div class="featured-work">
+                <h3 style="color: #2e7d32; margin: 0 0 20px 0; text-align: center;">{{expert.name|default:"Expert"}}'s Signature Aquascapes</h3>
+                
+                <div class="work-gallery">
+                    {{#each featured_works}}
+                    <div class="work-item">
+                        <img src="{{image|default:'https://via.placeholder.com/250x200/4caf50/ffffff?text=Signature+Work'}}" alt="{{title}}" class="work-image">
+                        <div class="work-info">
+                            <div class="work-title">{{title|default:"Masterpiece Aquascape"}}</div>
+                            <p class="work-description">{{description|default:"A stunning example of natural composition and artistic vision."}}</p>
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="work-item">
+                        <img src="https://via.placeholder.com/250x200/2e7d32/ffffff?text=Mountain+Path" alt="Mountain Path" class="work-image">
+                        <div class="work-info">
+                            <div class="work-title">"Mountain Path Serenity"</div>
+                            <p class="work-description">Award-winning 120cm layout inspired by Japanese mountain trails. Featured perspective-based hardscaping.</p>
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <img src="https://via.placeholder.com/250x200/1976d2/ffffff?text=Underwater+Forest" alt="Underwater Forest" class="work-image">
+                        <div class="work-info">
+                            <div class="work-title">"Underwater Forest Dreams"</div>
+                            <p class="work-description">Revolutionary vertical planting technique showcasing layered forest ecosystem in 180cm tank.</p>
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <img src="https://via.placeholder.com/250x200/ff7043/ffffff?text=Desert+Oasis" alt="Desert Oasis" class="work-image">
+                        <div class="work-info">
+                            <div class="work-title">"Desert Oasis Reflection"</div>
+                            <p class="work-description">Unique biotope recreation featuring rare desert aquatic plants and authentic geological formations.</p>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+
+        <!-- Expert Tips Section -->
+        <div class="content-section">
+            <h2 class="section-title">💡 Top Professional Tips</h2>
+            
+            <div class="expert-tips">
+                <h3 style="color: #f57c00; margin: 0 0 20px 0; text-align: center;">{{expert.name|default:"Expert"}}'s Essential Advice</h3>
+                
+                {{#each expert_tips}}
+                <div class="tip-item">
+                    <div class="tip-number">{{@index}}</div>
+                    <div class="tip-content">
+                        <strong>{{title|default:"Professional Tip"}}</strong><br>
+                        {{content|default:"Essential advice for aquascaping success."}}
+                    </div>
+                </div>
+                {{else}}
+                <div class="tip-item">
+                    <div class="tip-number">1</div>
+                    <div class="tip-content">
+                        <strong>Master the Golden Ratio</strong><br>
+                        Position focal points at 1/3 intersections, not center. This creates natural tension and visual interest that draws viewers into your aquascape.
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-number">2</div>
+                    <div class="tip-content">
+                        <strong>Start with Hardscape Photoshoots</strong><br>
+                        Take photos of your hardscape from multiple angles before adding plants. This reveals composition flaws you can't see while working on it.
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-number">3</div>
+                    <div class="tip-content">
+                        <strong>Plant Height Matters More Than Species</strong><br>
+                        Focus on creating layers - foreground (3-8cm), midground (10-20cm), background (25cm+). Species selection comes after height planning.
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-number">4</div>
+                    <div class="tip-content">
+                        <strong>Use Negative Space Intentionally</strong><br>
+                        Empty areas aren't mistakes - they're breathing room that makes your planted areas more impactful. Balance is key.
+                    </div>
+                </div>
+                <div class="tip-item">
+                    <div class="tip-number">5</div>
+                    <div class="tip-content">
+                        <strong>Document Everything</strong><br>
+                        Keep detailed records of water parameters, fertilization, and plant growth. Your failures teach more than your successes.
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <!-- Product Recommendations Section -->
+        <div class="content-section">
+            <h2 class="section-title">🛠️ Expert-Recommended Tools</h2>
+            
+            <div class="product-recommendations">
+                <h3 style="color: #7b1fa2; margin: 0 0 20px 0; text-align: center;">{{expert.name|default:"Expert"}}'s Essential Equipment</h3>
+                
+                <div class="product-grid">
+                    {{#each recommended_products}}
+                    <div class="product-card">
+                        <img src="{{image|default:'https://via.placeholder.com/180x120/7b1fa2/ffffff?text=Product'}}" alt="{{name}}" class="product-image">
+                        <div class="product-name">{{name|default:"Professional Tool"}}</div>
+                        <p class="product-reason">{{reason|default:"Essential for professional results"}}</p>
+                        {{#if green_aqua_link}}<a href="{{green_aqua_link}}" style="color: #4caf50; font-size: 12px;">🛒 Available at Green Aqua</a>{{/if}}
+                    </div>
+                    {{else}}
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/180x120/2e7d32/ffffff?text=Tweezers" alt="Professional Tweezers" class="product-image">
+                        <div class="product-name">ADA Pro-Tweezers Straight</div>
+                        <p class="product-reason">Precise plant placement without disturbing substrate. Essential for professional work.</p>
+                        <a href="#" style="color: #4caf50; font-size: 12px;">🛒 Available at Green Aqua</a>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/180x120/1976d2/ffffff?text=Scissors" alt="Curved Scissors" class="product-image">
+                        <div class="product-name">ADA Pro-Scissor Curve</div>
+                        <p class="product-reason">Perfect for trimming background plants and creating natural curves in plant masses.</p>
+                        <a href="#" style="color: #4caf50; font-size: 12px;">🛒 Available at Green Aqua</a>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/180x120/ff9800/ffffff?text=Dropper" alt="Liquid Fertilizer" class="product-image">
+                        <div class="product-name">Green Aqua Fertilizer Set</div>
+                        <p class="product-reason">Balanced nutrition system I've personally tested in competition setups.</p>
+                        <a href="#" style="color: #4caf50; font-size: 12px;">🛒 Available at Green Aqua</a>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://via.placeholder.com/180x120/4caf50/ffffff?text=Light" alt="LED Light" class="product-image">
+                        <div class="product-name">Chihiros WRGB II Pro</div>
+                        <p class="product-reason">Exceptional color rendering and spectrum control. Game-changer for photography and growth.</p>
+                        <a href="#" style="color: #4caf50; font-size: 12px;">🛒 Available at Green Aqua</a>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+
+        <!-- Media Section -->
+        {{#if interview_video}}
+        <div class="content-section">
+            <div class="media-section">
+                <h3 style="margin: 0 0 15px 0;">🎥 Watch the Full Interview</h3>
+                <div class="media-preview">
+                    <p style="margin: 0 0 15px 0; opacity: 0.9;">Get the complete conversation including live aquascaping demonstrations and behind-the-scenes insights.</p>
+                    <a href="{{interview_video.link|default:'#'}}" class="cta-button" style="background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);">▶️ Watch on YouTube</a>
+                    <a href="{{interview_podcast.link|default:'#'}}" class="cta-button" style="background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);">🎙️ Listen as Podcast</a>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Call to Action Section -->
+        <div class="content-section">
+            <div style="background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%); border-radius: 12px; padding: 30px; text-align: center;">
+                <h2 style="color: #1565c0; margin: 0 0 15px 0;">Continue Learning with {{expert.name|default:"Expert"}}</h2>
+                <p style="color: #455a64; margin: 0 0 25px 0;">
+                    Ready to take your aquascaping to the next level? Explore more resources and connect with the community.
+                </p>
+                
+                <a href="{{expert.website|default:'#'}}" class="cta-button">🌐 Visit Expert Website</a>
+                <a href="{{expert.courses|default:'#'}}" class="cta-button">📚 Online Courses</a>
+                <a href="{{green_aqua_products|default:'#'}}" class="cta-button">🛒 Shop Recommended Products</a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="partnership-badge">
+                🤝 Interview Partnership with Green Aqua
+            </div>
+            
+            <p style="margin: 20px 0 10px 0;">
+                Thanks for joining this exclusive conversation, <span class="personalized">{{subscriber_name|default:"Fellow Aquascaper"}}</span>! 
+            </p>
+            
+            <p style="margin: 10px 0;">
+                <a href="{{share_interview_link|default:'#'}}">📱 Share This Interview</a> | 
+                <a href="{{suggest_expert_link|default:'#'}}">💡 Suggest Next Expert</a> | 
+                <a href="{{community_discussion|default:'#'}}">💬 Discuss in Community</a>
+            </p>
+            
+            <p style="margin: 10px 0;">
+                <a href="{{unsubscribe_link|default:'#'}}">Unsubscribe</a> | 
+                <a href="{{preferences_link|default:'#'}}">Email Preferences</a>
+            </p>
+            
+            <div style="margin: 20px 0; padding: 15px; background-color: rgba(25, 118, 210, 0.1); border-radius: 8px;">
+                <h4 style="color: #1976d2; margin: 0 0 10px 0;">Next Month's Interview</h4>
+                <p style="margin: 0; font-size: 14px;">{{next_interview_preview|default:"March Interview: Renowned biotope specialist Dr. Heiko Bleher discusses authentic habitat recreation and his 40+ years of field research in aquatic ecosystems."}}</p>
+            </div>
+            
+            <p style="font-size: 12px; color: #78909c; margin: 10px 0;">
+                © 2025 AquaScene Expert Interview Series. All rights reserved.<br>
+                Interview content powered by AI-enhanced curation
+            </p>
+        </div>
+    </div>
+</body>
+</html>

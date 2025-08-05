@@ -1,0 +1,145 @@
+AquaScene Weekly - Week {{week_number|default:"1"}}
+{{theme|default:"Nature Aquarium Fundamentals"}}
+{{publish_date|date:"F j, Y"}}
+In Partnership with Green Aqua
+
+==================================================
+
+Hello {{subscriber_name|default:"Fellow Aquascaper"}}!
+
+Welcome to Week {{week_number|default:"1"}} of AquaScene Weekly, your comprehensive guide to the world of aquascaping. This week we're focusing on {{theme|default:"Nature Aquarium Fundamentals"}}.
+
+==================================================
+FEATURED AQUASCAPE
+==================================================
+
+🏆 This Week's Showcase: {{featured_setup.title|default:"Featured Aquascape"}}
+
+Designer: {{featured_setup.designer_name|default:"Featured Designer"}}
+{{featured_setup.designer_bio|default:"Professional aquascaper with years of experience in creating stunning underwater landscapes."}}
+
+Tank Specifications:
+• Size: {{featured_setup.tank_size|default:"120L (60cm x 40cm x 50cm)"}}
+• Lighting: {{featured_setup.lighting|default:"LED full spectrum, 8 hours daily"}}
+• Filtration: {{featured_setup.filtration|default:"Canister filter, 6x turnover"}}
+• CO2: {{featured_setup.co2|default:"Pressurized CO2 system, 30mg/L"}}
+• Substrate: {{featured_setup.substrate|default:"Aqua soil with mineral supplements"}}
+
+📖 View full step-by-step guide: {{featured_setup.tutorial_link|default:"Available in newsletter"}}
+
+==================================================
+PLANT SPOTLIGHT
+==================================================
+
+🌱 Featured Plant: {{plant_spotlight.name|default:"Rotala Rotundifolia"}}
+
+Difficulty: {{plant_spotlight.difficulty|default:"Beginner"}} | Growth Rate: {{plant_spotlight.growth_rate|default:"Fast"}}
+
+Care Requirements:
+• Light: {{plant_spotlight.light|default:"Medium to High"}}
+• CO2: {{plant_spotlight.co2|default:"Recommended but not essential"}}
+• Temperature: {{plant_spotlight.temperature|default:"20-28°C"}}
+• pH: {{plant_spotlight.ph|default:"6.0-7.5"}}
+
+Design Tips: {{plant_spotlight.design_tips|default:"Perfect for background plantings and creating natural-looking groups. Trim regularly to maintain bushy growth."}}
+
+🛒 Find this plant at Green Aqua: {{plant_spotlight.source_link|default:"greenaqua.hu"}}
+
+==================================================
+COMMUNITY SHOWCASE
+==================================================
+
+👥 Community Member Spotlight
+
+{{community_feature.title|default:"Amazing Community Setup"}}
+By: {{community_feature.author|default:"Community Member"}}
+
+{{community_feature.story|default:"This beautiful setup showcases the creativity and dedication of our community members. The attention to detail and natural composition creates a truly stunning underwater landscape."}}
+
+Challenges Overcome: {{community_feature.challenges|default:"Algae management during the initial cycling period and finding the right plant balance."}}
+
+📱 Follow on social media: {{community_feature.social_link|default:"Check newsletter for links"}}
+💬 Join the discussion: {{community_feature.discussion_link|default:"forum.aquascene.com"}}
+
+==================================================
+TECH TALK
+==================================================
+
+⚙️ Equipment Review: {{tech_talk.title|default:"Latest CO2 System"}}
+
+{{tech_talk.review|default:"This week we're reviewing the latest pressurized CO2 system that's been making waves in the aquascaping community. With its precise bubble counting and safety features, it's perfect for both beginners and advanced aquascapers."}}
+
+✅ Pros: {{tech_talk.pros|default:"Easy to set up, precise control, safety features"}}
+❌ Cons: {{tech_talk.cons|default:"Higher price point, requires regular maintenance"}}
+
+📝 Read the full review: {{tech_talk.review_link|default:"Available in newsletter"}}
+
+==================================================
+QUICK TIPS
+==================================================
+
+💡 This Week's Top 5 Tips:
+
+1. Weekly Water Changes: {{tip_1|default:"Maintain 30-50% weekly water changes to keep nutrients balanced and prevent algae blooms."}}
+
+2. Lighting Schedule: {{tip_2|default:"Gradually increase lighting duration over 2-3 weeks when starting a new setup to prevent algae."}}
+
+3. Plant Pruning: {{tip_3|default:"Trim fast-growing plants weekly to prevent overshadowing and maintain good circulation."}}
+
+4. CO2 Optimization: {{tip_4|default:"Monitor pH and KH to ensure optimal CO2 levels without stressing fish."}}
+
+5. Budget Tip: {{tip_5|default:"Start propagating your own plants early - it's the most cost-effective way to fill your aquascape."}}
+
+==================================================
+EVENTS & CONTESTS
+==================================================
+
+🏆 Upcoming Events:
+
+{{event_1.title|default:"International Aquascaping Contest 2025"}}
+Registration Deadline: {{event_1.deadline|default:"March 15, 2025"}}
+{{event_1.description|default:"Join aquascapers from around the world in this prestigious competition. Categories for beginners, advanced, and nano tanks."}}
+Register: {{event_1.registration_link|default:"Check newsletter for links"}}
+
+{{event_2.title|default:"Green Aqua Workshop Series"}}
+Next Session: {{event_2.date|default:"February 20, 2025"}}
+{{event_2.description|default:"Monthly online workshops covering advanced aquascaping techniques, plant care, and equipment selection."}}
+Sign up: {{event_2.signup_link|default:"greenaqua.hu/workshops"}}
+
+Monthly Community Challenge:
+{{community_challenge.title|default:"February Challenge: Iwagumi Style"}}
+{{community_challenge.description|default:"This month's community challenge focuses on the minimalist beauty of Iwagumi layouts. Share your creations using #AquaSceneChallenge"}}
+Submit entry: {{community_challenge.submission_link|default:"aquascene.com/challenges"}}
+
+==================================================
+CONNECT WITH US
+==================================================
+
+Follow AquaScene:
+📱 Instagram: {{social_links.instagram|default:"@aquascene_official"}}
+📺 YouTube: {{social_links.youtube|default:"youtube.com/@aquascene"}}
+📘 Facebook: {{social_links.facebook|default:"facebook.com/aquascene"}}
+💬 Forum: {{social_links.forum|default:"forum.aquascene.com"}}
+
+Powered by Green Aqua Partnership
+
+==================================================
+NEXT WEEK PREVIEW
+==================================================
+
+Coming Next Week:
+{{next_week_preview|default:"Week 2: Advanced Plant Carpeting Techniques - Learn how to create lush foreground carpets that stay healthy and vibrant."}}
+
+==================================================
+
+Thank you for being part of the AquaScene community!
+
+This email was sent to subscribers of AquaScene Weekly. 
+You're receiving this because you signed up for aquascaping updates.
+
+Unsubscribe: {{unsubscribe_link|default:"[unsubscribe link]"}}
+Update preferences: {{preferences_link|default:"[preferences link]"}}
+View in browser: {{archive_link|default:"[web version]"}}
+
+© 2025 AquaScene. All rights reserved.
+Generated with AquaScene Content Engine

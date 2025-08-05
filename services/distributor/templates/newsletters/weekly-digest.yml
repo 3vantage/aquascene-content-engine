@@ -1,0 +1,357 @@
+# Weekly Digest Newsletter Template Configuration
+# AquaScene Content Engine - Newsletter Templates
+
+template:
+  name: "weekly-digest"
+  display_name: "Weekly Digest"
+  category: "newsletter"
+  type: "weekly"
+  version: "1.0.0"
+  
+description: "Main newsletter template with multiple modular sections for weekly aquascaping content"
+
+# Template metadata
+metadata:
+  author: "AquaScene Content Engine"
+  created: "2025-08-05"
+  updated: "2025-08-05"
+  tags: ["weekly", "digest", "modular", "community", "aquascaping"]
+  
+# Email client compatibility
+compatibility:
+  outlook: true
+  gmail: true
+  apple_mail: true
+  yahoo: true
+  android: true
+  ios: true
+  mobile_responsive: true
+
+# Template variables and their types
+variables:
+  # Header section
+  newsletter_title:
+    type: "string"
+    default: "AquaScene Weekly"
+    description: "Main newsletter title"
+    required: false
+    
+  week_number:
+    type: "integer"
+    description: "Week number for the newsletter"
+    required: true
+    validation:
+      min: 1
+      max: 52
+      
+  theme:
+    type: "string"
+    default: "Nature Aquarium Fundamentals"
+    description: "Weekly theme or focus area"
+    required: false
+    
+  publish_date:
+    type: "date"
+    description: "Newsletter publication date"
+    required: true
+    format: "YYYY-MM-DD"
+  
+  # Subscriber personalization
+  subscriber_name:
+    type: "string"
+    default: "Fellow Aquascaper"
+    description: "Personalized subscriber name"
+    required: false
+    personalization: true
+    
+  # Featured setup section
+  featured_setup:
+    type: "object"
+    required: true
+    properties:
+      hero_image:
+        type: "url"
+        description: "Main aquascape image"
+        required: true
+        validation:
+          formats: ["jpg", "png", "webp"]
+          max_size: "2MB"
+      title:
+        type: "string"
+        required: true
+      designer_name:
+        type: "string"
+        required: true
+      designer_bio:
+        type: "string"
+        max_length: 200
+      tank_size:
+        type: "string"
+        default: "120L (60cm x 40cm x 50cm)"
+      lighting:
+        type: "string" 
+        default: "LED full spectrum, 8 hours daily"
+      filtration:
+        type: "string"
+        default: "Canister filter, 6x turnover"
+      co2:
+        type: "string"
+        default: "Pressurized CO2 system, 30mg/L"
+      substrate:
+        type: "string"
+        default: "Aqua soil with mineral supplements"
+      tutorial_link:
+        type: "url"
+        required: false
+        
+  # Plant spotlight section
+  plant_spotlight:
+    type: "object"
+    required: true
+    properties:
+      name:
+        type: "string"
+        default: "Rotala Rotundifolia"
+        required: true
+      image:
+        type: "url"
+        required: true
+        validation:
+          formats: ["jpg", "png", "webp"]
+      difficulty:
+        type: "string"
+        enum: ["Beginner", "Intermediate", "Advanced"]
+        default: "Beginner"
+      growth_rate:
+        type: "string"
+        enum: ["Slow", "Medium", "Fast"]
+        default: "Fast"
+      light:
+        type: "string"
+        default: "Medium to High"
+      co2:
+        type: "string"
+        default: "Recommended but not essential"
+      temperature:
+        type: "string"
+        default: "20-28°C"
+      ph:
+        type: "string"
+        default: "6.0-7.5"
+      design_tips:
+        type: "string"
+        max_length: 300
+      source_link:
+        type: "url"
+        description: "Green Aqua product link"
+        
+  # Community feature section
+  community_feature:
+    type: "object"
+    required: true
+    properties:
+      title:
+        type: "string"
+        required: true
+      author:
+        type: "string"
+        required: true
+      image:
+        type: "url"
+        required: true
+      story:
+        type: "string"
+        max_length: 400
+        required: true
+      challenges:
+        type: "string"
+        max_length: 200
+      social_link:
+        type: "url"
+      discussion_link:
+        type: "url"
+        
+  # Tech talk section
+  tech_talk:
+    type: "object"
+    required: true
+    properties:
+      title:
+        type: "string"
+        required: true
+      product_image:
+        type: "url"
+        required: true
+      review:
+        type: "string"
+        max_length: 500
+        required: true
+      pros:
+        type: "string"
+        required: true
+      cons:
+        type: "string"
+        required: true
+      review_link:
+        type: "url"
+        
+  # Quick tips
+  tip_1:
+    type: "string"
+    default: "Maintain 30-50% weekly water changes to keep nutrients balanced and prevent algae blooms."
+    max_length: 150
+  tip_2:
+    type: "string" 
+    default: "Gradually increase lighting duration over 2-3 weeks when starting a new setup to prevent algae."
+    max_length: 150
+  tip_3:
+    type: "string"
+    default: "Trim fast-growing plants weekly to prevent overshadowing and maintain good circulation."
+    max_length: 150
+  tip_4:
+    type: "string"
+    default: "Monitor pH and KH to ensure optimal CO2 levels without stressing fish."
+    max_length: 150
+  tip_5:
+    type: "string"
+    default: "Start propagating your own plants early - it's the most cost-effective way to fill your aquascape."
+    max_length: 150
+    
+  # Events section
+  event_1:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        default: "International Aquascaping Contest 2025"
+      deadline:
+        type: "string"
+        default: "March 15, 2025"
+      description:
+        type: "string"
+        max_length: 200
+      registration_link:
+        type: "url"
+        
+  event_2:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        default: "Green Aqua Workshop Series"
+      date:
+        type: "string"
+        default: "February 20, 2025"
+      description:
+        type: "string"
+        max_length: 200
+      signup_link:
+        type: "url"
+        
+  community_challenge:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        default: "February Challenge: Iwagumi Style"
+      description:
+        type: "string"
+        max_length: 200
+      submission_link:
+        type: "url"
+        
+  # Social links
+  social_links:
+    type: "object"
+    properties:
+      instagram:
+        type: "url"
+      youtube:
+        type: "url"
+      facebook:
+        type: "url"
+      forum:
+        type: "url"
+        
+  # Footer links
+  unsubscribe_link:
+    type: "url"
+    required: true
+  preferences_link:
+    type: "url"
+    required: true
+  archive_link:
+    type: "url"
+    
+  # Preview content
+  next_week_preview:
+    type: "string"
+    default: "Week 2: Advanced Plant Carpeting Techniques - Learn how to create lush foreground carpets that stay healthy and vibrant."
+    max_length: 200
+
+# Content generation hints for AI
+ai_generation:
+  content_areas:
+    - featured_setup: "Generate aquascape descriptions with technical specifications"
+    - plant_spotlight: "Provide plant care information and design usage tips"
+    - community_feature: "Create inspiring community member stories"
+    - tech_talk: "Write balanced product reviews with pros/cons"
+    - tips: "Generate practical maintenance and setup advice"
+    
+  tone: "Educational yet accessible, encouraging, community-focused"
+  expertise_level: "Mixed audience from beginners to advanced"
+  
+# Integration settings
+integrations:
+  green_aqua:
+    enabled: true
+    product_links: true
+    partnership_badges: true
+    affiliate_tracking: true
+    
+  social_media:
+    auto_share: true
+    hashtags: ["#AquaScene", "#Aquascaping", "#PlantedTank", "#NatureAquarium"]
+    
+  analytics:
+    track_opens: true
+    track_clicks: true
+    track_social_shares: true
+    
+# A/B testing configuration
+ab_testing:
+  subject_line: true
+  send_time: true
+  content_order: true
+  cta_buttons: true
+  
+# Automation rules
+automation:
+  personalization:
+    subscriber_name: "auto_detect"
+    location_based_tips: true
+    experience_level_content: true
+    
+  scheduling:
+    optimal_send_time: "Tuesday 10:00 AM local"
+    timezone_optimization: true
+    
+  follow_up:
+    non_openers: "48_hours"
+    link_clickers: "related_content"
+
+# Template validation rules
+validation:
+  required_sections: ["header", "featured_setup", "plant_spotlight", "footer"]
+  max_email_size: "1MB"
+  min_text_to_image_ratio: "60%"
+  accessibility_check: true
+  spam_score_check: true
+  
+# Localization support
+localization:
+  default_language: "en"
+  supported_languages: ["en", "bg", "de", "hu", "ro"]
+  rtl_support: false
+  currency_localization: true
+  date_format_localization: true

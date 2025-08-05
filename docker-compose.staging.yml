@@ -1,0 +1,499 @@
+# AquaScape Content Engine - Staging Environment
+# Version: 1.0
+# Staging environment with production-like configuration
+
+version: '3.8'
+
+networks:
+  content-engine-staging:
+    driver: bridge
+  monitoring-staging:
+    driver: bridge
+
+volumes:
+  postgres_staging_data:
+  redis_staging_data:
+  prometheus_staging_data:
+  grafana_staging_data:
+  nginx_staging_certs:
+  backup_staging_data:
+  minio_staging_data:
+
+services:
+  # ===================
+  # DATABASE SERVICES
+  # ===================
+  
+  postgres:
+    image: postgres:15
+    container_name: content-engine-postgres-staging
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${STAGING_DB_NAME:-content_engine_staging}
+      POSTGRES_USER: ${STAGING_DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${STAGING_DB_PASSWORD}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_staging_data:/var/lib/postgresql/data
+      - ./infrastructure/database/init:/docker-entrypoint-initdb.d:ro
+      - ./infrastructure/database/staging-backups:/backups
+    ports:
+      - "${STAGING_DB_PORT:-5433}:5432"
+    networks:
+      - content-engine-staging
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${STAGING_DB_USER:-postgres} -d ${STAGING_DB_NAME:-content_engine_staging}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  redis:
+    image: redis:7-alpine
+    container_name: content-engine-redis-staging
+    restart: unless-stopped
+    command: >
+      redis-server
+      --appendonly yes
+      --requirepass ${STAGING_REDIS_PASSWORD}
+      --maxmemory 1gb
+      --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_staging_data:/data
+      - ./infrastructure/redis/staging.conf:/etc/redis/redis.conf:ro
+    ports:
+      - "${STAGING_REDIS_PORT:-6380}:6379"
+    networks:
+      - content-engine-staging
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ===================
+  # STORAGE SERVICES
+  # ===================
+  
+  minio:
+    image: minio/minio:latest
+    container_name: content-engine-minio-staging
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${STAGING_MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${STAGING_MINIO_ROOT_PASSWORD}
+    volumes:
+      - minio_staging_data:/data
+    ports:
+      - "9010:9000"
+      - "9011:9001"
+    networks:
+      - content-engine-staging
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ===================
+  # CORE SERVICES
+  # ===================
+  
+  content-manager:
+    build:
+      context: ./services/content-manager
+      dockerfile: Dockerfile
+      target: staging
+    container_name: content-engine-api-staging
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://${STAGING_DB_USER:-postgres}:${STAGING_DB_PASSWORD}@postgres:5432/${STAGING_DB_NAME:-content_engine_staging}
+      - REDIS_URL=redis://:${STAGING_REDIS_PASSWORD}@redis:6379/0
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY=${STAGING_MINIO_ROOT_USER}
+      - MINIO_SECRET_KEY=${STAGING_MINIO_ROOT_PASSWORD}
+      - LOG_LEVEL=INFO
+      - SENTRY_DSN=${STAGING_SENTRY_DSN}
+    ports:
+      - "${STAGING_API_PORT:-8010}:8000"
+    networks:
+      - content-engine-staging
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+  ai-processor:
+    build:
+      context: ./services/ai-processor
+      dockerfile: Dockerfile
+      target: staging
+    container_name: content-engine-ai-staging
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://${STAGING_DB_USER:-postgres}:${STAGING_DB_PASSWORD}@postgres:5432/${STAGING_DB_NAME:-content_engine_staging}
+      - REDIS_URL=redis://:${STAGING_REDIS_PASSWORD}@redis:6379/1
+      - OPENAI_API_KEY=${STAGING_OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${STAGING_ANTHROPIC_API_KEY}
+      - LOG_LEVEL=INFO
+      - SENTRY_DSN=${STAGING_SENTRY_DSN}
+    ports:
+      - "${STAGING_AI_PORT:-8011}:8001"
+    networks:
+      - content-engine-staging
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+  web-scraper:
+    build:
+      context: ./services/web-scraper
+      dockerfile: Dockerfile
+      target: staging
+    container_name: content-engine-scraper-staging
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://${STAGING_DB_USER:-postgres}:${STAGING_DB_PASSWORD}@postgres:5432/${STAGING_DB_NAME:-content_engine_staging}
+      - REDIS_URL=redis://:${STAGING_REDIS_PASSWORD}@redis:6379/2
+      - SCRAPER_USER_AGENT=${STAGING_SCRAPER_USER_AGENT:-AquaSceneBot-Staging/1.0}
+      - SCRAPER_DELAY=${STAGING_SCRAPER_DELAY:-3}
+      - LOG_LEVEL=INFO
+      - SENTRY_DSN=${STAGING_SENTRY_DSN}
+    ports:
+      - "${STAGING_SCRAPER_PORT:-8012}:8002"
+    networks:
+      - content-engine-staging
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "3"
+
+  distributor:
+    build:
+      context: ./services/distributor
+      dockerfile: Dockerfile
+      target: staging
+    container_name: content-engine-distributor-staging
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://${STAGING_DB_USER:-postgres}:${STAGING_DB_PASSWORD}@postgres:5432/${STAGING_DB_NAME:-content_engine_staging}
+      - REDIS_URL=redis://:${STAGING_REDIS_PASSWORD}@redis:6379/3
+      - SENDGRID_API_KEY=${STAGING_SENDGRID_API_KEY}
+      - INSTAGRAM_ACCESS_TOKEN=${STAGING_INSTAGRAM_ACCESS_TOKEN}
+      - INSTAGRAM_BUSINESS_ACCOUNT_ID=${STAGING_INSTAGRAM_BUSINESS_ACCOUNT_ID}
+      - LOG_LEVEL=INFO
+      - SENTRY_DSN=${STAGING_SENTRY_DSN}
+    ports:
+      - "${STAGING_DISTRIBUTOR_PORT:-8013}:8003"
+    networks:
+      - content-engine-staging
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8003/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "3"
+
+  subscriber-manager:
+    build:
+      context: ./services/subscriber-manager
+      dockerfile: Dockerfile
+      target: staging
+    container_name: content-engine-subscribers-staging
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=staging
+      - DATABASE_URL=postgresql://${STAGING_DB_USER:-postgres}:${STAGING_DB_PASSWORD}@postgres:5432/${STAGING_DB_NAME:-content_engine_staging}
+      - REDIS_URL=redis://:${STAGING_REDIS_PASSWORD}@redis:6379/4
+      - ENCRYPTION_KEY=${STAGING_ENCRYPTION_KEY}
+      - JWT_SECRET=${STAGING_JWT_SECRET}
+      - LOG_LEVEL=INFO
+      - SENTRY_DSN=${STAGING_SENTRY_DSN}
+    ports:
+      - "${STAGING_SUBSCRIBER_PORT:-8014}:8004"
+    networks:
+      - content-engine-staging
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8004/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "3"
+
+  # ===================
+  # ADMIN DASHBOARD
+  # ===================
+  
+  admin-dashboard:
+    build:
+      context: ./admin-dashboard
+      dockerfile: Dockerfile
+      target: staging
+    container_name: content-engine-admin-staging
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=staging
+      - REACT_APP_API_URL=https://staging-api.aquascene.com
+      - REACT_APP_AI_SERVICE_URL=https://staging-ai.aquascene.com
+      - REACT_APP_SCRAPER_URL=https://staging-scraper.aquascene.com
+      - REACT_APP_DISTRIBUTOR_URL=https://staging-distributor.aquascene.com
+      - REACT_APP_SUBSCRIBER_URL=https://staging-subscribers.aquascene.com
+      - REACT_APP_SENTRY_DSN=${STAGING_FRONTEND_SENTRY_DSN}
+    ports:
+      - "${STAGING_ADMIN_PORT:-3011}:3000"
+    networks:
+      - content-engine-staging
+    depends_on:
+      - content-manager
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.3'
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ===================
+  # REVERSE PROXY
+  # ===================
+  
+  nginx:
+    image: nginx:alpine
+    container_name: content-engine-nginx-staging
+    restart: unless-stopped
+    volumes:
+      - ./infrastructure/nginx/staging.conf:/etc/nginx/nginx.conf:ro
+      - ./infrastructure/nginx/staging/conf.d:/etc/nginx/conf.d:ro
+      - nginx_staging_certs:/etc/nginx/certs
+      - ./infrastructure/nginx/html:/usr/share/nginx/html:ro
+    ports:
+      - "8080:80"
+      - "8443:443"
+    networks:
+      - content-engine-staging
+    depends_on:
+      - content-manager
+      - admin-dashboard
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+  # ===================
+  # MONITORING STACK
+  # ===================
+  
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: content-engine-prometheus-staging
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.enable-lifecycle'
+      - '--web.enable-admin-api'
+    volumes:
+      - ./infrastructure/monitoring/prometheus/staging.yml:/etc/prometheus/prometheus.yml:ro
+      - ./infrastructure/monitoring/prometheus/rules:/etc/prometheus/rules:ro
+      - prometheus_staging_data:/prometheus
+    ports:
+      - "9091:9090"
+    networks:
+      - content-engine-staging
+      - monitoring-staging
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "3"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: content-engine-grafana-staging
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=${STAGING_GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${STAGING_GRAFANA_PASSWORD}
+      - GF_INSTALL_PLUGINS=redis-datasource
+      - GF_FEATURE_TOGGLES_ENABLE=publicDashboards
+      - GF_SERVER_ROOT_URL=https://staging-monitoring.aquascene.com
+    volumes:
+      - grafana_staging_data:/var/lib/grafana
+      - ./infrastructure/monitoring/grafana/staging/provisioning:/etc/grafana/provisioning:ro
+      - ./infrastructure/monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "3010:3000"
+    networks:
+      - content-engine-staging
+      - monitoring-staging
+    depends_on:
+      - prometheus
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ===================
+  # BACKUP SERVICE
+  # ===================
+  
+  backup-service:
+    build:
+      context: ./infrastructure/backup
+      dockerfile: Dockerfile
+    container_name: content-engine-backup-staging
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgresql://${STAGING_DB_USER:-postgres}:${STAGING_DB_PASSWORD}@postgres:5432/${STAGING_DB_NAME:-content_engine_staging}
+      - BACKUP_SCHEDULE=${STAGING_BACKUP_SCHEDULE:-0 3 * * *}
+      - BACKUP_RETENTION_DAYS=${STAGING_BACKUP_RETENTION_DAYS:-14}
+      - S3_ENDPOINT=${STAGING_S3_ENDPOINT}
+      - S3_ACCESS_KEY=${STAGING_S3_ACCESS_KEY}
+      - S3_SECRET_KEY=${STAGING_S3_SECRET_KEY}
+      - S3_BUCKET=${STAGING_S3_BACKUP_BUCKET:-content-engine-staging-backups}
+    volumes:
+      - backup_staging_data:/backups
+      - ./infrastructure/database/staging-backups:/database-backups
+    networks:
+      - content-engine-staging
+    depends_on:
+      postgres:
+        condition: service_healthy
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

@@ -1,0 +1,390 @@
+# Announcements Newsletter Template Configuration
+# AquaScene Content Engine - Newsletter Templates
+
+template:
+  name: "announcements"
+  display_name: "Announcements"
+  category: "newsletter"
+  type: "announcement"
+  version: "1.0.0"
+  
+description: "Template for product releases, partnerships, events, and major news announcements"
+
+# Template metadata
+metadata:
+  author: "AquaScene Content Engine"
+  created: "2025-08-05"
+  updated: "2025-08-05"
+  tags: ["announcement", "product-launch", "partnership", "event", "news"]
+  
+# Email client compatibility
+compatibility:
+  outlook: true
+  gmail: true
+  apple_mail: true
+  yahoo: true
+  android: true
+  ios: true
+  mobile_responsive: true
+
+# Template variables and their types
+variables:
+  # Header section
+  announcement_title:
+    type: "string"
+    default: "Big News for Aquascapers!"
+    description: "Main announcement headline"
+    required: true
+    max_length: 60
+    
+  announcement_type:
+    type: "string"
+    enum: ["🚀 PRODUCT LAUNCH", "🤝 PARTNERSHIP", "🎉 EVENT", "📢 NEWS UPDATE", "⚡ FLASH SALE"]
+    default: "🚀 PRODUCT LAUNCH"
+    required: true
+    
+  urgency_level:
+    type: "string"
+    enum: ["low", "medium", "high"]
+    default: "medium"
+    description: "Urgency level affects banner color and messaging"
+    
+  badge_text:
+    type: "string"
+    default: "NEW"
+    description: "Badge text on main announcement"
+    max_length: 20
+  
+  # Subscriber personalization
+  subscriber_name:
+    type: "string"
+    default: "Fellow Aquascaper"
+    description: "Personalized subscriber name"
+    required: false
+    personalization: true
+    
+  # Main announcement section
+  main_image:
+    type: "url"
+    description: "Main announcement image"
+    validation:
+      formats: ["jpg", "png", "webp"]
+      max_size: "1MB"
+      
+  main_headline:
+    type: "string"
+    default: "Revolutionary New Aquascaping System"
+    description: "Primary headline for the announcement"
+    required: true
+    max_length: 80
+    
+  main_message:
+    type: "string"
+    description: "Main announcement message"
+    required: true
+    max_length: 600
+    
+  key_points:
+    type: "array"
+    description: "Key highlights as bullet points"
+    items:
+      type: "string"
+      max_length: 100
+      
+  # Product launch section (conditional)
+  product_launch:
+    type: "object"
+    description: "Product launch details (if applicable)"
+    properties:
+      name:
+        type: "string"
+        default: "AquaScene Pro System"
+        required: true
+      image:
+        type: "url"
+        validation:
+          formats: ["jpg", "png", "webp"]
+      description:
+        type: "string"
+        max_length: 300
+        required: true
+      features:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+              required: true
+            description:
+              type: "string"
+              required: true
+            icon:
+              type: "string"
+              default: "✅"
+      pricing:
+        type: "object"
+        properties:
+          price:
+            type: "string"
+            required: true
+          currency:
+            type: "string"
+            default: "EUR"
+          discount:
+            type: "string"
+            description: "Discount amount or percentage"
+            
+  # Partnership announcement (conditional)
+  partnership:
+    type: "object"
+    description: "Partnership announcement details"
+    properties:
+      title:
+        type: "string"
+        default: "Exciting New Partnership"
+      logos:
+        type: "array"
+        items:
+          type: "url"
+          description: "Partner logo images"
+      description:
+        type: "string"
+        max_length: 400
+        required: true
+      benefits:
+        type: "array"
+        items:
+          type: "string"
+          max_length: 150
+          
+  # Event announcement (conditional)
+  event:
+    type: "object"
+    description: "Event announcement details"
+    properties:
+      title:
+        type: "string"
+        default: "AquaScape Conference 2025"
+        required: true
+      image:
+        type: "url"
+        validation:
+          formats: ["jpg", "png", "webp"]
+      description:
+        type: "string"
+        max_length: 400
+        required: true
+      date:
+        type: "string"
+        default: "March 15-17, 2025"
+        required: true
+      location:
+        type: "string"
+        default: "Budapest, Hungary"
+        required: true
+      price:
+        type: "string"
+        default: "€149 Early Bird"
+      capacity:
+        type: "string"
+        default: "Limited to 200 attendees"
+      speakers:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            name:
+              type: "string"
+              required: true
+            title:
+              type: "string"
+              required: true
+            photo:
+              type: "url"
+              
+  # Countdown timer (conditional)
+  countdown:
+    type: "object"
+    description: "Countdown timer details"
+    properties:
+      title:
+        type: "string"
+        default: "Launch Countdown"
+      message:
+        type: "string"
+        default: "Don't miss out on this limited-time opportunity!"
+      days:
+        type: "string"
+        default: "7"
+      hours:
+        type: "string"
+        default: "12"
+      minutes:
+        type: "string"
+        default: "30"
+      seconds:
+        type: "string"
+        default: "15"
+        
+  # Call to action section
+  cta_message:
+    type: "string"
+    default: "Join thousands of aquascapers who have already discovered the future of underwater landscaping."
+    max_length: 200
+    
+  primary_cta_text:
+    type: "string"
+    default: "Get Started Now"
+    max_length: 30
+    required: true
+    
+  primary_cta_link:
+    type: "url"
+    required: true
+    
+  secondary_cta_text:
+    type: "string"
+    default: "Learn More"
+    max_length: 30
+    
+  secondary_cta_link:
+    type: "url"
+    
+  # Social proof
+  social_proof:
+    type: "object"
+    properties:
+      quote:
+        type: "string"
+        default: "This has completely transformed my aquascaping approach!"
+        max_length: 150
+      author:
+        type: "string"
+        default: "Maria K., Professional Aquascaper"
+        max_length: 80
+        
+  # Footer links
+  share_link:
+    type: "url"
+    description: "Social sharing link"
+    
+  community_link:
+    type: "url"
+    description: "Community discussion link"
+    
+  support_link:
+    type: "url"
+    description: "Support/help link"
+    
+  unsubscribe_link:
+    type: "url"
+    required: true
+  preferences_link:
+    type: "url"
+    required: true
+    
+  # Preview content
+  upcoming_news:
+    type: "string"
+    default: "More exciting announcements coming soon. Follow us on social media for the latest updates and behind-the-scenes content."
+    max_length: 200
+
+# Content generation hints for AI
+ai_generation:
+  content_areas:
+    - main_message: "Create compelling announcement copy with clear value proposition"
+    - key_points: "Generate concise benefit statements"
+    - product_features: "List practical features with user benefits"
+    - event_description: "Write engaging event details with clear value"
+    
+  tone: "Exciting, professional, action-oriented, credible"
+  urgency_techniques: ["limited_time", "exclusive_access", "early_bird", "limited_quantity"]
+  
+# Integration settings
+integrations:
+  green_aqua:
+    enabled: true
+    product_links: true
+    partnership_badges: true
+    affiliate_tracking: true
+    
+  social_media:
+    auto_share: true
+    hashtags: ["#AquaScene", "#Announcement", "#Aquascaping", "#BigNews"]
+    share_buttons: true
+    
+  analytics:
+    track_opens: true
+    track_clicks: true
+    track_conversions: true
+    track_social_shares: true
+    urgency_effectiveness: true
+    
+# A/B testing configuration
+ab_testing:
+  subject_line: true
+  headline_variations: true
+  cta_button_text: true
+  cta_button_color: true
+  urgency_level: true
+  send_time: true
+  
+# Automation rules
+automation:
+  personalization:
+    subscriber_name: "auto_detect"
+    content_based_on: ["purchase_history", "engagement_level", "preferences"]
+    timing_optimization: true
+    
+  follow_up:
+    non_openers: "24_hours"
+    non_clickers: "72_hours"
+    converters: "thank_you_sequence"
+    
+  urgency_automation:
+    countdown_timers: "real_time"
+    stock_levels: "if_applicable"
+    deadline_reminders: true
+
+# Template validation rules
+validation:
+  required_sections: ["header", "main_announcement", "cta_section", "footer"]
+  max_email_size: "1.5MB"
+  cta_button_required: true
+  spam_score_check: true
+  mobile_optimization_check: true
+  
+# Conditional content rules
+conditional_content:
+  display_rules:
+    - if: "announcement_type == 'PRODUCT LAUNCH'"
+      show: ["product_launch", "countdown"]
+    - if: "announcement_type == 'PARTNERSHIP'"
+      show: ["partnership"]
+    - if: "announcement_type == 'EVENT'"
+      show: ["event", "countdown"]
+    - if: "urgency_level == 'high'"
+      show: ["urgency_banner", "countdown"]
+      
+# Conversion tracking
+conversion_tracking:
+  primary_goals: ["click_through", "sign_up", "purchase", "registration"]
+  secondary_goals: ["social_share", "forward", "reply"]
+  attribution_window: "30_days"
+  
+# Localization support
+localization:
+  default_language: "en"
+  supported_languages: ["en", "bg", "de", "hu", "ro"]
+  currency_localization: true
+  date_format_localization: true
+  timezone_adjustment: true
+  
+# Compliance settings
+compliance:
+  gdpr_compliant: true
+  unsubscribe_required: true
+  sender_identification: true
+  privacy_policy_link: true
+  terms_of_service_link: true

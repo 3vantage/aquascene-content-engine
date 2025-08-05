@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{guide_title}} - AquaScene How-To Guide</title>
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:AllowPNG/>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    <style>
+        /* Reset styles */
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        /* Base styles */
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            background-color: #f0f8ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Container */
+        .email-container {
+            max-width: 650px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+
+        /* Header styles */
+        .header {
+            background: linear-gradient(135deg, #1565c0 0%, #1976d2 50%, #42a5f5 100%);
+            padding: 25px;
+            text-align: center;
+        }
+        .header h1 {
+            color: #ffffff;
+            font-size: 32px;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .header .guide-type {
+            background-color: rgba(255,255,255,0.2);
+            color: #e3f2fd;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Guide metadata */
+        .guide-meta {
+            background: linear-gradient(135deg, #e1f5fe 0%, #f0f8ff 100%);
+            padding: 20px;
+            border-bottom: 3px solid #29b6f6;
+        }
+        .meta-item {
+            display: inline-block;
+            margin: 5px 15px 5px 0;
+            color: #0277bd;
+            font-weight: 500;
+        }
+
+        /* Content sections */
+        .content-section {
+            padding: 25px;
+            border-bottom: 1px solid #e3f2fd;
+        }
+        .section-title {
+            color: #1565c0;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+            border-left: 5px solid #29b6f6;
+            padding-left: 15px;
+        }
+
+        /* Step-by-step styles */
+        .step-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border: 2px solid #29b6f6;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .step-header {
+            background: linear-gradient(135deg, #29b6f6 0%, #1976d2 100%);
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .step-content {
+            padding: 20px;
+        }
+        .step-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Materials list */
+        .materials-section {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .materials-list {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        .material-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e8f5e8;
+        }
+        .material-item:last-child {
+            border-bottom: none;
+        }
+        .material-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            color: #4caf50;
+        }
+
+        /* Tools required */
+        .tools-section {
+            background: linear-gradient(135deg, #fff3e0 0%, #fff8e1 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        /* Tips and warnings */
+        .tip-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #e8f5e8 100%);
+            border-left: 5px solid #4fc3f7;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffebee 100%);
+            border-left: 5px solid #ff9800;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Progress indicator */
+        .progress-indicator {
+            background-color: #f5f5f5;
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #4caf50, #81c784);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Troubleshooting section */
+        .troubleshooting {
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            border: 2px solid #bdbdbd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .problem-solution {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #ff7043;
+        }
+
+        /* Green Aqua Partnership */
+        .partnership-badge {
+            background: linear-gradient(45deg, #2e7d32, #4caf50);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        /* Buttons */
+        .cta-button {
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+            color: #ffffff !important;
+            padding: 14px 28px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 15px 10px 15px 0;
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+        }
+        .cta-button:hover {
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #263238;
+            color: #b0bec5;
+            padding: 30px 25px;
+            text-align: center;
+        }
+        .footer a {
+            color: #4fc3f7;
+            text-decoration: none;
+        }
+
+        /* Mobile responsive */
+        @media screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+            }
+            .step-content {
+                padding: 15px;
+            }
+            .material-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .material-icon {
+                margin-bottom: 5px;
+            }
+        }
+
+        /* Personalization */
+        .personalized {
+            background-color: #e3f2fd;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>{{guide_title|default:"Complete Aquascaping Setup Guide"}}</h1>
+            <div class="guide-type">🎯 HOW-TO GUIDE</div>
+            <div class="partnership-badge">
+                🤝 Powered by Green Aqua Partnership
+            </div>
+        </div>
+
+        <!-- Guide Metadata -->
+        <div class="guide-meta">
+            <div class="meta-item">⏱️ <strong>Duration:</strong> {{estimated_time|default:"2-3 hours"}}</div>
+            <div class="meta-item">📊 <strong>Difficulty:</strong> {{difficulty_level|default:"Intermediate"}}</div>
+            <div class="meta-item">💰 <strong>Budget:</strong> {{estimated_cost|default:"€150-300"}}</div>
+            <div class="meta-item">👤 <strong>Experience:</strong> {{required_experience|default:"6+ months"}}</div>
+        </div>
+
+        <!-- Introduction Section -->
+        <div class="content-section">
+            <h2 class="section-title">📖 Introduction</h2>
+            <p style="font-size: 16px; line-height: 1.6; color: #455a64;">
+                Hello <span class="personalized">{{subscriber_name|default:"Fellow Aquascaper"}}</span>! 
+                {{introduction|default:"Today we'll walk through creating a stunning nature aquarium from start to finish. This comprehensive guide covers everything from substrate preparation to the final plant placement, ensuring your success every step of the way."}}
+            </p>
+            
+            <div class="tip-box">
+                <strong>💡 Pro Tip:</strong> {{intro_tip|default:"Read through the entire guide before starting. Having all materials ready and understanding each step will make the process much smoother."}}
+            </div>
+        </div>
+
+        <!-- Materials Needed Section -->
+        <div class="content-section">
+            <h2 class="section-title">🛠️ Materials & Equipment</h2>
+            
+            <div class="materials-section">
+                <h3 style="color: #2e7d32; margin: 0 0 15px 0;">Essential Materials</h3>
+                <div class="materials-list">
+                    {{#each materials}}
+                    <div class="material-item">
+                        <span class="material-icon">{{icon|default:"✓"}}</span>
+                        <div>
+                            <strong>{{name}}</strong> - {{description}}
+                            {{#if green_aqua_link}}<br><a href="{{green_aqua_link}}" style="color: #4caf50; font-size: 14px;">🛒 Get from Green Aqua</a>{{/if}}
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="material-item">
+                        <span class="material-icon">🏺</span>
+                        <div><strong>Aquarium Tank</strong> - 60cm x 40cm x 50cm (120L)</div>
+                    </div>
+                    <div class="material-item">
+                        <span class="material-icon">💡</span>
+                        <div><strong>LED Lighting</strong> - Full spectrum aquarium light, 30-40W</div>
+                    </div>
+                    <div class="material-item">
+                        <span class="material-icon">🌱</span>
+                        <div><strong>Aqua Soil</strong> - 9L bag for substrate base</div>
+                    </div>
+                    <div class="material-item">
+                        <span class="material-icon">🪨</span>
+                        <div><strong>Hardscape Materials</strong> - Driftwood and rocks for structure</div>
+                    </div>
+                    <div class="material-item">
+                        <span class="material-icon">🌿</span>
+                        <div><strong>Aquatic Plants</strong> - Variety pack with foreground, midground, and background plants</div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="tools-section">
+                <h3 style="color: #f57c00; margin: 0 0 15px 0;">Tools Required</h3>
+                <p style="margin: 0; color: #5d4037;">{{tools_list|default:"Aquascaping tweezers, scissors, substrate spatula, spray bottle, cleaning cloth, measuring cup"}}</p>
+            </div>
+        </div>
+
+        <!-- Step-by-Step Guide -->
+        <div class="content-section">
+            <h2 class="section-title">📋 Step-by-Step Instructions</h2>
+            
+            <!-- Progress Indicator -->
+            <div class="progress-indicator">
+                <div class="progress-bar" style="width: 0%;" id="progress-bar"></div>
+            </div>
+            <p style="text-align: center; color: #666; font-size: 14px;">Follow each step carefully for best results</p>
+
+            {{#each steps}}
+            <div class="step-container">
+                <div class="step-header">
+                    Step {{@index}} of {{../total_steps|default:"8"}}: {{title|default:"Setup Step"}}
+                </div>
+                <div class="step-content">
+                    {{#if image}}
+                    <img src="{{image}}" alt="{{title}}" class="step-image">
+                    {{/if}}
+                    
+                    <p style="font-size: 16px; line-height: 1.6; color: #455a64;">{{description}}</p>
+                    
+                    {{#if detailed_instructions}}
+                    <ul style="color: #455a64; line-height: 1.6;">
+                        {{#each detailed_instructions}}
+                        <li>{{this}}</li>
+                        {{/each}}
+                    </ul>
+                    {{/if}}
+                    
+                    {{#if tip}}
+                    <div class="tip-box">
+                        <strong>💡 Step Tip:</strong> {{tip}}
+                    </div>
+                    {{/if}}
+                    
+                    {{#if warning}}
+                    <div class="warning-box">
+                        <strong>⚠️ Important:</strong> {{warning}}
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+            {{else}}
+            <!-- Default steps if none provided -->
+            <div class="step-container">
+                <div class="step-header">Step 1 of 8: Tank Preparation</div>
+                <div class="step-content">
+                    <img src="https://via.placeholder.com/600x300/1976d2/ffffff?text=Step+1+Tank+Preparation" alt="Tank Preparation" class="step-image">
+                    <p style="font-size: 16px; line-height: 1.6; color: #455a64;">
+                        Clean your aquarium thoroughly with warm water. Avoid using any detergents or chemicals. 
+                        Rinse until there's no residue left and dry with a clean, lint-free cloth.
+                    </p>
+                    <div class="tip-box">
+                        <strong>💡 Step Tip:</strong> Position your tank in its final location before adding substrate - it will be much heavier afterward!
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-container">
+                <div class="step-header">Step 2 of 8: Substrate Layout</div>
+                <div class="step-content">
+                    <img src="https://via.placeholder.com/600x300/1976d2/ffffff?text=Step+2+Substrate" alt="Substrate Layout" class="step-image">
+                    <p style="font-size: 16px; line-height: 1.6; color: #455a64;">
+                        Create a sloping substrate bed, higher in the back (6-8cm) and lower in the front (3-4cm). 
+                        This creates depth and helps with the overall composition.
+                    </p>
+                    <div class="warning-box">
+                        <strong>⚠️ Important:</strong> Don't rinse aqua soil - it will break down and cloud your water.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-container">
+                <div class="step-header">Step 3 of 8: Hardscape Placement</div>
+                <div class="step-content">
+                    <img src="https://via.placeholder.com/600x300/1976d2/ffffff?text=Step+3+Hardscape" alt="Hardscape Placement" class="step-image">
+                    <p style="font-size: 16px; line-height: 1.6; color: #455a64;">
+                        Arrange your rocks and driftwood following the rule of thirds. Create focal points and 
+                        ensure the hardscape looks natural from the front viewing angle.
+                    </p>
+                    <div class="tip-box">
+                        <strong>💡 Step Tip:</strong> Take photos from different angles to check your composition before proceeding.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-container">
+                <div class="step-header">Step 4 of 8: Initial Water Fill</div>
+                <div class="step-content">
+                    <img src="https://via.placeholder.com/600x300/1976d2/ffffff?text=Step+4+Water+Fill" alt="Water Fill" class="step-image">
+                    <p style="font-size: 16px; line-height: 1.6; color: #455a64;">
+                        Slowly add water using a plate or bowl to diffuse the flow. Fill to about 50% capacity 
+                        to make planting easier while preventing substrate disturbance.
+                    </p>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+
+        <!-- Troubleshooting Section -->
+        <div class="content-section">
+            <h2 class="section-title">🔧 Common Issues & Solutions</h2>
+            
+            <div class="troubleshooting">
+                {{#each troubleshooting_items}}
+                <div class="problem-solution">
+                    <h4 style="color: #d84315; margin: 0 0 10px 0;">{{problem|default:"Common Issue"}}</h4>
+                    <p style="margin: 0; color: #455a64;"><strong>Solution:</strong> {{solution}}</p>
+                </div>
+                {{else}}
+                <div class="problem-solution">
+                    <h4 style="color: #d84315; margin: 0 0 10px 0;">Cloudy Water After Setup</h4>
+                    <p style="margin: 0; color: #455a64;"><strong>Solution:</strong> This is normal with aqua soil. Run your filter and the water will clear in 24-48 hours. Avoid large water changes initially.</p>
+                </div>
+                <div class="problem-solution">
+                    <h4 style="color: #d84315; margin: 0 0 10px 0;">Plants Floating or Uprooting</h4>
+                    <p style="margin: 0; color: #455a64;"><strong>Solution:</strong> Plant deeper and use tweezers to firmly anchor roots. Some floating is normal in the first week.</p>
+                </div>
+                <div class="problem-solution">
+                    <h4 style="color: #d84315; margin: 0 0 10px 0;">Algae Growth in First Month</h4>
+                    <p style="margin: 0; color: #455a64;"><strong>Solution:</strong> Reduce lighting to 6 hours daily and increase CO2. This is part of the natural cycling process.</p>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <!-- Maintenance Schedule -->
+        <div class="content-section">
+            <h2 class="section-title">📅 Maintenance Schedule</h2>
+            
+            <div style="background: linear-gradient(135deg, #f3e5f5 0%, #fce4ec 100%); padding: 20px; border-radius: 10px;">
+                <h3 style="color: #7b1fa2; margin: 0 0 15px 0;">First 30 Days (Critical Period)</h3>
+                <ul style="color: #4a148c; line-height: 1.8;">
+                    <li><strong>Days 1-7:</strong> {{week1_maintenance|default:"No water changes. Monitor for major issues only. Light: 6 hours daily."}}</li>
+                    <li><strong>Days 8-14:</strong> {{week2_maintenance|default:"Small water changes (10-20%) if needed. Begin CO2 injection. Light: 7 hours daily."}}</li>
+                    <li><strong>Days 15-21:</strong> {{week3_maintenance|default:"Regular water changes (30%). Trim fast-growing plants. Light: 8 hours daily."}}</li>
+                    <li><strong>Days 22-30:</strong> {{week4_maintenance|default:"Full maintenance routine. Monitor plant growth and adjust fertilization."}}</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Call to Action Section -->
+        <div class="content-section" style="text-align: center; background: linear-gradient(135deg, #e8f5e8 0%, #e3f2fd 100%);">
+            <h2 style="color: #1565c0;">🎉 Ready to Start Your Aquascape Journey?</h2>
+            <p style="color: #455a64; font-size: 16px;">Get all the materials you need from our trusted partner Green Aqua</p>
+            
+            <a href="{{green_aqua_shop_link|default:'#'}}" class="cta-button">🛒 Shop Green Aqua</a>
+            <a href="{{community_link|default:'#'}}" class="cta-button">💬 Join Our Community</a>
+            <a href="{{support_link|default:'#'}}" class="cta-button">🤝 Get Support</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="partnership-badge">
+                🤝 Official Green Aqua Partnership
+            </div>
+            
+            <p style="margin: 20px 0 10px 0;">
+                Great work following along, <span class="personalized">{{subscriber_name|default:"Fellow Aquascaper"}}</span>! 
+                Share your results with our community using #AquaSceneGuide
+            </p>
+            
+            <p style="margin: 10px 0;">
+                <a href="{{more_guides_link|default:'#'}}">📚 More Guides</a> | 
+                <a href="{{video_tutorials_link|default:'#'}}">📺 Video Tutorials</a> | 
+                <a href="{{community_forum_link|default:'#'}}">💬 Get Help</a>
+            </p>
+            
+            <p style="margin: 10px 0;">
+                <a href="{{unsubscribe_link|default:'#'}}">Unsubscribe</a> | 
+                <a href="{{preferences_link|default:'#'}}">Email Preferences</a>
+            </p>
+            
+            <div style="margin: 20px 0; padding: 15px; background-color: rgba(79, 195, 247, 0.1); border-radius: 8px;">
+                <h4 style="color: #4fc3f7; margin: 0 0 10px 0;">Coming Next Week</h4>
+                <p style="margin: 0; font-size: 14px;">{{next_guide_preview|default:"Advanced Plant Trimming Techniques - Learn professional pruning methods to maintain perfect plant shapes and encourage healthy growth."}}</p>
+            </div>
+            
+            <p style="font-size: 12px; color: #78909c; margin: 10px 0;">
+                © 2025 AquaScene Content Engine. All rights reserved.<br>
+                Generated with AI-powered aquascaping expertise
+            </p>
+        </div>
+    </div>
+</body>
+</html>

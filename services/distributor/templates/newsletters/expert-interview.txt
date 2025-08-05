@@ -1,0 +1,202 @@
+AquaScene Expert Interview
+{{interview_title|default:"The Art of Natural Aquascaping"}}
+Featured by Green Aqua Partnership
+
+==================================================
+
+🎙️ EXCLUSIVE CONVERSATION
+
+==================================================
+
+Hello {{subscriber_name|default:"Fellow Aquascaper"}}!
+
+{{interview_intro|default:"Today we have the incredible privilege of speaking with one of the most influential figures in modern aquascaping. From revolutionary design techniques to sustainable aquarium practices, this conversation covers the insights that can transform your approach to underwater landscaping."}}
+
+==================================================
+MEET THE EXPERT
+==================================================
+
+{{expert.name|default:"Dr. Takashi Amano Jr."}}
+{{expert.title|default:"Master Aquascaper & Nature Aquarium Designer"}}
+
+Career Highlights:
+🏆 {{expert.stats.contests_won|default:"47"}} Contests Won
+📅 {{expert.stats.years_experience|default:"22"}} Years Experience
+👨‍🎓 {{expert.stats.students_taught|default:"1200+"}} Students Taught
+🌍 {{expert.stats.countries_judged|default:"15"}} Countries Judged
+
+Background:
+{{expert.credentials|default:"• 20+ years in aquascaping • International contest judge • Author of 'Modern Aquascaping Techniques' • Founder of Nature Design Studio"}}
+
+Featured Quote:
+"{{featured_quote|default:"The secret to great aquascaping isn't in the equipment or plants you choose - it's in understanding the story your aquascape wants to tell and having the patience to let it unfold naturally."}}"
+
+==================================================
+THE INTERVIEW
+==================================================
+
+{{#each interview_questions}}
+Q: {{question}}
+
+A: {{answer}}
+
+--------------------------------------------------
+{{else}}
+Q: What's the biggest mistake you see beginners make in aquascaping?
+
+A: The most common mistake is rushing the process. Beginners often want immediate results - they over-plant, over-fertilize, and change too many variables at once. Nature doesn't work that way. A truly stunning aquascape takes months to mature, and the best ones I've seen required patience above all else. Start simple, master the basics, and let your aquascape evolve naturally over time.
+
+--------------------------------------------------
+
+Q: How has aquascaping evolved since you started, and where do you see it heading?
+
+A: When I started 22 years ago, aquascaping was primarily about following established styles - Dutch, Nature Aquarium, Iwagumi. Today, we're seeing more hybrid approaches and personal artistic expression. Technology has also revolutionized the hobby - LED lighting, automated CO2 systems, and smart monitoring have made advanced techniques accessible to more people. Looking ahead, I believe we'll see more focus on biotope accuracy and sustainability, with aquascapers recreating specific natural ecosystems with scientific precision.
+
+--------------------------------------------------
+
+Q: What role does the Green Aqua partnership play in advancing aquascaping education?
+
+A: Green Aqua has been instrumental in making high-quality aquascaping accessible across Europe. Their commitment to education, not just selling products, aligns perfectly with my philosophy. Through our partnership, we've been able to share authentic techniques, provide reliable equipment, and build a community where beginners can learn from experienced aquascapers. It's not just about the tools - it's about fostering a culture of learning and artistic growth.
+
+--------------------------------------------------
+
+Q: Can you share your process for designing a new aquascape from concept to completion?
+
+A: Every aquascape starts with a story or emotion I want to convey. I might sketch 20-30 different compositions before choosing one. Then comes the hardscape - this is where the magic happens. I'll spend hours, sometimes days, positioning rocks and wood until the composition feels alive. Only then do I consider plants, choosing species that support the narrative rather than dominate it. The key is thinking like a landscape architect first, aquascaper second. Water parameters, plant care, and maintenance considerations come after the artistic vision is solid.
+
+--------------------------------------------------
+
+Q: What advice would you give to someone who wants to turn aquascaping into a professional career?
+
+A: First, master the craft. Enter contests, not just to win, but to receive feedback and challenge yourself. Document everything - your successes, failures, and learning process. Build a portfolio and share your work consistently. Most importantly, find your unique voice. The aquascaping world doesn't need another Takashi Amano - it needs the first YOU. Consider different paths: competition, teaching, consultation, product development, or content creation. The key is combining technical excellence with business understanding and genuine passion for sharing knowledge.
+{{/each}}
+
+==================================================
+FEATURED WORKS
+==================================================
+
+🎨 {{expert.name|default:"Expert"}}'s Signature Aquascapes:
+
+{{#each featured_works}}
+"{{title|default:"Masterpiece Aquascape"}}"
+{{description|default:"A stunning example of natural composition and artistic vision."}}
+
+{{else}}
+"Mountain Path Serenity"
+Award-winning 120cm layout inspired by Japanese mountain trails. Featured perspective-based hardscaping.
+
+"Underwater Forest Dreams" 
+Revolutionary vertical planting technique showcasing layered forest ecosystem in 180cm tank.
+
+"Desert Oasis Reflection"
+Unique biotope recreation featuring rare desert aquatic plants and authentic geological formations.
+{{/each}}
+
+==================================================
+PROFESSIONAL TIPS
+==================================================
+
+💡 {{expert.name|default:"Expert"}}'s Essential Advice:
+
+{{#each expert_tips}}
+{{@index}}. {{title|default:"Professional Tip"}}
+{{content|default:"Essential advice for aquascaping success."}}
+
+{{else}}
+1. Master the Golden Ratio
+Position focal points at 1/3 intersections, not center. This creates natural tension and visual interest that draws viewers into your aquascape.
+
+2. Start with Hardscape Photoshoots
+Take photos of your hardscape from multiple angles before adding plants. This reveals composition flaws you can't see while working on it.
+
+3. Plant Height Matters More Than Species
+Focus on creating layers - foreground (3-8cm), midground (10-20cm), background (25cm+). Species selection comes after height planning.
+
+4. Use Negative Space Intentionally
+Empty areas aren't mistakes - they're breathing room that makes your planted areas more impactful. Balance is key.
+
+5. Document Everything
+Keep detailed records of water parameters, fertilization, and plant growth. Your failures teach more than your successes.
+{{/each}}
+
+==================================================
+EXPERT RECOMMENDATIONS
+==================================================
+
+🛠️ {{expert.name|default:"Expert"}}'s Essential Equipment:
+
+{{#each recommended_products}}
+{{name|default:"Professional Tool"}}
+{{reason|default:"Essential for professional results"}}
+Available at Green Aqua: {{green_aqua_link|default:"greenaqua.hu"}}
+
+{{else}}
+ADA Pro-Tweezers Straight
+Precise plant placement without disturbing substrate. Essential for professional work.
+Available at Green Aqua: greenaqua.hu
+
+ADA Pro-Scissor Curve  
+Perfect for trimming background plants and creating natural curves in plant masses.
+Available at Green Aqua: greenaqua.hu
+
+Green Aqua Fertilizer Set
+Balanced nutrition system I've personally tested in competition setups.
+Available at Green Aqua: greenaqua.hu
+
+Chihiros WRGB II Pro
+Exceptional color rendering and spectrum control. Game-changer for photography and growth.
+Available at Green Aqua: greenaqua.hu
+{{/each}}
+
+==================================================
+WATCH & LISTEN
+==================================================
+
+{{#if interview_video}}
+🎥 Watch the Full Interview
+Get the complete conversation including live aquascaping demonstrations and behind-the-scenes insights.
+Video: {{interview_video.link|default:"[video link]"}}
+{{/if}}
+
+{{#if interview_podcast}}
+🎙️ Listen as Podcast: {{interview_podcast.link|default:"[podcast link]"}}
+{{/if}}
+
+==================================================
+CONTINUE LEARNING
+==================================================
+
+Ready to take your aquascaping to the next level?
+
+🌐 Visit Expert Website: {{expert.website|default:"[expert website]"}}
+📚 Online Courses: {{expert.courses|default:"[courses link]"}}
+🛒 Shop Recommended Products: {{green_aqua_products|default:"greenaqua.hu"}}
+
+==================================================
+SHARE & DISCUSS
+==================================================
+
+📱 Share This Interview: {{share_interview_link|default:"[share link]"}}
+💡 Suggest Next Expert: {{suggest_expert_link|default:"[suggestion link]"}}
+💬 Discuss in Community: {{community_discussion|default:"forum.aquascene.com"}}
+
+Interview Partnership with Green Aqua
+
+==================================================
+NEXT MONTH'S INTERVIEW
+==================================================
+
+{{next_interview_preview|default:"March Interview: Renowned biotope specialist Dr. Heiko Bleher discusses authentic habitat recreation and his 40+ years of field research in aquatic ecosystems."}}
+
+==================================================
+
+Thanks for joining this exclusive conversation, {{subscriber_name|default:"Fellow Aquascaper"}}!
+
+This interview was sent to AquaScene Expert Interview subscribers.
+You're receiving this because you signed up for expert content.
+
+Unsubscribe: {{unsubscribe_link|default:"[unsubscribe link]"}}
+Update preferences: {{preferences_link|default:"[preferences link]"}}
+
+© 2025 AquaScene Expert Interview Series. All rights reserved.
+Interview content powered by AI-enhanced curation

@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{showcase_title}} - AquaScene Community Spotlight</title>
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:AllowPNG/>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
+    <style>
+        /* Reset styles */
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        /* Base styles */
+        body {
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            background-color: #f0f8ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Container */
+        .email-container {
+            max-width: 650px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+
+        /* Header styles */
+        .header {
+            background: linear-gradient(135deg, #7b1fa2 0%, #9c27b0 50%, #ba68c8 100%);
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        .header::before {
+            content: '✨';
+            position: absolute;
+            font-size: 60px;
+            opacity: 0.1;
+            top: 10px;
+            left: 20px;
+            animation: sparkle 3s ease-in-out infinite;
+        }
+        .header::after {
+            content: '🌟';
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.1;
+            bottom: 10px;
+            right: 20px;
+            animation: sparkle 3s ease-in-out infinite reverse;
+        }
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.1; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 0.3; }
+        }
+        .header h1 {
+            color: #ffffff;
+            font-size: 32px;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+        .header .showcase-type {
+            background-color: rgba(255,255,255,0.2);
+            color: #f3e5f5;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Community stats */
+        .community-stats {
+            background: linear-gradient(135deg, #e1bee7 0%, #f3e5f5 100%);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #ab47bc;
+        }
+        .stat-item {
+            display: inline-block;
+            margin: 5px 20px;
+            color: #4a148c;
+            font-weight: 600;
+        }
+        .stat-number {
+            font-size: 24px;
+            color: #7b1fa2;
+        }
+
+        /* Content sections */
+        .content-section {
+            padding: 25px;
+            border-bottom: 1px solid #f3e5f5;
+        }
+        .section-title {
+            color: #7b1fa2;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+            border-left: 5px solid #ba68c8;
+            padding-left: 15px;
+        }
+
+        /* Featured aquascaper */
+        .featured-aquascaper {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffffff 100%);
+            border: 3px solid #ffc107;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            position: relative;
+        }
+        .featured-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ffc107 0%, #ff8f00 100%);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .aquascaper-profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid #ffc107;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+        .profile-info h3 {
+            color: #e65100;
+            margin: 0 0 5px 0;
+            font-size: 24px;
+        }
+        .profile-stats {
+            color: #8d6e63;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .tank-showcase {
+            margin: 20px 0;
+        }
+        .tank-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            margin: 15px 0;
+        }
+
+        /* Gallery grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .gallery-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-color: #ba68c8;
+        }
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .gallery-content {
+            padding: 15px;
+        }
+        .gallery-title {
+            color: #7b1fa2;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+        }
+        .gallery-author {
+            color: #8e24aa;
+            font-size: 14px;
+            margin: 0 0 10px 0;
+        }
+        .gallery-description {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        /* Success story */
+        .success-story {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+            border: 2px solid #4caf50;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        .story-timeline {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '●';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            color: #4caf50;
+            font-size: 20px;
+        }
+        .timeline-date {
+            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+
+        /* Before/After comparison */
+        .before-after {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        .comparison-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .comparison-item {
+            flex: 1;
+            min-width: 250px;
+            margin: 10px;
+            text-align: center;
+        }
+        .comparison-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 3px solid transparent;
+        }
+        .before-image {
+            border-color: #ff7043;
+        }
+        .after-image {
+            border-color: #4caf50;
+        }
+        .comparison-label {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .before-label {
+            background: linear-gradient(135deg, #ff7043 0%, #d84315 100%);
+            color: white;
+        }
+        .after-label {
+            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+            color: white;
+        }
+
+        /* Challenge spotlight */
+        .challenge-section {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #ffc107;
+        }
+        .challenge-entries {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .challenge-entry {
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .challenge-entry img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .challenge-entry-content {
+            padding: 12px;
+        }
+        .challenge-entry-author {
+            font-weight: bold;
+            color: #f57c00;
+            font-size: 14px;
+            margin: 0 0 5px 0;
+        }
+        .challenge-entry-caption {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.3;
+            margin: 0;
+        }
+
+        /* Green Aqua Partnership */
+        .partnership-badge {
+            background: linear-gradient(45deg, #2e7d32, #4caf50);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        /* Buttons */
+        .cta-button {
+            background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+            color: #ffffff !important;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 5px;
+            box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+        }
+        .cta-button:hover {
+            background: linear-gradient(135deg, #7b1fa2 0%, #4a148c 100%);
+        }
+
+        /* Social media links */
+        .social-links {
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #263238;
+            color: #b0bec5;
+            padding: 30px 25px;
+            text-align: center;
+        }
+        .footer a {
+            color: #ba68c8;
+            text-decoration: none;
+        }
+
+        /* Mobile responsive */
+        @media screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            .comparison-container {
+                flex-direction: column;
+            }
+            .aquascaper-profile {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-image {
+                margin: 0 0 15px 0;
+            }
+            .stat-item {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+
+        /* Personalization */
+        .personalized {
+            background-color: #f3e5f5;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>{{showcase_title|default:"Community Spotlight"}}</h1>
+            <div class="showcase-type">👥 COMMUNITY SHOWCASE</div>
+            <div class="partnership-badge">
+                🤝 Supported by Green Aqua
+            </div>
+        </div>
+
+        <!-- Community Stats -->
+        <div class="community-stats">
+            <div class="stat-item">
+                <div class="stat-number">{{total_members|default:"2,847"}}</div>
+                <div>Community Members</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{monthly_submissions|default:"156"}}</div>
+                <div>Monthly Submissions</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{countries_represented|default:"34"}}</div>
+                <div>Countries Represented</div>
+            </div>
+        </div>
+
+        <!-- Featured Aquascaper Section -->
+        <div class="content-section">
+            <div class="featured-aquascaper">
+                <div class="featured-badge">🏆 FEATURED AQUASCAPER</div>
+                
+                <div class="aquascaper-profile">
+                    <img src="{{featured_member.profile_image|default:'https://via.placeholder.com/100x100/9c27b0/ffffff?text=👤'}}" alt="{{featured_member.name}}" class="profile-image">
+                    <div class="profile-info">
+                        <h3>{{featured_member.name|default:"Alexandra Petrovic"}}</h3>
+                        <div class="profile-stats">📍 {{featured_member.location|default:"Sofia, Bulgaria"}} | 🏆 {{featured_member.experience|default:"3 years experience"}} | 🌱 {{featured_member.specialty|default:"Nature Aquariums"}}</div>
+                        <div class="profile-stats">📱 {{featured_member.social_followers|default:"1.2K"}} followers | 🏅 {{featured_member.achievements|default:"5 contest wins"}}</div>
+                    </div>
+                </div>
+                
+                <div class="tank-showcase">
+                    <h4 style="color: #e65100; margin: 0 0 15px 0;">Featured Aquascape: "{{featured_member.tank_name|default:"Mountain Valley Serenity"}}"</h4>
+                    
+                    <img src="{{featured_member.tank_image|default:'https://via.placeholder.com/580x320/4caf50/ffffff?text=Featured+Aquascape'}}" alt="{{featured_member.tank_name}}" class="tank-image">
+                    
+                    <div style="background-color: rgba(255, 193, 7, 0.1); padding: 20px; border-radius: 8px; margin: 20px 0;">
+                        <h5 style="color: #f57c00; margin: 0 0 10px 0;">Tank Specifications:</h5>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; color: #5d4037;">
+                            <div><strong>Size:</strong> {{featured_member.tank_specs.size|default:"120L (60x40x50cm)"}}</div>
+                            <div><strong>Lighting:</strong> {{featured_member.tank_specs.lighting|default:"Chihiros WRGB II Pro"}}</div>
+                            <div><strong>Filtration:</strong> {{featured_member.tank_specs.filtration|default:"Oase BioMaster Thermo 350"}}</div>
+                            <div><strong>CO2:</strong> {{featured_member.tank_specs.co2|default:"Pressurized system, 2bps"}}</div>
+                            <div><strong>Substrate:</strong> {{featured_member.tank_specs.substrate|default:"ADA Amazonia Ver.2"}}</div>
+                            <div><strong>Hardscape:</strong> {{featured_member.tank_specs.hardscape|default:"Seiryu stone, Manzanita wood"}}</div>
+                        </div>
+                    </div>
+                    
+                    <p style="font-size: 16px; line-height: 1.6; color: #455a64; margin: 20px 0;">
+                        <strong>Creator's Story:</strong> {{featured_member.story|default:"This aquascape was inspired by my travels through the Bulgarian mountains. I wanted to capture the peaceful feeling of a mountain valley with crystal-clear streams. The hardscape arrangement follows the golden ratio, and I've used slow-growing plants to maintain the natural, untouched feeling."}}
+                    </p>
+                    
+                    <div style="background: linear-gradient(135deg, #e8f5e8 0%, #ffffff 100%); padding: 15px; border-radius: 8px; border-left: 4px solid #4caf50;">
+                        <strong>🌟 Key Success Factors:</strong> {{featured_member.success_tips|default:"Patience during the first 3 months, weekly 30% water changes, and maintaining stable CO2 levels. The secret is not rushing the plant growth - let nature take its course!"}}
+                    </div>
+                </div>
+                
+                <div class="social-links">
+                    <h5 style="color: #7b1fa2; margin: 0 0 10px 0;">Follow {{featured_member.name|default:"Alexandra"}}'s Journey:</h5>
+                    <a href="{{featured_member.instagram|default:'#'}}" style="color: #e91e63; margin: 0 10px;">📱 Instagram</a>
+                    <a href="{{featured_member.youtube|default:'#'}}" style="color: #f44336; margin: 0 10px;">📺 YouTube</a>
+                    <a href="{{featured_member.forum_profile|default:'#'}}" style="color: #9c27b0; margin: 0 10px;">💬 Forum Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Community Gallery Section -->
+        <div class="content-section">
+            <h2 class="section-title">🎨 Community Gallery</h2>
+            <p style="color: #666; margin: 0 0 20px 0;">Amazing submissions from our talented community members around the world.</p>
+            
+            <div class="gallery-grid">
+                {{#each gallery_items}}
+                <div class="gallery-item">
+                    <img src="{{image|default:'https://via.placeholder.com/250x200/29b6f6/ffffff?text=Community+Tank'}}" alt="{{title}}" class="gallery-image">
+                    <div class="gallery-content">
+                        <div class="gallery-title">{{title|default:"Beautiful Aquascape"}}</div>
+                        <div class="gallery-author">by {{author|default:"Community Member"}}</div>
+                        <p class="gallery-description">{{description|default:"A stunning aquascape showcasing natural beauty and artistic composition."}}</p>
+                    </div>
+                </div>
+                {{else}}
+                <!-- Default gallery items -->
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/250x200/4caf50/ffffff?text=Nature+Style" alt="Nature Style" class="gallery-image">
+                    <div class="gallery-content">
+                        <div class="gallery-title">Zen Garden Inspiration</div>
+                        <div class="gallery-author">by Martin K.</div>
+                        <p class="gallery-description">Minimalist layout inspired by Japanese zen gardens with careful stone placement.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/250x200/ff7043/ffffff?text=Dutch+Style" alt="Dutch Style" class="gallery-image">
+                    <div class="gallery-content">
+                        <div class="gallery-title">Dutch Color Symphony</div>
+                        <div class="gallery-author">by Elena R.</div>
+                        <p class="gallery-description">Vibrant plant arrangement showcasing the classic Dutch aquascaping technique.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/250x200/29b6f6/ffffff?text=Iwagumi+Style" alt="Iwagumi Style" class="gallery-image">
+                    <div class="gallery-content">
+                        <div class="gallery-title">Perfect Iwagumi Balance</div>
+                        <div class="gallery-author">by David L.</div>
+                        <p class="gallery-description">Classic Iwagumi style with perfectly positioned stones and carpet plants.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/250x200/9c27b0/ffffff?text=Biotope" alt="Biotope" class="gallery-image">
+                    <div class="gallery-content">
+                        <div class="gallery-title">Amazon River Biotope</div>
+                        <div class="gallery-author">by Carlos M.</div>
+                        <p class="gallery-description">Authentic South American biotope with native plants and natural driftwood.</p>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <!-- Success Story Section -->
+        <div class="content-section">
+            <h2 class="section-title">📈 Success Story</h2>
+            
+            <div class="success-story">
+                <h3 style="color: #2e7d32; margin: 0 0 20px 0;">From Beginner to Contest Winner: {{success_story.member_name|default:"Petra's"}} Journey</h3>
+                
+                <div class="before-after">
+                    <h4 style="color: #1976d2; margin: 0 0 15px 0; text-align: center;">Transformation Over 18 Months</h4>
+                    <div class="comparison-container">
+                        <div class="comparison-item">
+                            <img src="{{success_story.before_image|default:'https://via.placeholder.com/300x200/ff7043/ffffff?text=Before'}}" alt="Before" class="comparison-image before-image">
+                            <div class="comparison-label before-label">BEFORE - Month 1</div>
+                        </div>
+                        <div class="comparison-item">
+                            <img src="{{success_story.after_image|default:'https://via.placeholder.com/300x200/4caf50/ffffff?text=After'}}" alt="After" class="comparison-image after-image">
+                            <div class="comparison-label after-label">AFTER - Month 18</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="story-timeline">
+                    <h4 style="color: #2e7d32; margin: 0 0 15px 0;">Journey Timeline:</h4>
+                    {{#each success_story.timeline}}
+                    <div class="timeline-item">
+                        <div>
+                            <div class="timeline-date">{{date}}</div>
+                            <p style="margin: 0; color: #455a64; line-height: 1.5;">{{milestone}}</p>
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="timeline-item">
+                        <div>
+                            <div class="timeline-date">Month 1</div>
+                            <p style="margin: 0; color: #455a64; line-height: 1.5;">Started with a basic 60L tank and beginner-friendly plants</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div>
+                            <div class="timeline-date">Month 3</div>
+                            <p style="margin: 0; color: #455a64; line-height: 1.5;">Learned proper CO2 injection and fertilization techniques</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div>
+                            <div class="timeline-date">Month 8</div>
+                            <p style="margin: 0; color: #455a64; line-height: 1.5;">First aquascaping contest entry - received positive feedback</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div>
+                            <div class="timeline-date">Month 12</div>
+                            <p style="margin: 0; color: #455a64; line-height: 1.5;">Upgraded to 120L tank with advanced lighting system</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div>
+                            <div class="timeline-date">Month 18</div>
+                            <p style="margin: 0; color: #455a64; line-height: 1.5;">Won 2nd place in Regional Aquascaping Championship</p>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
+                    <h4 style="margin: 0 0 10px 0;">{{success_story.member_name|default:"Petra"}}'s Advice for Beginners:</h4>
+                    <p style="margin: 0; font-style: italic;">"{{success_story.advice|default:"Don't be afraid to make mistakes - they're your best teachers. Start simple, be patient, and most importantly, connect with the community. The support and knowledge sharing here is incredible!"}}"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Challenge Section -->
+        <div class="content-section">
+            <h2 class="section-title">🏆 Monthly Challenge Spotlight</h2>
+            
+            <div class="challenge-section">
+                <h3 style="color: #f57c00; margin: 0 0 20px 0; text-align: center;">{{challenge.title|default:"February Challenge: Nano Tank Mastery"}}</h3>
+                
+                <p style="color: #e65100; text-align: center; font-size: 16px; margin: 0 0 20px 0;">
+                    {{challenge.description|default:"Create stunning aquascapes in tanks under 30 liters. Show that size doesn't limit creativity!"}}
+                </p>
+                
+                <div style="background-color: #ffffff; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+                    <p style="margin: 0 0 10px 0; color: #666;"><strong>Challenge Stats:</strong></p>
+                    <div style="color: #f57c00; font-weight: bold;">
+                        {{challenge.participants|default:"89"}} Participants | {{challenge.submissions|default:"67"}} Submissions | {{challenge.countries|default:"12"}} Countries
+                    </div>
+                </div>
+                
+                <h4 style="color: #f57c00; margin: 20px 0 15px 0;">Top Entries This Month:</h4>
+                <div class="challenge-entries">
+                    {{#each challenge.entries}}
+                    <div class="challenge-entry">
+                        <img src="{{image|default:'https://via.placeholder.com/200x150/ffc107/ffffff?text=Challenge+Entry'}}" alt="{{author}} entry">
+                        <div class="challenge-entry-content">
+                            <div class="challenge-entry-author">{{author|default:"Community Member"}}</div>
+                            <p class="challenge-entry-caption">{{caption|default:"Creative nano aquascape entry"}}</p>
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="challenge-entry">
+                        <img src="https://via.placeholder.com/200x150/4caf50/ffffff?text=Nano+Tank+1" alt="Entry 1">
+                        <div class="challenge-entry-content">
+                            <div class="challenge-entry-author">Lisa_Aquascape</div>
+                            <p class="challenge-entry-caption">"Crystal Clear" - 15L crystal glass cube</p>
+                        </div>
+                    </div>
+                    <div class="challenge-entry">
+                        <img src="https://via.placeholder.com/200x150/29b6f6/ffffff?text=Nano+Tank+2" alt="Entry 2">
+                        <div class="challenge-entry-content">
+                            <div class="challenge-entry-author">TinyTankMaster</div>
+                            <p class="challenge-entry-caption">"Forest Floor" - 20L planted paradise</p>
+                        </div>
+                    </div>
+                    <div class="challenge-entry">
+                        <img src="https://via.placeholder.com/200x150/ff7043/ffffff?text=Nano+Tank+3" alt="Entry 3">
+                        <div class="challenge-entry-content">
+                            <div class="challenge-entry-author">MicroNature_BG</div>
+                            <p class="challenge-entry-caption">"Stone Garden" - 12L Iwagumi style</p>
+                        </div>
+                    </div>
+                    <div class="challenge-entry">
+                        <img src="https://via.placeholder.com/200x150/9c27b0/ffffff?text=Nano+Tank+4" alt="Entry 4">
+                        <div class="challenge-entry-content">
+                            <div class="challenge-entry-author">NanoArtist_Sofia</div>
+                            <p class="challenge-entry-caption">"Jungle Path" - 25L dense planting</p>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <p style="color: #f57c00; font-weight: bold; margin: 0 0 15px 0;">Next Challenge: {{next_challenge.title|default:"March Challenge: Biotope Authenticity"}}</p>
+                    <a href="{{challenge.join_link|default:'#'}}" class="cta-button">🏆 Join Next Challenge</a>
+                    <a href="{{challenge.gallery_link|default:'#'}}" class="cta-button">📸 View All Entries</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Community Interaction Section -->
+        <div class="content-section">
+            <h2 class="section-title">💬 Get Involved</h2>
+            
+            <div style="background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%); border-radius: 12px; padding: 25px; text-align: center;">
+                <h3 style="color: #1976d2; margin: 0 0 15px 0;">Ready to Share Your Aquascape?</h3>
+                <p style="color: #455a64; margin: 0 0 25px 0;">
+                    Hi <span class="personalized">{{subscriber_name|default:"Fellow Aquascaper"}}</span>! 
+                    Join our vibrant community and showcase your own creations. Whether you're a beginner or expert, we'd love to see your work!
+                </p>
+                
+                <a href="{{submit_aquascape_link|default:'#'}}" class="cta-button">📸 Submit Your Aquascape</a>
+                <a href="{{join_forum_link|default:'#'}}" class="cta-button">💬 Join Community Forum</a>
+                <a href="{{follow_social_link|default:'#'}}" class="cta-button">📱 Follow on Social Media</a>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, #f3e5f5 0%, #fce4ec 100%); border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
+                <h4 style="color: #7b1fa2; margin: 0 0 10px 0;">Want to be Featured?</h4>
+                <p style="margin: 0; color: #4a148c; font-size: 14px;">
+                    Tag us in your posts with #AquaSceneShowcase and tell us your aquascaping story. 
+                    The most inspiring setups and journeys get featured in our monthly spotlight!
+                </p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="partnership-badge">
+                🤝 Community Powered by Green Aqua Partnership
+            </div>
+            
+            <p style="margin: 20px 0 10px 0;">
+                Thank you for being part of our amazing community, <span class="personalized">{{subscriber_name|default:"Fellow Aquascaper"}}</span>! 
+            </p>
+            
+            <p style="margin: 10px 0;">
+                <a href="{{community_guidelines_link|default:'#'}}">📋 Community Guidelines</a> | 
+                <a href="{{featured_member_nominate_link|default:'#'}}">⭐ Nominate Someone</a> | 
+                <a href="{{help_link|default:'#'}}">🤝 Get Help</a>
+            </p>
+            
+            <p style="margin: 10px 0;">
+                <a href="{{unsubscribe_link|default:'#'}}">Unsubscribe</a> | 
+                <a href="{{preferences_link|default:'#'}}">Email Preferences</a>
+            </p>
+            
+            <div style="margin: 20px 0; padding: 15px; background-color: rgba(186, 104, 200, 0.1); border-radius: 8px;">
+                <h4 style="color: #ba68c8; margin: 0 0 10px 0;">Coming Next Month</h4>
+                <p style="margin: 0; font-size: 14px;">{{next_month_preview|default:"March Community Spotlight will feature biotope aquascaping specialists and showcase authentic regional ecosystems from around the world."}}</p>
+            </div>
+            
+            <p style="font-size: 12px; color: #78909c; margin: 10px 0;">
+                © 2025 AquaScene Community Platform. All rights reserved.<br>
+                Community content curated with AI assistance
+            </p>
+        </div>
+    </div>
+</body>
+</html>

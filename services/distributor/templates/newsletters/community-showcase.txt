@@ -1,0 +1,166 @@
+AquaScene Community Spotlight
+{{showcase_title|default:"Community Spotlight"}}
+Supported by Green Aqua Partnership
+
+==================================================
+
+COMMUNITY STATS
+==================================================
+
+👥 {{total_members|default:"2,847"}} Community Members
+📸 {{monthly_submissions|default:"156"}} Monthly Submissions
+🌍 {{countries_represented|default:"34"}} Countries Represented
+
+==================================================
+
+Hello {{subscriber_name|default:"Fellow Aquascaper"}}!
+
+Welcome to our monthly celebration of the amazing AquaScene community. This month, we're showcasing the incredible talent, creativity, and passion that makes our community special.
+
+==================================================
+FEATURED AQUASCAPER
+==================================================
+
+🏆 COMMUNITY CHAMPION
+
+{{featured_member.name|default:"Alexandra Petrovic"}}
+📍 {{featured_member.location|default:"Sofia, Bulgaria"}}
+🏅 {{featured_member.experience|default:"3 years experience"}} | {{featured_member.specialty|default:"Nature Aquariums"}}
+📱 {{featured_member.social_followers|default:"1.2K"}} followers | 🏆 {{featured_member.achievements|default:"5 contest wins"}}
+
+Featured Aquascape: "{{featured_member.tank_name|default:"Mountain Valley Serenity"}}"
+
+Tank Specifications:
+• Size: {{featured_member.tank_specs.size|default:"120L (60x40x50cm)"}}
+• Lighting: {{featured_member.tank_specs.lighting|default:"Chihiros WRGB II Pro"}}
+• Filtration: {{featured_member.tank_specs.filtration|default:"Oase BioMaster Thermo 350"}}
+• CO2: {{featured_member.tank_specs.co2|default:"Pressurized system, 2bps"}}
+• Substrate: {{featured_member.tank_specs.substrate|default:"ADA Amazonia Ver.2"}}
+• Hardscape: {{featured_member.tank_specs.hardscape|default:"Seiryu stone, Manzanita wood"}}
+
+Creator's Story:
+{{featured_member.story|default:"This aquascape was inspired by my travels through the Bulgarian mountains. I wanted to capture the peaceful feeling of a mountain valley with crystal-clear streams. The hardscape arrangement follows the golden ratio, and I've used slow-growing plants to maintain the natural, untouched feeling."}}
+
+🌟 Success Tips: {{featured_member.success_tips|default:"Patience during the first 3 months, weekly 30% water changes, and maintaining stable CO2 levels. The secret is not rushing the plant growth - let nature take its course!"}}
+
+Follow {{featured_member.name|default:"Alexandra"}}'s Journey:
+📱 Instagram: {{featured_member.instagram|default:"[instagram link]"}}
+📺 YouTube: {{featured_member.youtube|default:"[youtube link]"}}
+💬 Forum: {{featured_member.forum_profile|default:"forum.aquascene.com"}}
+
+==================================================
+COMMUNITY GALLERY
+==================================================
+
+🎨 Amazing Submissions from Our Community:
+
+{{#each gallery_items}}
+"{{title|default:"Beautiful Aquascape"}}" by {{author|default:"Community Member"}}
+{{description|default:"A stunning aquascape showcasing natural beauty and artistic composition."}}
+
+{{else}}
+"Zen Garden Inspiration" by Martin K.
+Minimalist layout inspired by Japanese zen gardens with careful stone placement.
+
+"Dutch Color Symphony" by Elena R.
+Vibrant plant arrangement showcasing the classic Dutch aquascaping technique.
+
+"Perfect Iwagumi Balance" by David L.
+Classic Iwagumi style with perfectly positioned stones and carpet plants.
+
+"Amazon River Biotope" by Carlos M.
+Authentic South American biotope with native plants and natural driftwood.
+{{/each}}
+
+==================================================
+SUCCESS STORY
+==================================================
+
+📈 From Beginner to Contest Winner: {{success_story.member_name|default:"Petra's"}} Journey
+
+TRANSFORMATION OVER 18 MONTHS
+
+{{#each success_story.timeline}}
+{{date}}: {{milestone}}
+{{else}}
+Month 1: Started with a basic 60L tank and beginner-friendly plants
+Month 3: Learned proper CO2 injection and fertilization techniques
+Month 8: First aquascaping contest entry - received positive feedback
+Month 12: Upgraded to 120L tank with advanced lighting system
+Month 18: Won 2nd place in Regional Aquascaping Championship
+{{/each}}
+
+{{success_story.member_name|default:"Petra"}}'s Advice for Beginners:
+"{{success_story.advice|default:"Don't be afraid to make mistakes - they're your best teachers. Start simple, be patient, and most importantly, connect with the community. The support and knowledge sharing here is incredible!"}}"
+
+==================================================
+MONTHLY CHALLENGE
+==================================================
+
+🏆 {{challenge.title|default:"February Challenge: Nano Tank Mastery"}}
+
+{{challenge.description|default:"Create stunning aquascapes in tanks under 30 liters. Show that size doesn't limit creativity!"}}
+
+Challenge Stats:
+👥 {{challenge.participants|default:"89"}} Participants
+📸 {{challenge.submissions|default:"67"}} Submissions
+🌍 {{challenge.countries|default:"12"}} Countries
+
+Top Entries This Month:
+{{#each challenge.entries}}
+• {{author|default:"Community Member"}}: "{{caption|default:"Creative nano aquascape entry"}}"
+{{else}}
+• Lisa_Aquascape: "Crystal Clear" - 15L crystal glass cube
+• TinyTankMaster: "Forest Floor" - 20L planted paradise
+• MicroNature_BG: "Stone Garden" - 12L Iwagumi style
+• NanoArtist_Sofia: "Jungle Path" - 25L dense planting
+{{/each}}
+
+Next Challenge: {{next_challenge.title|default:"March Challenge: Biotope Authenticity"}}
+
+Join the challenge: {{challenge.join_link|default:"aquascene.com/challenges"}}
+View all entries: {{challenge.gallery_link|default:"aquascene.com/gallery"}}
+
+==================================================
+GET INVOLVED
+==================================================
+
+💬 Ready to Share Your Aquascape?
+
+Join our vibrant community and showcase your own creations. Whether you're a beginner or expert, we'd love to see your work!
+
+📸 Submit Your Aquascape: {{submit_aquascape_link|default:"aquascene.com/submit"}}
+💬 Join Community Forum: {{join_forum_link|default:"forum.aquascene.com"}}
+📱 Follow on Social Media: {{follow_social_link|default:"linktr.ee/aquascene"}}
+
+Want to be Featured?
+Tag us in your posts with #AquaSceneShowcase and tell us your aquascaping story. The most inspiring setups and journeys get featured in our monthly spotlight!
+
+==================================================
+CONNECT WITH THE COMMUNITY
+==================================================
+
+Community Guidelines: {{community_guidelines_link|default:"aquascene.com/guidelines"}}
+Nominate a Member: {{featured_member_nominate_link|default:"aquascene.com/nominate"}}
+Get Help: {{help_link|default:"aquascene.com/help"}}
+
+Community Powered by Green Aqua Partnership
+
+==================================================
+COMING NEXT MONTH
+==================================================
+
+{{next_month_preview|default:"March Community Spotlight will feature biotope aquascaping specialists and showcase authentic regional ecosystems from around the world."}}
+
+==================================================
+
+Thank you for being part of our amazing community, {{subscriber_name|default:"Fellow Aquascaper"}}!
+
+This showcase was sent to AquaScene community newsletter subscribers.
+You're receiving this because you signed up for community updates.
+
+Unsubscribe: {{unsubscribe_link|default:"[unsubscribe link]"}}
+Update preferences: {{preferences_link|default:"[preferences link]"}}
+
+© 2025 AquaScene Community Platform. All rights reserved.
+Community content curated with AI assistance
