@@ -67,7 +67,7 @@ services:
     networks:
       - content-engine
     healthcheck:
-      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
       interval: 10s
       timeout: 3s
       retries: 5
@@ -491,3 +491,26 @@ services:
       - monitoring
     depends_on:
       - loki
+      
+  # ===================
+  # E2E TESTING
+  # ===================
+  
+  e2e-testing:
+    build:
+      context: ./services/e2e-testing
+      dockerfile: Dockerfile
+    container_name: content-engine-e2e-tests
+    profiles: ["testing"]
+    environment:
+      - ENVIRONMENT=testing
+    networks:
+      - content-engine
+      - monitoring
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nginx:
+        condition: service_healthy

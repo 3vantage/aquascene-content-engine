@@ -1,0 +1,49 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "rules/*.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+
+  - job_name: 'content-manager'
+    static_configs:
+      - targets: ['content-manager:8000']
+    metrics_path: '/metrics'
+
+  - job_name: 'ai-processor'
+    static_configs:
+      - targets: ['ai-processor:8001']
+    metrics_path: '/metrics'
+
+  - job_name: 'web-scraper'
+    static_configs:
+      - targets: ['web-scraper:8002']
+    metrics_path: '/metrics'
+
+  - job_name: 'distributor'
+    static_configs:
+      - targets: ['distributor:8003']
+    metrics_path: '/metrics'
+
+  - job_name: 'subscriber-manager'
+    static_configs:
+      - targets: ['subscriber-manager:8004']
+    metrics_path: '/metrics'

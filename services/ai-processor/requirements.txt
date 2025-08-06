@@ -1,6 +1,7 @@
 # AI and LLM Integration
 openai==1.51.0
 anthropic==0.30.1
+google-generativeai==0.8.3
 ollama==0.3.2
 langchain==0.2.16
 langchain-openai==0.1.25
@@ -15,7 +16,7 @@ transformers==4.44.2
 sentence-transformers==3.0.1
 beautifulsoup4==4.12.3
 markdownify==0.12.1
-python-readability==0.4.1
+python-readability==1.0.0rc0
 
 # Web Framework and API
 fastapi==0.112.0
@@ -42,8 +43,9 @@ sentry-sdk[fastapi]==2.12.0
 python-dotenv==1.0.1
 click==8.1.7
 asyncio-throttle==1.0.2
-tenacity==9.0.0
+tenacity>=8.1.0,<9.0.0
 aiofiles==24.1.0
+pyairtable==2.3.3
 
 # Testing and Development
 pytest==8.3.2

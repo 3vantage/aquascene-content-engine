@@ -1,0 +1,1 @@
+"""Configuration module for subscriber manager service"""

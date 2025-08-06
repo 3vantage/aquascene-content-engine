@@ -9,7 +9,8 @@ import os
 from functools import lru_cache
 from typing import Optional, List, Dict, Any
 
-from pydantic import BaseSettings, Field, validator
+from pydantic import Field, field_validator
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -136,7 +137,8 @@ class Settings(BaseSettings):
         env_file_encoding = "utf-8"
         case_sensitive = False
     
-    @validator("environment")
+    @field_validator("environment")
+    @classmethod
     def validate_environment(cls, v):
         """Validate environment setting"""
         allowed_envs = ["development", "staging", "production", "testing"]
@@ -144,7 +146,8 @@ class Settings(BaseSettings):
             raise ValueError(f"Environment must be one of: {allowed_envs}")
         return v
     
-    @validator("log_level")
+    @field_validator("log_level")
+    @classmethod
     def validate_log_level(cls, v):
         """Validate log level"""
         allowed_levels = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
@@ -152,35 +155,40 @@ class Settings(BaseSettings):
             raise ValueError(f"Log level must be one of: {allowed_levels}")
         return v.upper()
     
-    @validator("default_temperature")
+    @field_validator("default_temperature")
+    @classmethod
     def validate_temperature(cls, v):
         """Validate temperature setting"""
         if not 0.0 <= v <= 2.0:
             raise ValueError("Temperature must be between 0.0 and 2.0")
         return v
     
-    @validator("max_memory_usage_percent", "max_cpu_usage_percent")
+    @field_validator("max_memory_usage_percent", "max_cpu_usage_percent")
+    @classmethod
     def validate_percentage(cls, v):
         """Validate percentage values"""
         if not 0.0 <= v <= 100.0:
             raise ValueError("Percentage must be between 0.0 and 100.0")
         return v
     
-    @validator("ollama_models", pre=True)
+    @field_validator("ollama_models", mode="before")
+    @classmethod
     def parse_ollama_models(cls, v):
         """Parse comma-separated string into list"""
         if isinstance(v, str):
             return [model.strip() for model in v.split(",") if model.strip()]
         return v
     
-    @validator("template_directories", pre=True)
+    @field_validator("template_directories", mode="before")
+    @classmethod
     def parse_template_directories(cls, v):
         """Parse comma-separated string into list"""
         if isinstance(v, str):
             return [dir.strip() for dir in v.split(",") if dir.strip()]
         return v
     
-    @validator("allowed_origins", pre=True)
+    @field_validator("allowed_origins", mode="before")
+    @classmethod
     def parse_allowed_origins(cls, v):
         """Parse comma-separated string into list"""
         if isinstance(v, str):
