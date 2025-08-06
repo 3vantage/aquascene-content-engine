@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     # LLM API Keys
     openai_api_key: Optional[str] = Field(None, env="OPENAI_API_KEY")
     anthropic_api_key: Optional[str] = Field(None, env="ANTHROPIC_API_KEY")
+    google_api_key: Optional[str] = Field(None, env="GOOGLE_API_KEY")
     
     # Ollama configuration
     ollama_base_url: Optional[str] = Field(None, env="OLLAMA_BASE_URL")

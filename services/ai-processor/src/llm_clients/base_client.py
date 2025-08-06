@@ -20,6 +20,8 @@ class ModelType(Enum):
     CLAUDE_SONNET = "claude-3-5-sonnet-20241022"
     CLAUDE_HAIKU = "claude-3-haiku-20240307"
     CLAUDE_OPUS = "claude-3-opus-20240229"
+    GEMINI_PRO = "gemini-pro"
+    GEMINI_PRO_VISION = "gemini-pro-vision"
     OLLAMA_LLAMA3 = "llama3.1:8b"
     OLLAMA_MISTRAL = "mistral:7b"
     OLLAMA_CODELLAMA = "codellama:7b"

@@ -8,7 +8,8 @@ import {
   SettingOutlined,
   RobotOutlined,
   GlobalOutlined,
-  MailOutlined
+  MailOutlined,
+  ApiOutlined
 } from '@ant-design/icons';
 
 import Dashboard from './components/Dashboard';
@@ -18,6 +19,7 @@ import AIProcessor from './components/AIProcessor';
 import WebScraper from './components/WebScraper';
 import Distributor from './components/Distributor';
 import Settings from './components/Settings';
+import AirtableWorkflow from './components/AirtableWorkflow';
 
 const { Header, Content, Sider } = Layout;
 
@@ -60,6 +62,12 @@ const menuItems = [
   },
   {
     key: '7',
+    icon: <ApiOutlined />,
+    label: 'Airtable Workflow',
+    path: '/workflow'
+  },
+  {
+    key: '8',
     icon: <SettingOutlined />,
     label: 'Settings',
     path: '/settings'
@@ -128,6 +136,7 @@ function App() {
                 <Route path="/scraper" element={<WebScraper />} />
                 <Route path="/distributor" element={<Distributor />} />
                 <Route path="/subscribers" element={<SubscriberManager />} />
+                <Route path="/workflow" element={<AirtableWorkflow />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </div>

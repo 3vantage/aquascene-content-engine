@@ -362,8 +362,17 @@ class ContentOrchestrator:
         return response
     
     async def _build_system_prompt(self, request: ContentRequest, context: Dict[str, Any]) -> str:
-        """Build system prompt for content generation"""
-        base_prompt = f"""You are an expert aquascaping content creator for AquaScene, specializing in creating high-quality, educational content about planted aquariums, aquascaping techniques, and aquatic plant care.
+        """Build system prompt for content generation using aquascaping-specific templates"""
+        # Get aquascaping-specific system prompt from template manager
+        aquascaping_system_prompt = self.template_manager.get_aquascaping_prompt(
+            request.content_type, "system_prompt"
+        )
+        
+        # Use aquascaping prompt if available, fallback to generic
+        if aquascaping_system_prompt:
+            base_prompt = aquascaping_system_prompt
+        else:
+            base_prompt = f"""You are an expert aquascaping content creator for AquaScene, specializing in creating high-quality, educational content about planted aquariums, aquascaping techniques, and aquatic plant care.
 
 BRAND VOICE: {context['brand_voice']}
 TARGET AUDIENCE: {context['target_audience']}
@@ -382,6 +391,13 @@ CONTENT GUIDELINES:
 - Maintain professional yet approachable tone
 - Focus on education and community building"""
 
+        # Add contextual information
+        if context.get('brand_voice'):
+            base_prompt += f"\n\nBRAND VOICE: {context['brand_voice']}"
+        
+        if context.get('target_audience'):
+            base_prompt += f"\nTARGET AUDIENCE: {context['target_audience']}"
+
         if context.get("knowledge_base"):
             base_prompt += f"\n\nRELEVANT KNOWLEDGE:\n{context['knowledge_base']}"
         
@@ -391,25 +407,36 @@ CONTENT GUIDELINES:
         return base_prompt
     
     async def _build_user_prompt(self, request: ContentRequest, context: Dict[str, Any]) -> str:
-        """Build user prompt for content generation"""
-        prompt = f"Create a {request.content_type.value} about: {request.topic}"
+        """Build user prompt for content generation using enhanced template prompts"""
+        base_prompt = f"Create a {request.content_type.value} about: {request.topic}"
+        
+        # Use template manager to build enhanced prompt with aquascaping context
+        enhanced_prompt = self.template_manager.build_enhanced_prompt(
+            base_prompt=base_prompt,
+            content_type=request.content_type,
+            context={
+                "target_audience": request.target_audience,
+                "seo_keywords": request.seo_keywords,
+                "brand_voice": request.brand_voice,
+                "additional_instructions": request.additional_instructions
+            }
+        )
         
         if request.requirements:
-            prompt += f"\n\nREQUIREMENTS:\n"
+            enhanced_prompt += f"\n\nREQUIREMENTS:\n"
             for key, value in request.requirements.items():
-                prompt += f"- {key}: {value}\n"
+                enhanced_prompt += f"- {key}: {value}\n"
         
         if request.max_length:
-            prompt += f"\n\nMAX LENGTH: {request.max_length} characters"
+            enhanced_prompt += f"\n\nMAX LENGTH: {request.max_length} characters"
         
-        if request.additional_instructions:
-            prompt += f"\n\nADDITIONAL INSTRUCTIONS:\n{request.additional_instructions}"
+        # Note: additional_instructions is already handled by build_enhanced_prompt
         
         # Add template-specific instructions
         if request.template_name and context.get("template_instructions"):
-            prompt += f"\n\nTEMPLATE INSTRUCTIONS:\n{context['template_instructions']}"
+            enhanced_prompt += f"\n\nTEMPLATE INSTRUCTIONS:\n{context['template_instructions']}"
         
-        return prompt
+        return enhanced_prompt
     
     async def _validate_content(self, request: ContentRequest) -> float:
         """Validate content quality"""

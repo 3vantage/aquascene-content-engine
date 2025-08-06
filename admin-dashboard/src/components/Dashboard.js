@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Statistic, Alert, Spin, Badge } from 'antd';
+import { Card, Row, Col, Statistic, Alert, Spin, Badge, message } from 'antd';
 import {
   UserOutlined,
   FileTextOutlined,
   RobotOutlined,
   GlobalOutlined,
   CheckCircleOutlined,
-  ExclamationCircleOutlined
+  ExclamationCircleOutlined,
+  ReloadOutlined
 } from '@ant-design/icons';
-import axios from 'axios';
+import { checkAllServicesHealth, getAllServiceStats } from '../utils/apiClient';
+import { HEALTH_CHECK_INTERVAL } from '../config/api';
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -22,62 +24,33 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchDashboardData();
-    const interval = setInterval(fetchDashboardData, 30000); // Refresh every 30 seconds
+    const interval = setInterval(fetchDashboardData, HEALTH_CHECK_INTERVAL);
     return () => clearInterval(interval);
   }, []);
 
   const fetchDashboardData = async () => {
     try {
-      // Check service health
-      const services = [
-        { name: 'Content Manager', url: 'http://localhost:8000/health' },
-        { name: 'AI Processor', url: 'http://localhost:8001/health' },
-        { name: 'Web Scraper', url: 'http://localhost:8002/health' },
-        { name: 'Distributor', url: 'http://localhost:8003/health' },
-        { name: 'Subscriber Manager', url: 'http://localhost:8004/health' }
-      ];
+      setLoading(true);
+      
+      // Check all services health using the new API client
+      const [serviceStatuses, serviceStats] = await Promise.all([
+        checkAllServicesHealth(),
+        getAllServiceStats()
+      ]);
 
-      const statuses = {};
-      await Promise.all(
-        services.map(async (service) => {
-          try {
-            const response = await axios.get(service.url, { timeout: 5000 });
-            statuses[service.name] = {
-              status: response.data.status === 'healthy' ? 'online' : 'offline',
-              lastCheck: new Date().toISOString()
-            };
-          } catch (error) {
-            statuses[service.name] = {
-              status: 'offline',
-              lastCheck: new Date().toISOString(),
-              error: error.message
-            };
-          }
-        })
-      );
-
-      setServiceStatuses(statuses);
-
-      // Fetch statistics (with fallback for missing services)
-      try {
-        const subscriberStats = await axios.get('http://localhost:8004/api/v1/subscribers/stats');
-        setStats(prev => ({ ...prev, subscribers: subscriberStats.data.total_subscribers || 0 }));
-      } catch (error) {
-        console.warn('Failed to fetch subscriber stats:', error.message);
-      }
-
-      try {
-        const scraperStats = await axios.get('http://localhost:8002/api/v1/stats');
-        setStats(prev => ({ ...prev, scrapeJobs: scraperStats.data.stats?.total_jobs || 0 }));
-      } catch (error) {
-        console.warn('Failed to fetch scraper stats:', error.message);
-      }
-
+      setServiceStatuses(serviceStatuses);
+      setStats(serviceStats);
       setLoading(false);
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error);
+      message.error('Failed to load dashboard data. Please check your connection.');
       setLoading(false);
     }
+  };
+
+  const handleRefresh = async () => {
+    message.info('Refreshing dashboard data...');
+    await fetchDashboardData();
   };
 
   const getStatusBadge = (status) => {
@@ -154,11 +127,26 @@ const Dashboard = () => {
 
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <Card title="Service Status" extra={
-            <span style={{ fontSize: '12px', color: '#666' }}>
-              Last updated: {new Date().toLocaleTimeString()}
-            </span>
-          }>
+          <Card 
+            title="Service Status" 
+            extra={
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <ReloadOutlined 
+                  onClick={handleRefresh}
+                  style={{ 
+                    cursor: 'pointer', 
+                    color: '#1890ff',
+                    fontSize: '16px'
+                  }}
+                  spin={loading}
+                  title="Refresh data"
+                />
+                <span style={{ fontSize: '12px', color: '#666' }}>
+                  Last updated: {new Date().toLocaleTimeString()}
+                </span>
+              </div>
+            }
+          >
             <Row gutter={[16, 16]}>
               {Object.entries(serviceStatuses).map(([serviceName, serviceData]) => (
                 <Col span={8} key={serviceName}>

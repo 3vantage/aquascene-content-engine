@@ -15,6 +15,7 @@ import structlog
 from .base_client import BaseLLMClient, LLMResponse, LLMConfig, ContentType, ModelType
 from .openai_client import OpenAIClient
 from .anthropic_client import AnthropicClient
+from .gemini_client import GeminiClient
 from .ollama_client import OllamaClient
 
 logger = structlog.get_logger()
@@ -36,7 +37,7 @@ class LLMClientManager:
         self.clients: Dict[str, BaseLLMClient] = {}
         self.client_health: Dict[str, Dict[str, Any]] = {}
         self.routing_strategy = RoutingStrategy.BALANCED
-        self.fallback_order = ["openai", "anthropic", "ollama"]
+        self.fallback_order = ["openai", "anthropic", "gemini", "ollama"]
         self.round_robin_index = 0
         
         # Performance tracking
@@ -47,14 +48,14 @@ class LLMClientManager:
         
         # Content type preferences (which models work best for what)
         self.content_preferences = {
-            ContentType.NEWSLETTER_ARTICLE: ["openai", "anthropic", "ollama"],
-            ContentType.INSTAGRAM_CAPTION: ["anthropic", "openai", "ollama"],
-            ContentType.HOW_TO_GUIDE: ["openai", "anthropic", "ollama"],
-            ContentType.PRODUCT_REVIEW: ["anthropic", "openai", "ollama"],
-            ContentType.COMMUNITY_POST: ["ollama", "anthropic", "openai"],
-            ContentType.SEO_BLOG_POST: ["openai", "anthropic", "ollama"],
-            ContentType.WEEKLY_DIGEST: ["anthropic", "openai", "ollama"],
-            ContentType.EXPERT_INTERVIEW: ["anthropic", "openai", "ollama"]
+            ContentType.NEWSLETTER_ARTICLE: ["openai", "anthropic", "gemini", "ollama"],
+            ContentType.INSTAGRAM_CAPTION: ["anthropic", "gemini", "openai", "ollama"],
+            ContentType.HOW_TO_GUIDE: ["openai", "anthropic", "gemini", "ollama"],
+            ContentType.PRODUCT_REVIEW: ["anthropic", "openai", "gemini", "ollama"],
+            ContentType.COMMUNITY_POST: ["gemini", "ollama", "anthropic", "openai"],
+            ContentType.SEO_BLOG_POST: ["openai", "gemini", "anthropic", "ollama"],
+            ContentType.WEEKLY_DIGEST: ["anthropic", "gemini", "openai", "ollama"],
+            ContentType.EXPERT_INTERVIEW: ["anthropic", "openai", "gemini", "ollama"]
         }
     
     def _initialize_clients(self, configs: Dict[str, LLMConfig]) -> None:
@@ -65,6 +66,8 @@ class LLMClientManager:
                     self.clients[provider] = OpenAIClient(config)
                 elif provider == "anthropic":
                     self.clients[provider] = AnthropicClient(config)
+                elif provider == "gemini":
+                    self.clients[provider] = GeminiClient(config)
                 elif provider == "ollama":
                     self.clients[provider] = OllamaClient(config)
                 else:

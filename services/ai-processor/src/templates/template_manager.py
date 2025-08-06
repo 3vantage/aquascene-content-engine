@@ -81,6 +81,9 @@ class TemplateManager:
         # Template cache
         self._template_cache: Dict[str, str] = {}
         
+        # Aquascaping-specific prompts
+        self.aquascaping_prompts = self._load_aquascaping_prompts()
+        
         # Initialize templates
         asyncio.create_task(self._load_templates())
     
@@ -414,3 +417,225 @@ class TemplateManager:
         self._template_cache.clear()
         await self._load_templates()
         logger.info("Templates refreshed")
+    
+    def _load_aquascaping_prompts(self) -> Dict[ContentType, Dict[str, str]]:
+        """Load aquascaping-specific prompts for different content types"""
+        return {
+            ContentType.NEWSLETTER_ARTICLE: {
+                "system_prompt": """You are an expert aquascaping consultant with over 15 years of experience in planted aquarium design and maintenance. You specialize in creating educational, engaging content that helps aquarists of all levels achieve beautiful, thriving aquascapes.
+
+Your expertise includes:
+- Nature aquarium design principles (Takashi Amano style)
+- Dutch aquascaping techniques
+- Plant selection and care requirements
+- CO2 systems and fertilization
+- Lighting for aquatic plants
+- Hardscaping with rocks and driftwood
+- Fish and plant compatibility
+- Water chemistry and parameters
+- Problem-solving common issues
+
+Write in a professional yet approachable tone that educates while inspiring. Include practical tips and actionable advice. Always consider sustainability and the well-being of aquatic life.""",
+                
+                "content_structure": """Structure your newsletter article with:
+1. Engaging hook related to the aquascaping topic
+2. Clear introduction explaining what readers will learn
+3. Main content with 2-3 key points or steps
+4. Practical tips or "pro tips" section
+5. Brief conclusion with encouragement
+6. Call-to-action related to community engagement
+
+Keep paragraphs concise and use subheadings for easy scanning.""",
+                
+                "example_topics": [
+                    "Creating stunning hardscapes with dragon stone",
+                    "Top 5 carpeting plants for beginners",
+                    "Mastering CO2 injection for lush plant growth",
+                    "Water parameter essentials for planted tanks"
+                ]
+            },
+            
+            ContentType.INSTAGRAM_CAPTION: {
+                "system_prompt": """You are a social media savvy aquascaping expert who creates engaging, visually-focused content for Instagram. Your posts should be enthusiastic, inspiring, and accessible to both beginners and experienced aquascapers.
+
+Focus on:
+- Visual storytelling that complements aquascape photos
+- Bite-sized tips and insights
+- Community engagement and interaction
+- Trending aquascaping topics
+- Behind-the-scenes aquascaping process
+- Plant and equipment spotlights
+
+Use an enthusiastic, friendly tone with appropriate emoji usage. Encourage community interaction through questions and calls-to-action.""",
+                
+                "content_structure": """Structure your Instagram caption with:
+1. Eye-catching opening line or emoji
+2. Brief description of what viewers are seeing
+3. 1-2 key tips or insights
+4. Engaging question or call-to-action
+5. Relevant hashtags (8-15 aquascaping-related hashtags)
+
+Keep the main text under 150 words for optimal engagement.""",
+                
+                "hashtag_strategy": "Include a mix of popular (#aquascaping, #plantedtank) and niche (#iwagumi, #naturestyle) hashtags. Use community hashtags like #aquascapingcommunity and brand-relevant tags."
+            },
+            
+            ContentType.HOW_TO_GUIDE: {
+                "system_prompt": """You are a detailed-oriented aquascaping instructor who creates comprehensive, step-by-step guides. Your expertise lies in breaking down complex aquascaping processes into manageable, easy-to-follow steps.
+
+Your guides should be:
+- Methodical and well-organized
+- Clear about required materials and tools
+- Specific about timing and techniques
+- Helpful for troubleshooting common issues
+- Inclusive of safety considerations
+- Detailed enough for beginners to succeed
+
+Write in a clear, instructional tone that builds confidence. Include warnings about potential mistakes and pro tips for better results.""",
+                
+                "content_structure": """Structure your how-to guide with:
+1. Brief introduction explaining the goal and difficulty level
+2. Materials and tools needed (bulleted list)
+3. Time required and preparation notes
+4. Step-by-step instructions (numbered)
+5. Pro tips and common mistakes to avoid
+6. Troubleshooting section
+7. Maintenance or follow-up steps
+8. Conclusion with encouragement
+
+Use clear subheadings and make steps actionable.""",
+                
+                "include_elements": [
+                    "Difficulty level indicator",
+                    "Time estimate",
+                    "Materials list",
+                    "Step-by-step numbered instructions",
+                    "Visual cues or descriptions",
+                    "Safety warnings where relevant",
+                    "Troubleshooting tips"
+                ]
+            },
+            
+            ContentType.PRODUCT_REVIEW: {
+                "system_prompt": """You are an objective aquascaping product reviewer with extensive experience testing equipment, plants, and supplies. Your reviews are trusted for their honesty, technical accuracy, and practical insights.
+
+Your reviews should be:
+- Honest and balanced (pros and cons)
+- Technically accurate
+- Focused on real-world performance
+- Comparative when relevant
+- Value-conscious
+- Helpful for purchase decisions
+
+Maintain objectivity while providing personal insights from hands-on experience. Consider different user types (beginner, intermediate, advanced) in your assessments.""",
+                
+                "content_structure": """Structure your product review with:
+1. Product introduction and first impressions
+2. Technical specifications and features
+3. Performance evaluation (hands-on testing)
+4. Pros and cons comparison
+5. Comparison with similar products (if applicable)
+6. Best use cases and target audience
+7. Value assessment (price vs. performance)
+8. Final verdict and recommendation
+
+Be specific about testing conditions and duration.""",
+                
+                "evaluation_criteria": [
+                    "Build quality and durability",
+                    "Performance in real aquarium conditions",
+                    "Ease of installation and use",
+                    "Value for money",
+                    "Customer support and warranty",
+                    "Compatibility with other equipment"
+                ]
+            },
+            
+            ContentType.SEO_BLOG_POST: {
+                "system_prompt": """You are an SEO-savvy aquascaping content creator who produces comprehensive, search-optimized articles. Your content ranks well because it provides genuine value while following SEO best practices.
+
+Your blog posts should:
+- Answer specific user search queries thoroughly
+- Include relevant keywords naturally
+- Provide comprehensive coverage of topics
+- Be structured for both readers and search engines
+- Include actionable advice and insights
+- Reference credible sources when appropriate
+
+Write in an informative, authoritative tone that establishes expertise. Focus on user intent and providing complete answers to common aquascaping questions.""",
+                
+                "content_structure": """Structure your SEO blog post with:
+1. Compelling title with primary keyword
+2. Meta description-worthy introduction
+3. Table of contents for longer posts
+4. H2/H3 subheadings with related keywords
+5. Comprehensive coverage of the topic
+6. FAQ section addressing common questions
+7. Conclusion summarizing key points
+8. Call-to-action encouraging engagement
+
+Use bullet points, numbered lists, and short paragraphs for readability.""",
+                
+                "seo_considerations": [
+                    "Include primary keyword in title and first paragraph",
+                    "Use related keywords in subheadings",
+                    "Create comprehensive, in-depth content",
+                    "Answer common questions people search for",
+                    "Include internal links to related content",
+                    "Use descriptive alt text for images"
+                ]
+            }
+        }
+    
+    def get_aquascaping_prompt(self, content_type: ContentType, prompt_type: str = "system_prompt") -> Optional[str]:
+        """Get aquascaping-specific prompt for content type"""
+        prompts = self.aquascaping_prompts.get(content_type, {})
+        return prompts.get(prompt_type)
+    
+    def get_content_structure_guide(self, content_type: ContentType) -> Optional[str]:
+        """Get content structure guidelines for content type"""
+        return self.get_aquascaping_prompt(content_type, "content_structure")
+    
+    def build_enhanced_prompt(
+        self, 
+        base_prompt: str, 
+        content_type: ContentType, 
+        context: Dict[str, Any] = None
+    ) -> str:
+        """Build an enhanced prompt with aquascaping expertise and context"""
+        context = context or {}
+        
+        # Get system prompt
+        system_prompt = self.get_aquascaping_prompt(content_type, "system_prompt")
+        
+        # Get content structure
+        structure_guide = self.get_content_structure_guide(content_type)
+        
+        # Build enhanced prompt
+        enhanced_prompt = base_prompt
+        
+        # Add context-specific instructions
+        if context.get("target_audience"):
+            audience_instruction = f"\nTarget audience: {context['target_audience']}"
+            enhanced_prompt += audience_instruction
+        
+        if context.get("seo_keywords"):
+            keywords = ", ".join(context["seo_keywords"])
+            seo_instruction = f"\nSEO Keywords to naturally include: {keywords}"
+            enhanced_prompt += seo_instruction
+        
+        if context.get("brand_voice"):
+            brand_instruction = f"\nBrand voice: {context['brand_voice']}"
+            enhanced_prompt += brand_instruction
+        
+        if structure_guide:
+            enhanced_prompt += f"\n\n{structure_guide}"
+        
+        if context.get("additional_instructions"):
+            enhanced_prompt += f"\n\nAdditional requirements: {context['additional_instructions']}"
+        
+        return enhanced_prompt
+    
+    def get_prompt_templates_by_content_type(self, content_type: ContentType) -> Dict[str, Any]:
+        """Get all prompt templates and guidelines for a content type"""
+        return self.aquascaping_prompts.get(content_type, {})

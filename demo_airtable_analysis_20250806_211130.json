@@ -1,0 +1,579 @@
+{
+  "base_id": "appAquaSceneDemo123",
+  "base_name": "AquaScene Content Engine Demo Base",
+  "analysis_date": "2025-08-06T21:11:30.742404",
+  "tables": [
+    {
+      "id": "tblContentItems123",
+      "name": "Content_Items",
+      "description": "Main content repository for all aquascaping content",
+      "fields": [
+        {
+          "name": "Title",
+          "field_type": "singleLineText",
+          "options": {},
+          "description": "Content title/headline",
+          "is_primary": true,
+          "is_computed": false,
+          "validation_rules": [
+            "Required field",
+            "Max 200 characters"
+          ],
+          "sample_values": [
+            "10 Essential Aquascaping Plants for Beginners",
+            "Creating the Perfect Planted Tank Lighting",
+            "Weekly Water Changes: A Complete Guide"
+          ]
+        },
+        {
+          "name": "Content_Type",
+          "field_type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "id": "sel1",
+                "name": "Blog Post",
+                "color": "blue"
+              },
+              {
+                "id": "sel2",
+                "name": "Social Media",
+                "color": "green"
+              },
+              {
+                "id": "sel3",
+                "name": "Newsletter",
+                "color": "orange"
+              },
+              {
+                "id": "sel4",
+                "name": "Video Script",
+                "color": "purple"
+              }
+            ]
+          },
+          "description": null,
+          "is_primary": false,
+          "is_computed": false,
+          "validation_rules": [
+            "Must be one of: ['Blog Post', 'Social Media', 'Newsletter', 'Video Script']"
+          ],
+          "sample_values": [
+            "Blog Post",
+            "Social Media",
+            "Newsletter"
+          ]
+        },
+        {
+          "name": "Status",
+          "field_type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "id": "sta1",
+                "name": "Draft",
+                "color": "gray"
+              },
+              {
+                "id": "sta2",
+                "name": "In Review",
+                "color": "yellow"
+              },
+              {
+                "id": "sta3",
+                "name": "Approved",
+                "color": "green"
+              },
+              {
+                "id": "sta4",
+                "name": "Published",
+                "color": "blue"
+              },
+              {
+                "id": "sta5",
+                "name": "Archived",
+                "color": "red"
+              }
+            ]
+          },
+          "description": null,
+          "is_primary": false,
+          "is_computed": false,
+          "validation_rules": [
+            "Must be one of: ['Draft', 'In Review', 'Approved', 'Published', 'Archived']"
+          ],
+          "sample_values": [
+            "Published",
+            "Approved",
+            "In Review"
+          ]
+        },
+        {
+          "name": "Created_Date",
+          "field_type": "createdTime",
+          "options": {
+            "dateFormat": {
+              "format": "M/D/YYYY",
+              "name": "US"
+            }
+          },
+          "description": null,
+          "is_primary": false,
+          "is_computed": true,
+          "validation_rules": [
+            "Automatically set on record creation"
+          ],
+          "sample_values": [
+            "2025-01-15",
+            "2025-02-01",
+            "2025-02-10"
+          ]
+        },
+        {
+          "name": "Publish_Date",
+          "field_type": "date",
+          "options": {
+            "dateFormat": {
+              "format": "M/D/YYYY",
+              "name": "US"
+            }
+          },
+          "description": null,
+          "is_primary": false,
+          "is_computed": false,
+          "validation_rules": [
+            "Date format: M/D/YYYY"
+          ],
+          "sample_values": [
+            "2025-02-15",
+            "2025-02-20",
+            "2025-03-01"
+          ]
+        },
+        {
+          "name": "Tags",
+          "field_type": "multipleRecordLinks",
+          "options": {
+            "linkedTableId": "tblTags123"
+          },
+          "description": null,
+          "is_primary": false,
+          "is_computed": false,
+          "validation_rules": [
+            "Links to Tags table"
+          ],
+          "sample_values": [
+            [
+              "Beginner",
+              "Plants"
+            ],
+            [
+              "Lighting",
+              "Equipment"
+            ],
+            [
+              "Maintenance"
+            ]
+          ]
+        },
+        {
+          "name": "Word_Count",
+          "field_type": "number",
+          "options": {
+            "precision": 0
+          },
+          "description": null,
+          "is_primary": false,
+          "is_computed": false,
+          "validation_rules": [
+            "Precision: 0 decimal places"
+          ],
+          "sample_values": [
+            1250,
+            800,
+            1500
+          ]
+        },
+        {
+          "name": "SEO_Score",
+          "field_type": "formula",
+          "options": {
+            "formula": "IF({Word_Count}>1000,IF({Tags}>2,'High','Medium'),'Low')"
+          },
+          "description": null,
+          "is_primary": false,
+          "is_computed": true,
+          "validation_rules": [
+            "Computed based on word count and tags"
+          ],
+          "sample_values": [
+            "High",
+            "Medium",
+            "High"
+          ]
+        }
+      ],
+      "record_count": 145,
+      "primary_field": "Title",
+      "relationships": [
+        {
+          "type": "many_to_many",
+          "field_name": "Tags",
+          "linked_table_id": "tblTags123",
+          "inverse_field_id": "fldInverseContent"
+        }
+      ],
+      "data_patterns": {
+        "record_count": 145,
+        "field_completion_rates": {
+          "Title": 1.0,
+          "Content_Type": 0.98,
+          "Status": 1.0,
+          "Created_Date": 1.0,
+          "Publish_Date": 0.75,
+          "Tags": 0.89,
+          "Word_Count": 0.85,
+          "SEO_Score": 1.0
+        },
+        "common_patterns": {
+          "Content_Type": {
+            "most_common": {
+              "Blog Post": 65,
+              "Social Media": 45,
+              "Newsletter": 25,
+              "Video Script": 10
+            },
+            "unique_count": 4,
+            "total_count": 145
+          },
+          "Status": {
+            "most_common": {
+              "Published": 85,
+              "Approved": 25,
+              "In Review": 20,
+              "Draft": 15
+            },
+            "unique_count": 5,
+            "total_count": 145
+          }
+        },
+        "data_quality_issues": []
+      },
+      "business_logic": [
+        "Table has 1 relationships with other tables",
+        "Workflow/status fields: ['Content_Type', 'Status']",
+        "Computed fields: ['Created_Date', 'SEO_Score']"
+      ]
+    },
+    {
+      "id": "tblTags123",
+      "name": "Tags",
+      "description": "Content categorization and tagging system",
+      "fields": [
+        {
+          "name": "Tag_Name",
+          "field_type": "singleLineText",
+          "options": {},
+          "description": null,
+          "is_primary": true,
+          "is_computed": false,
+          "validation_rules": [
+            "Required field",
+            "Must be unique"
+          ],
+          "sample_values": [
+            "Beginner",
+            "Plants",
+            "Lighting",
+            "Equipment",
+            "Maintenance"
+          ]
+        },
+        {
+          "name": "Category",
+          "field_type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "id": "cat1",
+                "name": "Equipment",
+                "color": "blue"
+              },
+              {
+                "id": "cat2",
+                "name": "Plants",
+                "color": "green"
+              },
+              {
+                "id": "cat3",
+                "name": "Technique",
+                "color": "orange"
+              },
+              {
+                "id": "cat4",
+                "name": "Maintenance",
+                "color": "red"
+              }
+            ]
+          },
+          "description": null,
+          "is_primary": false,
+          "is_computed": false,
+          "validation_rules": [
+            "Must be one of: ['Equipment', 'Plants', 'Technique', 'Maintenance']"
+          ],
+          "sample_values": [
+            "Plants",
+            "Equipment",
+            "Technique"
+          ]
+        },
+        {
+          "name": "Content_Count",
+          "field_type": "count",
+          "options": {
+            "recordLinkFieldId": "fldContentLink"
+          },
+          "description": null,
+          "is_primary": false,
+          "is_computed": true,
+          "validation_rules": [
+            "Count of linked content items"
+          ],
+          "sample_values": [
+            25,
+            18,
+            12
+          ]
+        }
+      ],
+      "record_count": 28,
+      "primary_field": "Tag_Name",
+      "relationships": [
+        {
+          "type": "count",
+          "field_name": "Content_Count",
+          "record_link_field_id": "fldContentLink"
+        }
+      ],
+      "data_patterns": {
+        "record_count": 28,
+        "field_completion_rates": {
+          "Tag_Name": 1.0,
+          "Category": 0.96,
+          "Content_Count": 1.0
+        },
+        "common_patterns": {
+          "Category": {
+            "most_common": {
+              "Plants": 10,
+              "Equipment": 8,
+              "Technique": 6,
+              "Maintenance": 4
+            },
+            "unique_count": 4,
+            "total_count": 28
+          }
+        },
+        "data_quality_issues": []
+      },
+      "business_logic": [
+        "Table has 1 relationships with other tables",
+        "Workflow/status fields: ['Category']",
+        "Computed fields: ['Content_Count']"
+      ]
+    },
+    {
+      "id": "tblSchedule123",
+      "name": "Publishing_Schedule",
+      "description": "Content publishing schedule across platforms",
+      "fields": [
+        {
+          "name": "Schedule_ID",
+          "field_type": "autoNumber",
+          "options": {},
+          "description": null,
+          "is_primary": true,
+          "is_computed": true,
+          "validation_rules": [
+            "Auto-generated unique ID"
+          ],
+          "sample_values": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "name": "Content",
+          "field_type": "multipleRecordLinks",
+          "options": {
+            "linkedTableId": "tblContentItems123"
+          },
+          "description": null,
+          "is_primary": false,
+          "is_computed": false,
+          "validation_rules": [
+            "Links to Content_Items table"
+          ],
+          "sample_values": [
+            "10 Essential Aquascaping Plants",
+            "Creating Perfect Lighting"
+          ]
+        },
+        {
+          "name": "Platform",
+          "field_type": "multipleSelects",
+          "options": {
+            "choices": [
+              {
+                "id": "plt1",
+                "name": "Website",
+                "color": "blue"
+              },
+              {
+                "id": "plt2",
+                "name": "Instagram",
+                "color": "purple"
+              },
+              {
+                "id": "plt3",
+                "name": "YouTube",
+                "color": "red"
+              },
+              {
+                "id": "plt4",
+                "name": "Newsletter",
+                "color": "green"
+              }
+            ]
+          },
+          "description": null,
+          "is_primary": false,
+          "is_computed": false,
+          "validation_rules": [
+            "Can include: ['Website', 'Instagram', 'YouTube', 'Newsletter']"
+          ],
+          "sample_values": [
+            [
+              "Website",
+              "Instagram"
+            ],
+            [
+              "YouTube"
+            ],
+            [
+              "Newsletter",
+              "Website"
+            ]
+          ]
+        },
+        {
+          "name": "Scheduled_Time",
+          "field_type": "dateTime",
+          "options": {
+            "dateFormat": {
+              "format": "M/D/YYYY",
+              "name": "US"
+            },
+            "timeFormat": {
+              "format": "h:mma",
+              "name": "12hour"
+            }
+          },
+          "description": null,
+          "is_primary": false,
+          "is_computed": false,
+          "validation_rules": [
+            "DateTime format with 12-hour time"
+          ],
+          "sample_values": [
+            "2025-02-15 10:00 AM",
+            "2025-02-20 2:30 PM"
+          ]
+        }
+      ],
+      "record_count": 89,
+      "primary_field": "Schedule_ID",
+      "relationships": [
+        {
+          "type": "many_to_many",
+          "field_name": "Content",
+          "linked_table_id": "tblContentItems123",
+          "inverse_field_id": "fldScheduleLink"
+        }
+      ],
+      "data_patterns": {
+        "record_count": 89,
+        "field_completion_rates": {
+          "Schedule_ID": 1.0,
+          "Content": 1.0,
+          "Platform": 0.98,
+          "Scheduled_Time": 0.92
+        },
+        "common_patterns": {
+          "Platform": {
+            "most_common": {
+              "Website": 85,
+              "Instagram": 65,
+              "YouTube": 25,
+              "Newsletter": 45
+            },
+            "unique_count": 4,
+            "total_count": 89
+          }
+        },
+        "data_quality_issues": [
+          "Fields with low completion rates (<50%): []"
+        ]
+      },
+      "business_logic": [
+        "Table has 1 relationships with other tables",
+        "Workflow/status fields: ['Platform']",
+        "Computed fields: ['Schedule_ID']"
+      ]
+    }
+  ],
+  "relationships_map": {
+    "Content_Items": [
+      "Tags"
+    ],
+    "Tags": [
+      "Content_Items"
+    ],
+    "Publishing_Schedule": [
+      "Content_Items"
+    ]
+  },
+  "data_quality_assessment": {
+    "total_tables": 3,
+    "total_records": 262,
+    "tables_with_relationships": 3,
+    "tables_with_quality_issues": [],
+    "field_type_distribution": {
+      "singleLineText": 2,
+      "singleSelect": 3,
+      "multipleRecordLinks": 2,
+      "number": 1,
+      "formula": 1,
+      "createdTime": 1,
+      "date": 1,
+      "autoNumber": 1,
+      "multipleSelects": 1,
+      "dateTime": 1,
+      "count": 1
+    },
+    "completion_rate_summary": {
+      "average_completion": 0.94,
+      "min_completion": 0.75,
+      "max_completion": 1.0
+    }
+  },
+  "recommendations": [
+    "Create a metadata table to document table purposes, field definitions, and business rules",
+    "Tables using computed fields (good for automation): ['Content_Items', 'Tags', 'Publishing_Schedule']",
+    "Consider adding description fields to tables for better documentation",
+    "Implement regular data quality monitoring and validation processes",
+    "Consider adding relationship from Content_Items to Publishing_Schedule for better workflow tracking"
+  ]
+}

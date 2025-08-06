@@ -1,0 +1,272 @@
+[
+  {
+    "fields": {
+      "Table_Name": "Content_Items",
+      "Field_Name": "Title",
+      "Field_Type": "singleLineText",
+      "Description": "Content title/headline",
+      "Is_Primary": true,
+      "Is_Required": true,
+      "Is_Computed": false,
+      "Validation_Rules": "Required field\nMax 200 characters",
+      "Sample_Values": "['10 Essential Aquascaping Plants for Beginners', 'Creating the Perfect Planted Tank Lighting', 'Weekly Water Changes: A Complete Guide']",
+      "Related_Tables": "",
+      "Business_Purpose": "Primary identifier for records in this table",
+      "Data_Quality_Score": "Excellent",
+      "Completion_Rate": 100.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Content_Items",
+      "Field_Name": "Content_Type",
+      "Field_Type": "singleSelect",
+      "Description": null,
+      "Is_Primary": false,
+      "Is_Required": true,
+      "Is_Computed": false,
+      "Validation_Rules": "Must be one of: ['Blog Post', 'Social Media', 'Newsletter', 'Video Script']",
+      "Sample_Values": "['Blog Post', 'Social Media', 'Newsletter']",
+      "Related_Tables": "",
+      "Business_Purpose": "",
+      "Data_Quality_Score": "Excellent",
+      "Completion_Rate": 98.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Content_Items",
+      "Field_Name": "Status",
+      "Field_Type": "singleSelect",
+      "Description": null,
+      "Is_Primary": false,
+      "Is_Required": true,
+      "Is_Computed": false,
+      "Validation_Rules": "Must be one of: ['Draft', 'In Review', 'Approved', 'Published', 'Archived']",
+      "Sample_Values": "['Published', 'Approved', 'In Review']",
+      "Related_Tables": "",
+      "Business_Purpose": "",
+      "Data_Quality_Score": "Excellent",
+      "Completion_Rate": 100.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Content_Items",
+      "Field_Name": "Created_Date",
+      "Field_Type": "createdTime",
+      "Description": null,
+      "Is_Primary": false,
+      "Is_Required": true,
+      "Is_Computed": true,
+      "Validation_Rules": "Automatically set on record creation",
+      "Sample_Values": "['2025-01-15', '2025-02-01', '2025-02-10']",
+      "Related_Tables": "",
+      "Business_Purpose": "Automatically calculated value",
+      "Data_Quality_Score": "Excellent",
+      "Completion_Rate": 100.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Content_Items",
+      "Field_Name": "Publish_Date",
+      "Field_Type": "date",
+      "Description": null,
+      "Is_Primary": false,
+      "Is_Required": false,
+      "Is_Computed": false,
+      "Validation_Rules": "Date format: M/D/YYYY",
+      "Sample_Values": "['2025-02-15', '2025-02-20', '2025-03-01']",
+      "Related_Tables": "",
+      "Business_Purpose": "",
+      "Data_Quality_Score": "Fair",
+      "Completion_Rate": 75.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Content_Items",
+      "Field_Name": "Tags",
+      "Field_Type": "multipleRecordLinks",
+      "Description": null,
+      "Is_Primary": false,
+      "Is_Required": false,
+      "Is_Computed": false,
+      "Validation_Rules": "Links to Tags table",
+      "Sample_Values": "[['Beginner', 'Plants'], ['Lighting', 'Equipment'], ['Maintenance']]",
+      "Related_Tables": "Linked table ID: tblTags123",
+      "Business_Purpose": "Links to records in related tables",
+      "Data_Quality_Score": "Good",
+      "Completion_Rate": 89.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Content_Items",
+      "Field_Name": "Word_Count",
+      "Field_Type": "number",
+      "Description": null,
+      "Is_Primary": false,
+      "Is_Required": false,
+      "Is_Computed": false,
+      "Validation_Rules": "Precision: 0 decimal places",
+      "Sample_Values": "[1250, 800, 1500]",
+      "Related_Tables": "",
+      "Business_Purpose": "",
+      "Data_Quality_Score": "Good",
+      "Completion_Rate": 85.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Content_Items",
+      "Field_Name": "SEO_Score",
+      "Field_Type": "formula",
+      "Description": null,
+      "Is_Primary": false,
+      "Is_Required": true,
+      "Is_Computed": true,
+      "Validation_Rules": "Computed based on word count and tags",
+      "Sample_Values": "['High', 'Medium', 'High']",
+      "Related_Tables": "",
+      "Business_Purpose": "Automatically calculated value",
+      "Data_Quality_Score": "Excellent",
+      "Completion_Rate": 100.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Tags",
+      "Field_Name": "Tag_Name",
+      "Field_Type": "singleLineText",
+      "Description": null,
+      "Is_Primary": true,
+      "Is_Required": true,
+      "Is_Computed": false,
+      "Validation_Rules": "Required field\nMust be unique",
+      "Sample_Values": "['Beginner', 'Plants', 'Lighting', 'Equipment', 'Maintenance']",
+      "Related_Tables": "",
+      "Business_Purpose": "Primary identifier for records in this table",
+      "Data_Quality_Score": "Excellent",
+      "Completion_Rate": 100.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Tags",
+      "Field_Name": "Category",
+      "Field_Type": "singleSelect",
+      "Description": null,
+      "Is_Primary": false,
+      "Is_Required": true,
+      "Is_Computed": false,
+      "Validation_Rules": "Must be one of: ['Equipment', 'Plants', 'Technique', 'Maintenance']",
+      "Sample_Values": "['Plants', 'Equipment', 'Technique']",
+      "Related_Tables": "",
+      "Business_Purpose": "",
+      "Data_Quality_Score": "Excellent",
+      "Completion_Rate": 96.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Tags",
+      "Field_Name": "Content_Count",
+      "Field_Type": "count",
+      "Description": null,
+      "Is_Primary": false,
+      "Is_Required": true,
+      "Is_Computed": true,
+      "Validation_Rules": "Count of linked content items",
+      "Sample_Values": "[25, 18, 12]",
+      "Related_Tables": "Linked table ID: Unknown",
+      "Business_Purpose": "Automatically calculated value",
+      "Data_Quality_Score": "Excellent",
+      "Completion_Rate": 100.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Publishing_Schedule",
+      "Field_Name": "Schedule_ID",
+      "Field_Type": "autoNumber",
+      "Description": null,
+      "Is_Primary": true,
+      "Is_Required": true,
+      "Is_Computed": true,
+      "Validation_Rules": "Auto-generated unique ID",
+      "Sample_Values": "[1, 2, 3]",
+      "Related_Tables": "",
+      "Business_Purpose": "Primary identifier for records in this table\nAutomatically calculated value",
+      "Data_Quality_Score": "Excellent",
+      "Completion_Rate": 100.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Publishing_Schedule",
+      "Field_Name": "Content",
+      "Field_Type": "multipleRecordLinks",
+      "Description": null,
+      "Is_Primary": false,
+      "Is_Required": true,
+      "Is_Computed": false,
+      "Validation_Rules": "Links to Content_Items table",
+      "Sample_Values": "['10 Essential Aquascaping Plants', 'Creating Perfect Lighting']",
+      "Related_Tables": "Linked table ID: tblContentItems123",
+      "Business_Purpose": "Links to records in related tables",
+      "Data_Quality_Score": "Excellent",
+      "Completion_Rate": 100.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Publishing_Schedule",
+      "Field_Name": "Platform",
+      "Field_Type": "multipleSelects",
+      "Description": null,
+      "Is_Primary": false,
+      "Is_Required": true,
+      "Is_Computed": false,
+      "Validation_Rules": "Can include: ['Website', 'Instagram', 'YouTube', 'Newsletter']",
+      "Sample_Values": "[['Website', 'Instagram'], ['YouTube'], ['Newsletter', 'Website']]",
+      "Related_Tables": "",
+      "Business_Purpose": "",
+      "Data_Quality_Score": "Excellent",
+      "Completion_Rate": 98.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  },
+  {
+    "fields": {
+      "Table_Name": "Publishing_Schedule",
+      "Field_Name": "Scheduled_Time",
+      "Field_Type": "dateTime",
+      "Description": null,
+      "Is_Primary": false,
+      "Is_Required": false,
+      "Is_Computed": false,
+      "Validation_Rules": "DateTime format with 12-hour time",
+      "Sample_Values": "['2025-02-15 10:00 AM', '2025-02-20 2:30 PM']",
+      "Related_Tables": "",
+      "Business_Purpose": "",
+      "Data_Quality_Score": "Good",
+      "Completion_Rate": 92.0,
+      "Notes": "Analyzed on 2025-08-06T21:44:02.806914"
+    }
+  }
+]

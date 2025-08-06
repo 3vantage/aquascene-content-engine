@@ -88,6 +88,14 @@ async def lifespan(app: FastAPI):
                 max_tokens=2000
             )
         
+        if settings.google_api_key:
+            llm_configs["gemini"] = LLMConfig(
+                model=ModelType.GEMINI_PRO,
+                api_key=settings.google_api_key,
+                temperature=0.7,
+                max_tokens=2000
+            )
+        
         if settings.ollama_base_url:
             llm_configs["ollama"] = LLMConfig(
                 model=ModelType.OLLAMA_LLAMA3,
